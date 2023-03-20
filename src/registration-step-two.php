@@ -58,6 +58,24 @@ if (isset($_POST['submit'])) {
         <form action="" method="POST">
 
 
+            <div class="-mx-3 flex flex-wrap">
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <input type="text" name="fName" id="fName" placeholder="First Name"
+                               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        />
+                    </div>
+                </div>
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <input type="text" name="lName" id="lName" placeholder="Last Name"
+                               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        />
+                    </div>
+                </div>
+            </div>
+
+
             <div class="mb-5">
                 <div class="mb-5">
                     <input type="text"
@@ -84,7 +102,18 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
 
-
+            <div class="mb-5">
+                <div class="mb-5">
+                    <input type="date"
+                           name="date-of-birth"
+                           id="date-of-birth"
+                           placeholder="Date of Birth"
+                           class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    />
+                </div>
+            </div>
 
             <div class="mb-5">
                 <div class="mb-5">
@@ -115,7 +144,7 @@ if (isset($_POST['submit'])) {
 
             <div class="flex flex-col items-center justify-center gap-2">
                 <button class="hover:shadow-form rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-white outline-none items-center">
-                    Sign Up
+                    Sign in
                 </button>
                 <button class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center">
                     Already have an Account? Click here to Sign In
