@@ -1,11 +1,11 @@
 <?php
 session_start();
 if(!isset($_SESSION["id"])) {
-    header("Location: signIn.php");
+    header("Location: ../index.php");
 }
 if(isset($_POST["logout"])) {
     session_destroy();
-    header("Location: index.html");
+    header("Location: ../index.php");
 }
 ?>
 
@@ -14,7 +14,7 @@ if(isset($_POST["logout"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/dist/output.css" rel="stylesheet">
+    <link href="../../dist/output.css" rel="stylesheet">
     <title>Title</title>
 </head>
 <body>

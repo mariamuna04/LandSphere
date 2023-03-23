@@ -1,3 +1,5 @@
+@import "sign-in-up.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
