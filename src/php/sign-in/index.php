@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
     animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
     dark:border-gray-800 ">
 
-        <h2 class="align-middle pb-12 text-center font-black text-2xl dark:text-white">
+        <h2 class="align-middle pb-12 text-center font-black text-2xl dark:text-white select-none">
             Sign in to your account
         </h2>
 
@@ -128,19 +128,35 @@ if (isset($_POST['submit'])) {
             }
             ?>
 
-            <div class="flex flex-col items-center justify-center gap-2">
-                <button name="submit"
-                        class="hover:shadow-form rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-white outline-none items-center">
-                    Sign in
-                </button>
-                <a href="../sign-up"
-                   class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center">
-                    Don't have an account? Click here to Register
-                </a>
 
+
+            <div class="flex flex-col items-center justify-center gap-2 align-middle">
+                <div class="flex items-center justify-center gap-24">
+                    <a href="#" class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                outline-none items-center select-none text-primary flex flex-row gap-2 text-primary">
+                        Forgot Password?
+                    </a>
+                    <button name="submit"
+                            class="hover:shadow-form rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-white outline-none items-center">
+                        Sign in
+                    </button>
+
+                </div>
+                <div class="flex pt-4 py-3 px-8">
+                    <p class="text-black dark:text-white select-none">Don't have an account?</p>
+                    <a href="../sign-up"
+                       class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">
+                        Register
+                    </a>
+                </div>
 
             </div>
+
         </form>
+
+
+
+
     </div>
 </div>
 
