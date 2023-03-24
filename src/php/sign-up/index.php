@@ -1,10 +1,17 @@
 <?php
 
+session_start();
+
+if (isset($_SESSION["id"])) {
+    header("Location: ../userPanel.php");
+}
+
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,8 +82,10 @@
                     Confirmation
                 </div>
             </div>
+
         </div>
-        <div class="overflow-scroll overscroll-none pb-4">
+
+        <div class="overflow-y-scroll scroll-smooth no-scroll">
 
             <div id="card-title">
                 <h2 id="header-page-one"
@@ -111,6 +120,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="email" class="text-xs"></label>
                         </div>
                     </div>
 
@@ -125,6 +135,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="nid_number" class="text-xs"></label>
                         </div>
                     </div>
 
@@ -140,6 +151,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="password" class="text-xs"></label>
                         </div>
                     </div>
 
@@ -154,6 +166,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="confirm_password" class="text-xs"></label>
                         </div>
                     </div>
 
@@ -170,6 +183,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="name" class="text-xs"></label>
                         </div>
                     </div>
 
@@ -184,6 +198,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="dob" class="text-xs"></label>
                         </div>
                     </div>
                 </div>
@@ -199,6 +214,7 @@
                                outline-none focus:border-[#6A64F1] focus:shadow-md
                                dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                             />
+                            <label for="job" class="text-xs"></label>
                         </div>
                     </div>
                 </div>
@@ -224,32 +240,40 @@
             </form>
 
         </div>
+
         <div class="flex flex-col items-center justify-center gap-2 pt-4">
             <div class="flex gap-24 justify-end flex-auto">
-                <a id="previousButton" onclick="onPreviousClick()"
+                <button id="previousButton" onclick="onPreviousClick()"
                    class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                    outline-none items-center select-none hidden text-primary">
                     Previous
-                </a>
+                </button>
 
-                <a id="nextButton" onclick="onNextClick()"
-                   class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                <button id="nextButton" onclick="onNextClick()"
+                        class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                 outline-none items-center select-none bg-primary text-white">
                     Next
-                </a>
+                </button>
+
+                <button name="submit" id="submitButton"
+                        class="hidden cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                outline-none items-center select-none bg-primary text-white">
+                    Submit
+                </button>
 
             </div>
 
             <a href="../sign-in"
-               class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center select-none">
+               class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center
+               select-none">
                 Already have an Account? Click here to Sign In
             </a>
-
 
         </div>
     </div>
 
 </div>
+
 </body>
 
 <script>
@@ -267,6 +291,7 @@
 
     const previousButton = document.getElementById('previousButton');
     const nextButton = document.getElementById('nextButton');
+    const submitButton = document.getElementById('submitButton');
 
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
@@ -287,19 +312,14 @@
             stepOneCircle.classList.remove('animate-pulse');
             stepOneCircle.classList.add('bg-green-600');
             stepOneCircle.classList.add('text-white');
-
             stepTwoCircle.classList.add('border-4');
             stepTwoCircle.classList.add('border-green-600');
             stepTwoCircle.classList.add('animate-pulse');
             previousButton.classList.remove('hidden');
-
-
             page1.classList.add('hidden');
             page2.classList.remove('hidden');
-
             headerPageOne.classList.add('hidden');
             headerPageTwo.classList.remove('hidden');
-
             stepOne.classList.add('text-gray-400');
         } else if (page_number === 2) {
             stepTwoCircle.classList.remove('text-black');
@@ -336,7 +356,8 @@
             headerPageThree.classList.add('hidden');
             headerPageFour.classList.remove('hidden');
 
-            nextButton.innerHTML = 'Submit';
+            nextButton.classList.add('hidden');
+            submitButton.classList.remove('hidden');
         }
 
     }
@@ -398,7 +419,8 @@
             headerPageFour.classList.add('hidden');
             headerPageThree.classList.remove('hidden');
 
-            nextButton.innerHTML = 'Next';
+            nextButton.classList.remove('hidden');
+            submitButton.classList.add('hidden');
         }
     }
 
