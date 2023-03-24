@@ -16,7 +16,7 @@
 
             <div class="flex items-center mt-6 gap-x-3">
                 <a class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
-                outline-none items-center select-none  text-white flex flex-row gap-2 text-primary">Go back</a>
+                outline-none items-center select-none text-primary flex flex-row gap-2 text-primary">Go back</a>
 
                 <a class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                 outline-none items-center select-none bg-primary text-white bg-primary text-white" href="../index.php">Take me Home</a>

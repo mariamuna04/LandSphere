@@ -5,7 +5,3 @@ function gotoSignUp() {
 function gotoSignIn() {
     window.location.href = "./php/sign-in";
 }
-
-function gotoRegistrationOne() {
-    window.location.href = "./registration-step-one.php";
-}
