@@ -15,9 +15,11 @@
             <p class="mt-4 text-gray-500 dark:text-gray-400">Sorry, the page you are looking for doesn't exist</p>
 
             <div class="flex items-center mt-6 gap-x-3">
-                <a class="btn flex flex-row gap-2 text-primary">Go back</a>
+                <a class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                outline-none items-center select-none  text-white flex flex-row gap-2 text-primary">Go back</a>
 
-                <a class="btn bg-primary text-white" href="../index.php">Take me Home</a>
+                <a class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                outline-none items-center select-none bg-primary text-white bg-primary text-white" href="../index.php">Take me Home</a>
             </div>
         </div>
 
