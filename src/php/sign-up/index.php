@@ -11,46 +11,54 @@
     <link href="../../../dist/output.css" rel="stylesheet">
     <title>Sign In</title>
 </head>
-<body class="bg-sign-up-background bg-cover">
+<body class="bg-sign-up-background-light bg-cover dark:bg-sign-up-background-dark">
 
-<div class="card">
+<div class="flex items-center justify-center h-screen">
 
-    <div class="parent-card">
+    <div class="mx-auto w-[550px] h-[700px] p-12 flex flex-col justify-between
+                rounded-xl bg-opacity-60 backdrop-blur-md border border-gray-400
+                bg-white shadow-2xl animate-fadeIn dark:bg-black dark:bg-opacity-30
+                dark:border-gray-800">
 
-        <div class="step-container">
+        <div class="max-w-xl mx-auto my-4 border-b-2 pb-4 select-none">
 
-            <div id="step-box" class="step-circle-container">
+            <div id="step-box" class="flex pb-3">
                 <div class="flex-1">
                     <div id="step-one-circle"
-                         class="circle border-4 border-green-600 text-black animate-pulse">
-                        <span>1</span>
+                         class="w-10 h-10 mx-auto rounded-full text-lg flex
+                         items-center border-4 border-green-600 text-black
+                         animate-pulse dark:text-white">
+                        <span class="text-center w-full">1</span>
                     </div>
                 </div>
 
 
                 <div class="flex-1">
                     <div id="step-two-circle"
-                         class="circle">
-                        <span>2</span>
+                         class="w-10 h-10 mx-auto rounded-full text-lg flex
+                         items-center dark:text-white">
+                        <span class="text-center w-full">2</span>
                     </div>
                 </div>
 
                 <div class="flex-1">
                     <div id="step-three-circle"
-                         class="circle">
-                        <span>3</span>
+                         class="w-10 h-10 mx-auto rounded-full text-lg flex
+                         items-center dark:text-white">
+                        <span class="text-center w-full">3</span>
                     </div>
                 </div>
 
                 <div class="flex-1">
                     <div id="step-four-circle"
-                         class="circle">
-                        <span>4</span>
+                         class="w-10 h-10 mx-auto rounded-full text-lg flex
+                         items-center dark:text-white">
+                        <span class="text-center w-full">4</span>
                     </div>
                 </div>
             </div>
 
-            <div class="step-text-container">
+            <div class="flex text-xs content-center text-center dark:text-white">
                 <div id="step-one" class="w-1/4">
                     Account Registration
                 </div>
@@ -68,143 +76,172 @@
                 </div>
             </div>
         </div>
+        <div class="overflow-scroll overscroll-none pb-4">
 
-        <div id="card-title">
-            <h2 id="header-page-one" class="card-title">
-                Create an Account
-            </h2>
-            <h2 id="header-page-two" class="hidden card-title animate-fadeIn">
-                A Few More Information...
-            </h2>
-            <h2 id="header-page-three" class="hidden card-title animate-fadeIn">
-                Almost There!
-            </h2>
-            <h2 id="header-page-four" class="hidden card-title animate-fadeIn">
-                Finishing...
-            </h2>
+            <div id="card-title">
+                <h2 id="header-page-one"
+                    class="align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white">
+                    Create an Account
+                </h2>
+                <h2 id="header-page-two"
+                    class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                    A Few More Information...
+                </h2>
+                <h2 id="header-page-three"
+                    class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                    Almost There!
+                </h2>
+                <h2 id="header-page-four"
+                    class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                    Finishing...
+                </h2>
+            </div>
+
+            <form action="" method="POST">
+
+                <div id="page1" class="animate-fadeIn">
+                    <div id="email" class="mb-5">
+                        <div class="mb-5">
+                            <input type="text"
+                                   name="email"
+                                   id="email"
+                                   placeholder="Email address or Phone number"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+
+                    <div id="nid_number" class="mb-5">
+                        <div class="mb-5">
+                            <input type="text"
+                                   name="nid_number"
+                                   id="nid_number"
+                                   placeholder="10 digit NID Number"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+
+
+                    <div id="password" class="mb-5">
+                        <div class="mb-5">
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   placeholder="Password"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+
+                    <div id="confirm_password" class="mb-5">
+                        <div class="mb-5">
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   placeholder="Confirm Password"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="hidden animate-fadeIn" id="page2">
+                    <div id="email" class="mb-5">
+                        <div class="mb-5">
+                            <input type="text"
+                                   name="name"
+                                   id="name"
+                                   placeholder="Full name"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+
+                    <div id="nid_number" class="mb-5">
+                        <div class="mb-5">
+                            <input type="date"
+                                   name="dob"
+                                   id="dob"
+                                   placeholder="10 digit NID Number"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden animate-fadeIn" id="page3">
+                    <div id="email" class="mb-5">
+                        <div class="mb-5">
+                            <input type="text"
+                                   name="job"
+                                   id="job"
+                                   placeholder="Give job"
+                                   class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden animate-fadeIn" id="page4">
+                    <div id="email" class="mb-5">
+                        <div class="mb-5">
+                            <input type="checkbox"
+                                   name="agreement"
+                                   id="agreement"
+                            />
+                            <label for="agreement">Do you agree</label>
+                        </div>
+                        <div class="mb-5">
+                            <input type="checkbox"
+                                   name="agreement"
+                                   id="agreement"
+                            />
+                            <label for="agreement">Permission to sell your data</label>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
         </div>
-
-        <form action="" method="POST">
-
-            <div id="page1" class="animate-fadeIn">
-                <div id="email" class="mb-5">
-                    <div class="mb-5">
-                        <input type="text"
-                               name="email"
-                               id="email"
-                               placeholder="Email address or Phone number"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-
-                <div id="nid_number" class="mb-5">
-                    <div class="mb-5">
-                        <input type="text"
-                               name="nid_number"
-                               id="nid_number"
-                               placeholder="10 digit NID Number"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-
-                <div id="password" class="mb-5">
-                    <div class="mb-5">
-                        <input type="password"
-                               name="password"
-                               id="password"
-                               placeholder="Password"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-
-                <div id="confirm_password" class="mb-5">
-                    <div class="mb-5">
-                        <input type="password"
-                               name="password"
-                               id="password"
-                               placeholder="Confirm Password"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-
-            </div>
-            <div class="hidden animate-fadeIn" id="page2">
-                <div id="email" class="mb-5">
-                    <div class="mb-5">
-                        <input type="text"
-                               name="name"
-                               id="name"
-                               placeholder="Full name"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-
-                <div id="nid_number" class="mb-5">
-                    <div class="mb-5">
-                        <input type="date"
-                               name="dob"
-                               id="dob"
-                               placeholder="10 digit NID Number"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="hidden animate-fadeIn" id="page3">
-                <div id="email" class="mb-5">
-                    <div class="mb-5">
-                        <input type="text"
-                               name="job"
-                               id="job"
-                               placeholder="Give job"
-                               class="input-box"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="hidden animate-fadeIn" id="page4">
-                <div id="email" class="mb-5">
-                    <div class="mb-5">
-                        <input type="checkbox"
-                               name="agreement"
-                               id="agreement"
-                        />
-                        <label for="agreement">Do you agree</label>
-                    </div>
-                    <div class="mb-5">
-                        <input type="checkbox"
-                               name="agreement"
-                               id="agreement"
-                        />
-                        <label for="agreement">Permission to sell your data</label>
-                    </div>
-                </div>
-
-            </div>
-        </form>
-
-
-        <div class="btn-container">
+        <div class="flex flex-col items-center justify-center gap-2 pt-4">
             <div class="flex gap-24 justify-end flex-auto">
                 <a id="previousButton" onclick="onPreviousClick()"
-                   class="btn hidden text-primary">
+                   class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                   outline-none items-center select-none hidden text-primary">
                     Previous
                 </a>
 
                 <a id="nextButton" onclick="onNextClick()"
-                   class="btn bg-primary text-white">
+                   class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                outline-none items-center select-none bg-primary text-white">
                     Next
                 </a>
 
             </div>
 
             <a href="../sign-in"
-               class="sign-in-link">
+               class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center select-none">
                 Already have an Account? Click here to Sign In
             </a>
 

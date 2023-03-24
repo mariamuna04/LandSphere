@@ -54,17 +54,18 @@ if (isset($_POST['submit'])) {
     <link href="../../../dist/output.css" rel="stylesheet">
     <title>Sign In</title>
 </head>
-<body class="bg-sign-in-background bg-cover filter ">
+<body class="bg-sign-in-background-light bg-cover filter dark:bg-sign-in-background-dark">
 
 
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-xl
     bg-opacity-60 backdrop-blur-md border border-gray-400 bg-white shadow-2xl
-    animate-fadeIn overflow-scroll overscroll-none">
+    animate-fadeIn overflow-scroll overscroll-none dark:bg-black dark:bg-opacity-30
+    dark:border-gray-800">
 
 
-        <h2 class="align-middle pb-12 text-center font-black text-2xl"> Sign in to your account</h2>
+        <h2 class="align-middle pb-12 text-center font-black text-2xl dark:text-white"> Sign in to your account</h2>
 
 
         <form action="" method="POST">
@@ -83,7 +84,7 @@ if (isset($_POST['submit'])) {
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md <?php if ($auth_err) {
                                echo 'border-red-600';
-                           } ?>"
+                           } ?> dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                     />
                 </div>
             </div>
@@ -98,7 +99,7 @@ if (isset($_POST['submit'])) {
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md <?php if ($auth_err) {
                                echo 'border-red-600';
-                           } ?>"
+                           } ?> dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
                     />
                 </div>
             </div>

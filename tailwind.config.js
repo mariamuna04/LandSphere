@@ -11,8 +11,12 @@ module.exports = {
                 'accent-3': '#FF5722',
             },
             backgroundImage: {
-                'sign-in-background': "url('/src/res/img/sign-in-background.webp')",
-                'sign-up-background': "url('/src/res/img/sign-up-background.webp')",
+                'sign-in-background-light': "url('/src/res/img/sign-in-background-light.webp')",
+                'sign-up-background-light': "url('/src/res/img/sign-up-background-light.webp')",
+                'sign-in-background-dark': "url('/src/res/img/sign-in-background-dark.webp')",
+                'sign-up-background-dark': "url('/src/res/img/sign-up-background-dark.webp')",
+
+
             },
             cursor: {
                 'hand': 'pointer',
