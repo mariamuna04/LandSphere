@@ -27,7 +27,7 @@ if (isset($_SESSION["id"])) {
                 bg-white shadow-2xl animate-fadeIn dark:bg-black dark:bg-opacity-30
                 dark:border-gray-800">
 
-        <div class="max-w-xl mx-auto my-4 border-b-2 pb-4 select-none">
+        <div class="max-w-xl mx-auto my-3 border-b-2 pb-4 select-none">
 
             <div id="step-box" class="flex pb-3">
                 <div class="flex-1">
@@ -87,19 +87,19 @@ if (isset($_SESSION["id"])) {
 
         <div id="card-title">
             <h2 id="header-page-one"
-                class="align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white">
+                class="align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white">
                 Create an Account
             </h2>
             <h2 id="header-page-two"
-                class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
                 A Few More Information...
             </h2>
             <h2 id="header-page-three"
-                class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
                 Almost There!
             </h2>
             <h2 id="header-page-four"
-                class="hidden align-middle pt-4 pb-8 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
                 Finishing...
             </h2>
         </div>
@@ -243,8 +243,8 @@ if (isset($_SESSION["id"])) {
 
             </div>
 
-            <div class="flex flex-col items-center justify-center gap-2 pt-4">
-                <div class="flex gap-24 justify-end flex-auto">
+            <div class="flex flex-col items-center justify-center gap-2 max-w-xl mx-auto my-3">
+                <div class="flex gap-24 justify-end flex-auto pb-2">
                     <a id="previousButton" onclick="onPreviousClick()"
                             class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                    outline-none items-center select-none hidden text-primary">
@@ -265,18 +265,19 @@ if (isset($_SESSION["id"])) {
 
                 </div>
 
-                <a href="../sign-in"
-                   class="pt-2 py-3 px-8 text-center text-base text-secondary outline-none items-center select-none">
-                    Already have an Account? Click here to Sign In
-                </a>
+                <div class="flex">
+                    <p class="text-black dark:text-white select-none">Already Have an Account?</p>
+                    <a href="../sign-in"
+                       class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">
+                       Sign In
+                    </a>
+                </div>
             </div>
         </form>
 
     </div>
 
 </div>
-
-
 
 </body>
 

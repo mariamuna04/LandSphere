@@ -146,7 +146,7 @@ if (isset($_POST['submit'])) {
                     <p class="text-black dark:text-white select-none">Don't have an account?</p>
                     <a href="../sign-up"
                        class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">
-                        Register
+                        Sign Up
                     </a>
                 </div>
 
