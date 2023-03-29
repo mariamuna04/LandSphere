@@ -10,10 +10,10 @@ $DB_USER = 'root';
 $DB_NAME = 'cse3522';
 $DB_PASS = '';
 
-$conn = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+$connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
 
-if (!$conn) {
+if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
@@ -35,11 +35,11 @@ if (isset($_POST['submit'])) {
             $error_message = 'Please use a valid email address';
             $authentication_error = true;
         } else {
-            $email = mysqli_real_escape_string($conn, $email);
-            $password = mysqli_real_escape_string($conn, $password);
+            $email = mysqli_real_escape_string($connection, $email);
+            $password = mysqli_real_escape_string($connection, $password);
 
             $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($connection, $sql);
             $row = mysqli_fetch_array($result);
 
             if (is_array($row)) {
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 
             <div class="flex flex-col items-center justify-center gap-2 align-middle">
                 <div class="flex items-center justify-center gap-24">
-                    <a href="#" class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                    <a href="../forgot-password" class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                 outline-none items-center select-none text-primary flex flex-row gap-2 text-primary">
                         Forgot Password?
                     </a>
@@ -153,10 +153,6 @@ if (isset($_POST['submit'])) {
             </div>
 
         </form>
-
-
-
-
     </div>
 </div>
 
