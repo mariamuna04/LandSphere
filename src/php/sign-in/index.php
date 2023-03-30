@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION["name"] = $row['_name_'];
                 header("Location: ../userPanel.php");
             } else {
-                $error_message = 'Email and Password does not match';
+                $error_message = 'Invalid Credentials';
                 $authentication_error = true;
             }
         }
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
             <?php
 
             if ($error_message != '') {
-                echo "<div class='text-red-500 text-center pb-3'>$error_message</div>";
+                echo "<div class='text-red-500 text-center pb-4'>$error_message</div>";
             } else {
                 echo '';
             }
@@ -129,19 +129,19 @@ if (isset($_POST['submit'])) {
 
 
 
-            <div class="flex flex-col items-center justify-center gap-2 align-middle">
+            <div class="flex flex-col items-center justify-center gap-2 align-middle pt-4">
                 <div class="flex items-center justify-center gap-24">
-                    <a href="../forgot-password" class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                    <a href="../forgot-password" class="cursor-hand rounded-md text-center text-base font-semibold
                 outline-none items-center select-none text-primary flex flex-row gap-2 text-primary">
                         Forgot Password?
                     </a>
-                    <button name="submit"
+                    <button name="submit" type="submit"
                             class="hover:shadow-form rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-white outline-none items-center">
                         Sign in
                     </button>
 
                 </div>
-                <div class="flex pt-4 py-3 px-8">
+                <div class="flex pt-4 pb-4 py-3 px-8">
                     <p class="text-black dark:text-white select-none">Don't have an account?</p>
                     <a href="../sign-up"
                        class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">

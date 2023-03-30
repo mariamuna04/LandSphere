@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (isset($_SESSION["id"])) {
-    header("Location: ./reset-password");
+if (isset($_SESSION['nid'])) {
+    header('Location: ../reset-password');
 }
 
 $DB_HOST = 'localhost';
@@ -16,11 +16,12 @@ if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$nid = $key = '';
 $account_not_found = false;
 $input_error = false;
 
 if (isset($_POST['submit'])) {
-    $key = $_POST['key'];
+    $key = $_POST['email_or_phone'];
     $nid = $_POST['nid'];
 
     if (empty($key) || empty($nid)) {
@@ -35,10 +36,8 @@ if (isset($_POST['submit'])) {
             $row = mysqli_fetch_array($result);
 
             if (is_array($row)) {
-                $_SESSION["id"] = $row['nid'];
-                $_SESSION["email"] = $row['email'];
-                $_SESSION["name"] = $row['_name_'];
-                header("Location: ./reset-password");
+                $_SESSION['nid'] = $row['nid'];
+                header("Location: ../reset-password");
             } else {
                 $account_not_found = true;
             }
@@ -93,15 +92,15 @@ function isNID($keyword): bool
         <form action="" method="POST">
             <div class="mb-5">
                 <div class="mb-5">
-                    <input type="text" name="key" id="key"
+                    <input type="text" name="email_or_phone" id="email_or_phone"
                            placeholder="Search By Email or Phone Number"
                            class="w-full rounded-md border border-[#e0e0e0]
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:border-[#6A64F1] focus:shadow-md
                            dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
-                            <?php if ($account_not_found || $input_error) {
-                                 echo "value='$key'";
-                            } ?>
+                        <?php if ($account_not_found || $input_error) {
+                            echo "value='$key'";
+                        } ?>
                     />
                     <label for="key" class="text-sm">
                 </div>
@@ -112,9 +111,9 @@ function isNID($keyword): bool
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:border-[#6A64F1] focus:shadow-md
                            dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
-                           <?php if ($account_not_found || $input_error) {
-                               echo "value='$nid'";
-                           } ?>
+                        <?php if ($account_not_found || $input_error) {
+                            echo "value='$nid'";
+                        } ?>
                     />
                     <label for="nid" class="text-sm">
                         <?php if ($account_not_found) {
@@ -128,14 +127,14 @@ function isNID($keyword): bool
                 </div>
             </div>
 
-            <p class="text-xs text-gray-500 text-center dark:text-gray-300 select-none">
+            <p class="text-xs text-gray-500 text-center dark:text-gray-300 select-none pt-4">
                 An authentication code will be sent to your email address or phone number <br>
                 You will need to enter the code to reset your password
             </p>
 
-            <div class="flex flex-col items-center justify-center gap-2 align-middle mt-12">
+            <div class="flex flex-col items-center justify-center gap-2 align-middle mt-4">
                 <div class="flex items-center justify-center gap-24">
-                    <button name="submit"
+                    <button name="submit" type="submit"
                             class="hover:shadow-form rounded-md bg-primary py-3 px-8
                             text-center text-base font-semibold text-white outline-none
                             items-center select-none">

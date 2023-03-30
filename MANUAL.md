@@ -49,7 +49,7 @@ The `js` directory is where the javascript files are placed. The `php` directory
 The `res` directory is where the resource files are placed. The `stylesheets` directory is where the stylesheet files
 are placed. The `index.php` file is the main entry point file.
 
-> **Note:** You don't need to write anything in the `js' directory.
+> **Note:** You don't need to write anything in the 'js' directory.
 
 In the `php` directory, there should be a directory for every page. For Example, if you want to create a page called
 `about`, you should create a directory called `about` in the `php` directory. In the `about` directory, there should
