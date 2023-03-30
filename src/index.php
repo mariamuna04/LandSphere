@@ -18,16 +18,16 @@ session_start();
     backdrop-blur-md items-center top-0 mb-12">
     <div class="flex gap-5 items-center">
 
-        <div class="flex">
+        <a href="#" class="flex select-none">
             <img alt="" src="resource/icons/logo.svg">
-        </div>
+        </a>
 
         <div class="flex gap-2 items-center">
             <a href="#" class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">About</a>
             <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Projects</a>
             <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Services</a>
             <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">News</a>
-            <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Contact</a>
+            <a href="php/contact-us" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Contact</a>
         </div>
     </div>
 
@@ -98,6 +98,14 @@ session_start();
 
     </p>
 
+</section>
+
+<section class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-6 pb-6
+                bg-green-50 text-green-800 text-center">
+    <h1 class="text-3xl font-bold pb-3">We support Turkey</h1>
+    <p class="text-black">
+        We are taking action to support Turkey by donating 10% of our profits to the Turkish Red Crescent.
+    </p>
 </section>
 
 <footer class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12">
