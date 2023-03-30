@@ -41,7 +41,7 @@ session_start();
 
 </nav>
 
-<section class="container mx-auto mt-48 mb-24">
+<section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus neque urna, condimentum eu arcu ut, vulputate
         viverra purus. Proin libero lorem, mattis at tincidunt quis, vulputate in odio. Integer in augue ac augue

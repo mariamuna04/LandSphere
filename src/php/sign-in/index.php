@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-xl
-    bg-opacity-60 backdrop-blur-md border border-gray-400 bg-white shadow-2xl
+    bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
     animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
     dark:border-gray-800 ">
 

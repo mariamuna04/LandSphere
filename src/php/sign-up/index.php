@@ -23,8 +23,8 @@ if (isset($_SESSION["id"])) {
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] h-[700px] p-12 flex flex-col justify-between
-                rounded-xl bg-opacity-60 backdrop-blur-md border border-gray-400
-                bg-white shadow-2xl animate-fadeIn dark:bg-black dark:bg-opacity-30
+                rounded-xl bg-opacity-60 backdrop-blur-md bg-beige-light
+                shadow-2xl animate-fadeIn dark:bg-black dark:bg-opacity-30
                 dark:border-gray-800">
 
         <div class="max-w-xl mx-auto my-3 border-b-2 pb-4 select-none">
