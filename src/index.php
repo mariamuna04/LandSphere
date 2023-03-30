@@ -14,25 +14,33 @@ session_start();
 
 <body class="bg-beige-default">
 <nav class="bg-beige-dark flex gap-6 justify-between pl-24
-    pr-24 pt-5 pb-5 rounded-b-2xl fixed w-full bg-opacity-60
+    pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-md items-center top-0 mb-12">
-    <div class="flex gap-10">
-        <h1>Our hotels</h1>
-        <h1>Rooms</h1>
-        <h1>Offers</h1>
+    <div class="flex gap-5 items-center">
+
+        <div class="flex">
+            <img alt="" src="resource/icons/logo.svg">
+        </div>
+
+        <div class="flex gap-2 items-center">
+            <a href="#" class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">About</a>
+            <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Projects</a>
+            <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Services</a>
+            <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">News</a>
+            <a href="#" class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Contact</a>
+        </div>
     </div>
 
-    <div class="flex">
-        <h1>Logo</h1>
-    </div>
 
-    <div class="flex gap-10 items-center">
-        <h1>Contact</h1>
-        <button onclick="gotoSignIn()">
+
+
+    <div class="flex gap-6 items-center">
+        <button  onclick="gotoSignIn()"
+        class="hover:border-green-600 border border-beige-darker pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
         <button onclick="gotoSignUp()"
-                class="bg-green-600 pt-3 pb-3 pl-6 pr-6 rounded-3xl font-bold text-white">
+                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
 

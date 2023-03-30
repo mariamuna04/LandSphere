@@ -12,6 +12,8 @@ module.exports = {
                 'beige-default': '#f4f4f4',
                 'beige-light': '#f8f8f8',
                 'beige-dark': '#eaeaea',
+                'beige-darker': '#e0e0e0',
+                'beige-darkest': '#d6d6d6',
             },
             backgroundImage: {
                 'sign-in-background-light': "url('/src/resource/img/sign-in-background-light.webp')",
