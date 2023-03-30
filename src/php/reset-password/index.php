@@ -143,7 +143,7 @@ if (!$_SESSION['success']) {
         animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
         dark:border-gray-800">
     
-            <img src="../../res/icons/checkmark.svg" class="h-[100px] pb-5" alt="success_img">
+            <img src="../../resource/icons/checkmark.svg" class="h-[100px] pb-5" alt="success_img">
                 <h2 class="align-middle text-center font-black text-2xl dark:text-white select-none">
                     Password Changed Successfully!
                     Redirecting...
