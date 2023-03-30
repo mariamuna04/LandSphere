@@ -53,7 +53,7 @@
 </nav>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
-    <p class="text-3xl font-black text-center text-green-600 pb-2">
+    <p class="text-3xl font-black text-center text-green-600 pb-2 ">
         We would love to meet you
     </p>
     <p class="text-xl font-semibold text-center">
@@ -123,14 +123,15 @@
 </section>
 
 <section class="container mx-auto my-auto mb-12 rounded-xl pl-24 pr-24 pt-6 pb-6
-                bg-green-50 text-green-800 text-center">
+                bg-green-50 text-green-800 text-center drop-shadow-xl">
     <h1 class="text-3xl font-bold pb-3">We support Turkey</h1>
     <p class="text-black">
         We are taking action to support Turkey by donating 10% of our profits to the Turkish Red Crescent.
     </p>
 </section>
 
-<footer class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12">
+<footer class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12
+drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">
