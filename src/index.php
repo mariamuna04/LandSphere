@@ -36,7 +36,7 @@ session_start();
 
     <div class="flex gap-6 items-center">
         <button  onclick="gotoSignIn()"
-        class="hover:border-green-600 border border-beige-darker pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
+        class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
         <button onclick="gotoSignUp()"
@@ -100,7 +100,7 @@ session_start();
 
 </section>
 
-<section class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-6 pb-6
+<section class="container mx-auto my-auto mb-12 rounded-xl pl-24 pr-24 pt-6 pb-6
                 bg-green-50 text-green-800 text-center">
     <h1 class="text-3xl font-bold pb-3">We support Turkey</h1>
     <p class="text-black">
