@@ -9,14 +9,15 @@ module.exports = {
                 'accent': '#FFC107',
                 'accent-2': '#FF9800',
                 'accent-3': '#FF5722',
+                'beige-default': '#f4f4f4',
+                'beige-light': '#f8f8f8',
+                'beige-dark': '#eaeaea',
             },
             backgroundImage: {
                 'sign-in-background-light': "url('/src/resource/img/sign-in-background-light.webp')",
                 'sign-up-background-light': "url('/src/resource/img/sign-up-background-light.webp')",
                 'sign-in-background-dark': "url('/src/resource/img/sign-in-background-dark.webp')",
                 'sign-up-background-dark': "url('/src/resource/img/sign-up-background-dark.webp')",
-
-
             },
             cursor: {
                 'hand': 'pointer',
