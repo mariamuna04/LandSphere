@@ -102,7 +102,7 @@ function isNID($keyword): bool
                             echo "value='$key'";
                         } ?>
                     />
-                    <label for="key" class="text-sm">
+                    <label for="email_or_phone" class="text-sm">
                 </div>
                 <div class="mb-5">
                     <input type="text" name="nid" id="nid"

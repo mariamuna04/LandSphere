@@ -118,7 +118,7 @@ if (!$_SESSION['success']) {
 
             <div class="flex flex-col items-center justify-center gap-2 align-middle pt-4">
                 <div class="flex items-center justify-center">
-                    <button name="submit"
+                    <button name="submit" type="submit"
                             class="hover:shadow-form rounded-md bg-primary py-3 px-8 
                             text-center text-base font-semibold text-white outline-none 
                             items-center">
