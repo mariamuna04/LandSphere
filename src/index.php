@@ -10,7 +10,6 @@ session_start();
     <link href="../dist/output.css" rel="stylesheet">
     <title>Title</title>
     <script src="js/utility.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet"/>
 </head>
 
 <body class="bg-beige-default">
@@ -51,31 +50,58 @@ session_start();
 
 <section class="container mx-auto my-auto mt-48 mb-24
                 pl-16 pr-16">
-    <header class="grid grid-cols-4 pb-10 gap-x-5 justify-items-center items-center">
-        <h1 class="text-red-800">Reserved</h1>
+    <header class="grid grid-cols-4 pb-10 gap-x-5">
+        <h1 class="text-red-800 text-center">Reserved for header</h1>
     </header>
 
-    <main class="grid grid-cols-4 justify-items-center gap-6">
+    <main class="grid grid-cols-4 justify-items-center gap-6 ">
         <h1 class="col-span-4 pb-8 text-3xl font-bold text-green-800">
             Why you should choose us?
         </h1>
-        <div class="h-[200px] col-span-3 bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 1
+        <div class="col-span-3 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">Simplicity in management</p>
+            <p class="text-sm">Our user-friendly system streamlines land transactions by simplifying administrative
+                tasks, reducing complexity, and increasing efficiency while providing a straightforward interface and
+                reliable data management to ensure a positive user experience.</p>
         </div>
-        <div class="row-span-2 bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 2
+        <div class="row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">Booking was never this much easier</p>
+            <p class="text-sm">
+                Our project simplifies the land transaction process, allowing easy browsing and selection of land, with
+                the flexibility to cancel or negotiate transactions, making the process seamless and stress-free for
+                users.
+            </p>
+
         </div>
-        <div class="col-span-2 row-span-2 bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 3
+        <div class="col-span-2 row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">Goodbye to Middleman</p>
+            <p class="text-sm">
+                Our land transaction process is broker-free, enabling you to negotiate directly with sellers, reducing
+                costs, increasing transparency and ensuring fair deals.
+
+            </p>
         </div>
-        <div class="bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 4
+        <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">You are secure!</p>
+            <p class="text-sm">
+                Our security is so tight, not even a determined squirrel could crack our system (we hope)!
+            </p>
         </div>
-        <div class="row-span-2 col-span-2 bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 5
+        <div class="row-span-2 col-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">Even if you have a big family, there won't be any land
+                disputes at dinner table!</p>
+            <p class="text-sm">
+                Our product includes a feature that ensures even distribution of land among successors to prevent future
+                disputes or conflicts.
+            </p>
+
         </div>
-        <div class="col-span-2 bg-beige-darkest justify-self-stretch p-6 rounded-2xl drop-shadow-xl">
-            Feature 6
+        <div class="col-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <p class="text-green-500 font-bold text-xl pb-4">Relax, we got your back</p>
+            <p class="text-sm">
+                We do not have direct deals with government organizations, ensuring efficient, secure, and compliant
+                land transactions through our platform.
+            </p>
         </div>
     </main>
 </section>
@@ -179,7 +205,4 @@ session_start();
 
 </footer>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
-
-
 </html>
