@@ -15,7 +15,7 @@
 <body class="bg-beige-default">
 <nav class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-md items-center top-0 mb-12">
+    backdrop-blur-md items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
         <a href="../../index.php" class="flex select-none">
