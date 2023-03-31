@@ -106,7 +106,7 @@ session_start();
 
             <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
-                
+
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
                 />
@@ -165,43 +165,50 @@ session_start();
         </h1>
 
         <main class="grid grid-cols-3 gap-6 ">
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/hompage-feature-simple.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
-                    It's that <span class="text-green-500">simple</span>. 
+                    It's that <span class="text-green-500">simple</span>.
                     Just a few steps and your lands are <span class="text-green-500">managed!</span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-booking.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
-                    <span class="text-blue-500"> Booking </span> was never this much 
+                    <span class="text-blue-500"> Booking </span> was never this much
                     <span class="text-blue-500"> easier. </span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-middleman.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Take a shortcut and <span class="text-purple-500">say goodbye to middlemen</span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-featue-credit-card.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Pay in full or <span class="text-green-500"> pay over time.</span> Your choice.
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-dispute.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Even if you have a <span style="color: #FFAB45">big family </span>, there won't be any land
                     <span style="color: #FFAB45"> disputes </span> at dinner table!</p>
             </div>
-            <div class=" bg-gray-800 justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+            <div id="privacy" class=" bg-gray-800 justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/home-page-feature-lock.svg" alt="">
-                <p class="text-white font-medium text-2xl pb-4">
-                    Privacy is our priority. Stay sa
-                    &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+                <p class="text-white font-medium text-2xl pb-4 transition-all">
+                    Privacy is our priority. <span id="hidden_bullet">Stay sa
+                    &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+                    <span id="visible_bullet" class="hidden">Stay safe and secure!</span>
                 </p>
             </div>
         </main>
@@ -321,4 +328,19 @@ session_start();
 
 </footer>
 </body>
+<script>
+    const card_privacy = document.getElementById("privacy");
+    const hidden_bullet = document.getElementById("hidden_bullet");
+    const visible_bullet = document.getElementById("visible_bullet");
+
+    card_privacy.addEventListener("mouseover", () => {
+        hidden_bullet.style.display = "none";
+        visible_bullet.style.display = "inline";
+    });
+
+    card_privacy.addEventListener("mouseout", () => {
+        hidden_bullet.style.display = "inline";
+        visible_bullet.style.display = "none";
+    });
+</script>
 </html>
