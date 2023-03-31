@@ -32,17 +32,18 @@
             <a href="#"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">News</a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Contact</a>
+               class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
+                    text-green-700">Contact</a>
         </div>
     </div>
 
 
     <div class="flex gap-6 items-center">
-        <button onclick="gotoSignIn()"
+        <button onclick="window.location.href = '../sign-in';" 
                 class="hover:border-green-600 border border-beige-darker pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
-        <button onclick="gotoSignUp()"
+        <button onclick="window.location.href = '../sign-up';"
                 class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>

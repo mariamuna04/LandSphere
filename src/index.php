@@ -9,7 +9,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
-    <script src="js/utility.js"></script>
 </head>
 
 <body class="bg-beige-default">
@@ -42,12 +41,12 @@ session_start();
     </div>
 
     <div class="flex gap-6 items-center">
-        <button onclick="gotoSignIn()"
+        <button onclick="window.location.href = './php/sign-in';"
                 class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] 
                 pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
-        <button onclick="gotoSignUp()"
+        <button onclick="window.location.href = './php/sign-up';"
                 class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] 
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
@@ -93,39 +92,39 @@ session_start();
         <div id="ongoing_projects" class="flex gap-4 justify-evenly">
 
             <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg text-gray-500  hover:text-black">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
                 />
 
                 <div class="mt-2 p-4 text-center">
-                    <p class="font-medium pb-4">ABC Building <br>
-                        123 Wallaby Avenue, Park Road</p>
+                    <p class="font-medium pb-4"> Sunset Ridge Estates <br>
+                        1234 Maple Lane Maplewood, CA 90210</p>
                 </div>
             </a>
 
             <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg text-gray-500  hover:text-black">
 
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
                 />
 
                 <div class="mt-2 p-4 text-center">
-                    <p class="font-medium pb-4">ABC Building <br>
-                        123 Wallaby Avenue, Park Road</p>
+                    <p class="font-medium pb-4"> Riverbend Heights <br>
+                        4567 Riverbend Road Hillside, NY 12345</p>
                 </div>
             </a>
 
             <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg text-gray-500  hover:text-black">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
                 />
 
                 <div class="mt-2 p-4 text-center">
-                    <p class="font-medium pb-4">ABC Building <br>
-                        123 Wallaby Avenue, Park Road</p>
+                    <p class="font-medium pb-4"> Maple Grove Estates <br>
+                        7890 Sunset Ridge Drive Westfield, MA 01085</p>
                 </div>
             </a>
 
@@ -138,8 +137,7 @@ session_start();
         </h1>
         <div class="grid grid-cols-2 gap-4">
             <a href="#" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
-                        transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg bg-homepage-help-bg-card-1"
-               style="background-image: url(./resource/icons/homepage-help-bg-card-1.jpg); ">
+                        transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg bg-homepage-help-bg-card-1">
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
@@ -151,7 +149,7 @@ session_start();
 
             </a>
             <a href="#" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8">
+            transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8 bg-card-bg-homepage">
                 <p class="font-medium text-2xl ">Get expert service <br> and support</p>
                 <img src="resource/icons/homepage-help-brain.svg" alt="brain">
             </a>
