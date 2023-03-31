@@ -158,9 +158,8 @@ session_start();
         </div>
     </main>
 
-
     <main class="flex flex-col gap-3 pb-12">
-        <h1 class="pb-8 text-3xl font-medium">
+        <h1 class="pb-4 text-3xl font-medium">
             LandSphere differences. <span class="text-gray-500">Even more reasons to be with us.</span>
         </h1>
 
