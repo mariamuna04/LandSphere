@@ -85,7 +85,7 @@ session_start();
 
         <div id="ongoing_projects" class="flex gap-5 justify-evenly">
 
-            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
@@ -97,7 +97,7 @@ session_start();
                 </div>
             </a>
 
-            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
@@ -109,7 +109,7 @@ session_start();
                 </div>
             </a>
 
-            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
@@ -135,14 +135,14 @@ session_start();
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
-            <a href="#" class="bg-beige-dark rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
+            <a href="#" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
                         items-center justify-between">
                 <p class="font-medium text-2xl">Get to know about laws, rules and regulations</p>
                 <img src="resource/icons/homepage-help-law.svg" alt="brain">
 
             </a>
-            <a href="#" class="bg-beige-dark rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
+            <a href="#" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8">
                 <p class="font-medium text-2xl ">Get expert service <br> and support</p>
                 <img src="resource/icons/homepage-help-brain.svg" alt="brain">
