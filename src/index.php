@@ -53,7 +53,7 @@ session_start();
     <header class="flex justify-between items-center pb-24">
         <div id="welcome-container">
             <h1 class="text-5xl font-medium text-gray-600">
-                 <span class="text-green-600 font-bold">LandSphere.</span> The best way to <br> manage your land.
+                <span class="text-green-600 font-bold">LandSphere.</span> The best way to <br> manage your land.
             </h1>
         </div>
         <div id="button-container" class="flex flex-col gap-2  justify-start">
@@ -83,16 +83,44 @@ session_start();
             The Latest. <span class="text-gray-500">Take a look at what project we are working on, right now.</span>
         </h1>
 
-        <div id="ongoing_projects" class="flex gap-2 justify-evenly">
-            <div class="bg-beige-dark rounded-3xl p-4 w-full">
-                Project #1
-            </div>
-            <div class="bg-beige-dark rounded-3xl p-4 w-full">
-                Project #2
-            </div>
-            <div class="bg-beige-dark rounded-3xl p-4 w-full">
-                Project #3
-            </div>
+        <div id="ongoing_projects" class="flex gap-5 justify-evenly">
+
+            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                     src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
+                />
+
+                <div class="mt-2 p-4 text-center">
+                    <p class="font-medium pb-4">ABC Building <br>
+                        123 Wallaby Avenue, Park Road</p>
+                </div>
+            </a>
+
+            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                     src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
+                />
+
+                <div class="mt-2 p-4 text-center">
+                    <p class="font-medium pb-4">ABC Building <br>
+                        123 Wallaby Avenue, Park Road</p>
+                </div>
+            </a>
+
+            <a class=" rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            transition-all hover:shadow-lg">
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                     src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
+                />
+
+                <div class="mt-2 p-4 text-center">
+                    <p class="font-medium pb-4">ABC Building <br>
+                        123 Wallaby Avenue, Park Road</p>
+                </div>
+            </a>
+
         </div>
     </main>
 
@@ -103,7 +131,7 @@ session_start();
         <div class="grid grid-cols-2 gap-4">
             <a href="#" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg bg-homepage-help-bg-card-1"
-            style="background-image: url(./resource/icons/homepage-help-bg-card-1.jpg); ">
+               style="background-image: url(./resource/icons/homepage-help-bg-card-1.jpg); ">
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
@@ -132,13 +160,15 @@ session_start();
             <div class="col-span-3 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
                 <p class="text-green-500 font-bold text-xl pb-4">Simplicity in management</p>
                 <p class="text-sm">Our user-friendly system streamlines land transactions by simplifying administrative
-                    tasks, reducing complexity, and increasing efficiency while providing a straightforward interface and
+                    tasks, reducing complexity, and increasing efficiency while providing a straightforward interface
+                    and
                     reliable data management to ensure a positive user experience.</p>
             </div>
             <div class="row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
                 <p class="text-green-500 font-bold text-xl pb-4">Booking was never this much easier</p>
                 <p class="text-sm">
-                    Our project simplifies the land transaction process, allowing easy browsing and selection of land, with
+                    Our project simplifies the land transaction process, allowing easy browsing and selection of land,
+                    with
                     the flexibility to cancel or negotiate transactions, making the process seamless and stress-free for
                     users.
                 </p>
@@ -147,7 +177,8 @@ session_start();
             <div class="col-span-2 row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
                 <p class="text-green-500 font-bold text-xl pb-4">Goodbye to Middleman</p>
                 <p class="text-sm">
-                    Our land transaction process is broker-free, enabling you to negotiate directly with sellers, reducing
+                    Our land transaction process is broker-free, enabling you to negotiate directly with sellers,
+                    reducing
                     costs, increasing transparency and ensuring fair deals.
 
                 </p>
@@ -162,7 +193,8 @@ session_start();
                 <p class="text-green-500 font-bold text-xl pb-4">Even if you have a big family, there won't be any land
                     disputes at dinner table!</p>
                 <p class="text-sm">
-                    Our product includes a feature that ensures even distribution of land among successors to prevent future
+                    Our product includes a feature that ensures even distribution of land among successors to prevent
+                    future
                     disputes or conflicts.
                 </p>
 
@@ -178,15 +210,16 @@ session_start();
     </main>
 
 
-
     <main class="flex flex-col">
         <h1 class="col-span-4 pb-4 text-3xl font-medium">
             Quick Links
         </h1>
         <div class="flex gap-4 font-normal">
             <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Status </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Terms and conditions </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Our Commitments </a>
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Terms and
+                conditions </a>
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Our
+                Commitments </a>
         </div>
     </main>
 </section>
