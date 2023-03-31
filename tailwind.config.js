@@ -19,8 +19,8 @@ module.exports = {
                 'sign-up-background-light': "url('/src/resource/img/sign-up-background-light.webp')",
                 'sign-in-background-dark': "url('/src/resource/img/sign-in-background-dark.webp')",
                 'sign-up-background-dark': "url('/src/resource/img/sign-up-background-dark.webp')",
-                'homepage-help-bg-card-1': "url('/src/resource/icons/homepage-help-bg-card-1.jpg')",
-                'card-bg-homepage': "url('/src/resource/icons/milad-fakurian-PGdW_bHDbpI-unsplash.jpg')",
+                's3c2-1': "url('/src/resource/icons/index/main-section_shelf-three_c2-1_specialists.jpg')",
+                's3c2-3': "url('/src/resource/icons/index/main-section_shelf-three_c2-3_expert_bg.jpg')",
             },
             cursor: {
                 'hand': 'pointer',

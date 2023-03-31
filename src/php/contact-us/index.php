@@ -19,7 +19,7 @@
     <div class="flex gap-5 items-center">
 
         <a href="../../index.php" class="flex select-none">
-            <img alt="" src="../../resource/icons/logo.svg">
+            <img alt="" src="../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
@@ -54,13 +54,13 @@
 </nav>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
-    <p class="text-3xl font-black text-center text-green-600 pb-2 ">
+    <p class="text-4xl font-bold text-center text-green-600 pb-2 ">
         We would love to meet you
     </p>
-    <p class="text-xl font-semibold text-center">
+    <p class="text-2xl font-semibold text-center">
         Get in touch with us
     </p>
-    <p class="text-gray-500 text text-center pt-4">
+    <p class="text-gray-500 text text-center pt-4 text-lg font-light">
         Fill out the form below, and we will get back to you as soon as possible.
     </p>
 
@@ -70,7 +70,7 @@
                    placeholder="Full Name"
                    class="w-full rounded-md border border-[#e0e0e0]
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:border-[#6A64F1] focus:shadow-md"
+                           outline-none focus:shadow-md"
             />
             <label for="full_name" class="text-sm">
         </div>
@@ -82,7 +82,7 @@
                    placeholder="Email address"
                    class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md "
+                               outline-none focus:shadow-md "
             />
             <label for="email" class="text-sm">
         </div>
@@ -94,19 +94,19 @@
                    placeholder="Telephone number"
                    class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md"
+                               outline-none focus:shadow-md"
             />
             <label for="telephone" class="text-sm">
         </div>
 
         <div class="mb-5 col-span-2">
             <textarea type="tel"
-                   name="text"
-                   id="message"
-                   placeholder="Write your message here..."
-                   class="w-full rounded-md border border-[#e0e0e0]
+                      name="text"
+                      id="message"
+                      placeholder="Write your message here..."
+                      class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md h-32"></textarea>
+                               outline-none focus:shadow-md h-32"></textarea>
             <label for="message" class="text-sm">
         </div>
 
@@ -114,7 +114,7 @@
                 class="hover:shadow-form bg-green-700
                         py-3 px-8 text-center text-base font-semibold
                         font-bold text-white outline-none items-center
-                        col-span-2 rounded-3xl hover:bg-green-800">
+                        col-span-2 rounded-3xl hover:bg-green-800 font-bold">
             Submit
         </button>
 
@@ -193,16 +193,16 @@ drop-shadow-xl">
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
             <a href="#">
-                <img src="../../resource/icons/icon-facebook.svg" alt="">
+                <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/icon-twitter.svg" alt="">
+                <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/icon-linkedin.svg" alt="">
+                <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/icon-youtube.svg" alt="">
+                <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
 
