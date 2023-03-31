@@ -15,7 +15,7 @@ session_start();
 <body class="bg-beige-default">
 <nav class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-md items-center top-0 mb-12 z-50">
+    backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
         <a href="#" class="flex select-none">
@@ -24,25 +24,32 @@ session_start();
 
         <div class="flex gap-2 items-center">
             <a href="#"
-               class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">About</a>
+               class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
+                About</a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Projects</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                Projects</a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Services</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                Services</a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">News</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                News</a>
             <a href="php/contact-us"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Contact</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                Contact</a>
         </div>
     </div>
 
     <div class="flex gap-6 items-center">
         <button onclick="gotoSignIn()"
-                class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
+                class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] 
+                pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
         <button onclick="gotoSignUp()"
-                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
+                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] 
+                pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
     </div>
@@ -83,11 +90,11 @@ session_start();
             The Latest. <span class="text-gray-500">Take a look at what project we are working on, right now.</span>
         </h1>
 
-        <div id="ongoing_projects" class="flex gap-5 justify-evenly">
+        <div id="ongoing_projects" class="flex gap-4 justify-evenly">
 
-            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
-                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
                 />
 
@@ -97,9 +104,10 @@ session_start();
                 </div>
             </a>
 
-            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
-                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
                 />
 
@@ -109,9 +117,9 @@ session_start();
                 </div>
             </a>
 
-            <a class="bg-white rounded-lg w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
-                <img alt="Home" class="h-48 w-full object-cover rounded-tl-lg rounded-tr-lg"
+                <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
                 />
 
@@ -124,7 +132,7 @@ session_start();
         </div>
     </main>
 
-    <main class="flex flex-col gap-3 pb-12">
+    <main class="flex flex-col gap-4 pb-12">
         <h1 class="pb-4 text-3xl font-medium">
             Help is here. <span class="text-gray-500">Whenever and however you need it.</span>
         </h1>
@@ -156,54 +164,44 @@ session_start();
             LandSphere differences. <span class="text-gray-500">Even more reasons to be with us.</span>
         </h1>
 
-        <main class="grid grid-cols-4 gap-6 ">
-            <div class="col-span-3 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">Simplicity in management</p>
-                <p class="text-sm">Our user-friendly system streamlines land transactions by simplifying administrative
-                    tasks, reducing complexity, and increasing efficiency while providing a straightforward interface
-                    and
-                    reliable data management to ensure a positive user experience.</p>
-            </div>
-            <div class="row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">Booking was never this much easier</p>
-                <p class="text-sm">
-                    Our project simplifies the land transaction process, allowing easy browsing and selection of land,
-                    with
-                    the flexibility to cancel or negotiate transactions, making the process seamless and stress-free for
-                    users.
-                </p>
-
-            </div>
-            <div class="col-span-2 row-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">Goodbye to Middleman</p>
-                <p class="text-sm">
-                    Our land transaction process is broker-free, enabling you to negotiate directly with sellers,
-                    reducing
-                    costs, increasing transparency and ensuring fair deals.
-
+        <main class="grid grid-cols-3 gap-6 ">
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+                <img class="pb-4" src="resource/icons/hompage-feature-simple.svg" alt="">
+                <p class="text-black font-medium text-2xl pb-4">
+                    It's that <span class="text-green-500">simple</span>. 
+                    Just a few steps and your lands are <span class="text-green-500">managed!</span>
                 </p>
             </div>
             <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">You are secure!</p>
-                <p class="text-sm">
-                    Our security is so tight, not even a determined squirrel could crack our system (we hope)!
+                <img class="pb-4" src="resource/icons/homepage-feature-booking.svg" alt="">
+                <p class="text-black font-medium text-2xl pb-4">
+                    <span class="text-blue-500"> Booking </span> was never this much 
+                    <span class="text-blue-500"> easier. </span>
                 </p>
             </div>
-            <div class="row-span-2 col-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">Even if you have a big family, there won't be any land
-                    disputes at dinner table!</p>
-                <p class="text-sm">
-                    Our product includes a feature that ensures even distribution of land among successors to prevent
-                    future
-                    disputes or conflicts.
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+                <img class="pb-4" src="resource/icons/homepage-feature-middleman.svg" alt="">
+                <p class="text-black font-medium text-2xl pb-4">
+                    Take a shortcut and <span class="text-purple-500">say goodbye to middlemen</span>
                 </p>
-
             </div>
-            <div class="col-span-2 bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
-                <p class="text-green-500 font-bold text-xl pb-4">Relax, we got your back</p>
-                <p class="text-sm">
-                    We do not have direct deals with government organizations, ensuring efficient, secure, and compliant
-                    land transactions through our platform.
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+                <img class="pb-4" src="resource/icons/homepage-featue-credit-card.svg" alt="">
+                <p class="text-black font-medium text-2xl pb-4">
+                    Pay in full or <span class="text-green-500"> pay over time.</span> Your choice.
+                </p>
+            </div>
+            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+                <img class="pb-4" src="resource/icons/homepage-feature-dispute.svg" alt="">
+                <p class="text-black font-medium text-2xl pb-4">
+                    Even if you have a <span style="color: #FFAB45">big family </span>, there won't be any land
+                    <span style="color: #FFAB45"> disputes </span> at dinner table!</p>
+            </div>
+            <div class=" bg-gray-800 justify-self-stretch p-6 rounded-2xl drop-shadow-md">
+                <img class="pb-4" src="resource/icons/home-page-feature-lock.svg" alt="">
+                <p class="text-white font-medium text-2xl pb-4">
+                    Privacy is our priority. Stay sa
+                    &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
                 </p>
             </div>
         </main>
