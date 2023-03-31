@@ -92,7 +92,7 @@ session_start();
 
         <div id="ongoing_projects" class="flex gap-4 justify-evenly">
 
-            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
@@ -104,7 +104,7 @@ session_start();
                 </div>
             </a>
 
-            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
 
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
@@ -117,7 +117,7 @@ session_start();
                 </div>
             </a>
 
-            <a class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
+            <a href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
@@ -165,7 +165,7 @@ session_start();
         </h1>
 
         <main class="grid grid-cols-3 gap-6 ">
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/hompage-feature-simple.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
@@ -173,7 +173,7 @@ session_start();
                     Just a few steps and your lands are <span class="text-green-500">managed!</span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            <div class="bg-white  justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-booking.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
@@ -181,21 +181,21 @@ session_start();
                     <span class="text-blue-500"> easier. </span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-middleman.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Take a shortcut and <span class="text-purple-500">say goodbye to middlemen</span>
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-featue-credit-card.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Pay in full or <span class="text-green-500"> pay over time.</span> Your choice.
                 </p>
             </div>
-            <div class="bg-beige-light justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
+            <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/homepage-feature-dispute.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
