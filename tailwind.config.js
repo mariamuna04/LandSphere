@@ -35,6 +35,16 @@ module.exports = {
                 },
             }
         },
+        fontFamily: {
+            'sans': ['-apple-system',
+                'BlinkMacSystemFont',
+                "Inter",
+                'Helvetica Neue',
+                'sans-serif',
+                'Apple Color Emoji',
+                'Segoe UI Emoji',
+                'Segoe UI Symbol'],
+        }
     },
     plugins: [
         require('@tailwindcss/typography'),
