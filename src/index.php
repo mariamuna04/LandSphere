@@ -424,6 +424,10 @@ session_start();
         if (event.metaKey && event.keyCode === 75) { 
             document.getElementById('search_button').click();
         }
+        // detect ctrl+k
+        if (event.ctrlKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
     });
 
     // get os, if mac then show cmd+k else show ctrl+k
