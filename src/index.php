@@ -46,7 +46,7 @@ session_start();
         </div>
     </div>
     
-    <button type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
+    <button id="search_button" type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
             class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
                     flex gap-12 items-center">
         <span class="flex items-center gap-2">
@@ -368,14 +368,22 @@ session_start();
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto 
      md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
     backdrop-blur-md transition-all">
+    
+    
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Search
-                </h3>
+            <div class="flex items-start justify-between p-4 border-b rounded-t flex items-center">
+                <input type="text"
+                       name="search_box"
+                       id="search_text-field"
+                       placeholder="Type anything to search"
+                       class="w-full rounded-md
+                               bg-white px-3 text-base font-medium text-[#6B7280]
+                               outline-none text-lg"
+                />
+                <label for="search_text-field"></label>
                 <button type="button"
                         class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
@@ -384,13 +392,14 @@ session_start();
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-
+                
             </div>
             <!-- Modal footer -->
-            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
             </div>
         </div>
     </div>
+    
 </div>
 
 </body>
@@ -411,6 +420,13 @@ session_start();
     });
     
     // click on search button while cmd+k
-    
+    document.addEventListener('keydown', function(event) {
+        if (event.metaKey && event.keyCode === 75) { 
+            document.getElementById('search_button').click();
+        }
+    });
+
+
+
 </script>
 </html>
