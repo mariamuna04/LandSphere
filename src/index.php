@@ -54,7 +54,7 @@ session_start();
             <span class="text-xs font-medium text-gray-800">Search</span>
         </span>
         <span class="flex gap-1 select-none">
-            <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+            <kbd id="keyboard_shortcut" class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
                 rounded-lg">⌘</kbd><kbd class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 
                 rounded-lg">K</kbd>
         </span>
@@ -425,6 +425,12 @@ session_start();
             document.getElementById('search_button').click();
         }
     });
+
+    // get os, if mac then show cmd+k else show ctrl+k
+    const os = navigator.platform;
+    if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
+        document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
+    }
 
 
 
