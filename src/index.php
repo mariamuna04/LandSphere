@@ -45,7 +45,21 @@ session_start();
                 Contact</a>
         </div>
     </div>
-
+    
+    <button type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
+            class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
+                    flex gap-12 items-center">
+        <span class="flex items-center gap-2">
+            <img src="resource/icons/search-navbar.svg" alt=" ">
+            <span class="text-xs font-medium text-gray-800">Search</span>
+        </span>
+        <span class="flex gap-1 select-none">
+            <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">⌘</kbd><kbd class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 
+                rounded-lg">K</kbd>
+        </span>
+    </button>
+    
     <div class="flex gap-6 items-center">
         <button onclick="window.location.href = './php/sign-in';"
                 class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] 
@@ -59,6 +73,8 @@ session_start();
         </button>
     </div>
 </nav>
+
+
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
@@ -344,7 +360,41 @@ session_start();
     </div>
 
 </footer>
+
+<!-- Search modal -->
+<div id="defaultModal"
+     tabindex="-1"
+     aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto 
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
+    backdrop-blur-md transition-all">
+    <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Search
+                </h3>
+                <button type="button"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                    <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">Esc</kbd>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 <script>
     const card_privacy = document.getElementById("privacy");
     const hidden_bullet = document.getElementById("hidden_bullet");
@@ -359,5 +409,8 @@ session_start();
         hidden_bullet.style.display = "inline";
         visible_bullet.style.display = "none";
     });
+    
+    // click on search button while cmd+k
+    
 </script>
 </html>
