@@ -46,8 +46,28 @@ session_start();
     </div>
 </nav>
 
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
-                pl-36 pr-36">
+<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+
+<!--    USER DASHBOARD -->
+    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
+        USER DASHBOARD
+    </main>
+
+    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
+        BUTTON
+    </main>
+
+    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
+        LAND STATUS
+    </main>
+
+    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
+        NOTICE
+    </main>
+
+    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
+        NEWS
+    </main>
 
 </section>
 
