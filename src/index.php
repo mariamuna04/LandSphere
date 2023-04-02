@@ -34,9 +34,10 @@ session_start();
             <a href="#"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
-            <a href="#"
+            <a href="php/on-sale"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
-                Services</a>
+                On Sale
+            </a>
             <a href="#"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
@@ -73,8 +74,6 @@ session_start();
         </button>
     </div>
 </nav>
-
-
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
@@ -158,7 +157,7 @@ session_start();
 
     </main>
 
-    <main id="shelf-three" class="flex flex-col gap-4 pb-12">
+    <main id="shelf-three" class="flex flex-col gap-4 pb-12 select-none">
         <h1 id="threeC1" class="pb-4 text-3xl font-medium">
             Help is here. <span class="text-gray-500">Whenever and however you need it.</span>
         </h1>
@@ -188,11 +187,11 @@ session_start();
     </main>
 
     <main id="shelf-four" class="flex flex-col gap-3 pb-12">
-        <h1 id="fourC1" class="pb-4 text-3xl font-medium">
+        <h1 id="fourC1" class="pb-4 text-3xl font-medium select-none">
             LandSphere differences. <span class="text-gray-500">Even more reasons to be with us.</span>
         </h1>
 
-        <main id="fourC2" class="grid grid-cols-3 gap-6 ">
+        <main id="fourC2" class="grid grid-cols-3 gap-6 select-none">
             <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-1.svg"
@@ -246,7 +245,7 @@ session_start();
         </main>
     </main>
 
-    <main id="shelf-five" class="flex flex-col">
+    <main id="shelf-five" class="flex flex-col ">
         <h1 id="fiveC1" class="col-span-4 pb-4 text-3xl font-medium">
             Quick Links
         </h1>
@@ -372,9 +371,10 @@ session_start();
     
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <div class="flex items-start justify-between p-4 border-b rounded-t flex items-center">
+                <img src="resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
                        id="search_text-field"
@@ -401,7 +401,6 @@ session_start();
     </div>
     
 </div>
-
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 <script>
@@ -419,23 +418,20 @@ session_start();
         visible_bullet.style.display = "none";
     });
     
-    // click on search button while cmd+k
     document.addEventListener('keydown', function(event) {
         if (event.metaKey && event.keyCode === 75) { 
             document.getElementById('search_button').click();
         }
-        // detect ctrl+k
         if (event.ctrlKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
         }
     });
 
-    // get os, if mac then show cmd+k else show ctrl+k
     const os = navigator.platform;
     if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
         document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
     }
-
+    
 
 
 </script>

@@ -2,12 +2,12 @@
 session_start();
 
 if (isset($_SESSION["id"])) {
-    header("Location: ../userPanel.php");
+    header("Location: ../user-dashboard");
 }
 
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
-$DB_NAME = 'cse3522';
+$DB_NAME = 'dbms_project';
 $DB_PASS = '';
 
 $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
             $email = mysqli_real_escape_string($connection, $email);
             $password = mysqli_real_escape_string($connection, $password);
 
-            $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+            $sql = "SELECT nid, password FROM USER JOIN LOGIN AS L on USER.nid = L.user_nid";
             $result = mysqli_query($connection, $sql);
             $row = mysqli_fetch_array($result);
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION["id"] = $row['nid'];
                 $_SESSION["email"] = $row['email'];
                 $_SESSION["name"] = $row['_name_'];
-                header("Location: ../userPanel.php");
+                header("Location: ../user-dashboard");
             } else {
                 $error_message = 'Invalid Credentials';
                 $authentication_error = true;

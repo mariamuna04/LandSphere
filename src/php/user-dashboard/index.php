@@ -1,5 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION["id"])) {
+    header("Location: ../sign-in");
+}
+
+if (isset($_POST["sign_out"])) {
+    session_destroy();
+    header("Location: ../../");
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +51,7 @@ session_start();
     <div class="flex gap-6 items-center">
         <div>profile_picture</div>
         <div>user_name</div>
+        <div><form method="post" action=""><button name="sign_out">Bhago PLS</button></form></div>
     </div>
 </nav>
 
