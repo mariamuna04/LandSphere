@@ -121,9 +121,9 @@ if (!$connection) {
                 
                 echo
 
-"<a href='#' class='bg-white rounded-2xl w-full block shadow-md 
-                    transform motion-safe:hover:scale-[1.02]
-                    transition-all hover:shadow-lg'>
+"<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
+                    transform motion-safe:hover:scale-[1.03]
+                    transition-all hover:shadow-lg  text-gray-600'>
     <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
          src='../../resource/img/image_placeholder.webp'
     />
@@ -133,14 +133,26 @@ if (!$connection) {
         <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5'>
             ". $row['address'] ."
         </p>
-        
-        <div class='flex align-middle justify-between items-center'>
-         <p class='text-xs font-extrabold opacity-75 text-gray-600 py-0.5'>
+
+        <p class='text-xs font-extrabold pb-1 opacity-75 text-gray-600'>
             " . $land_type . "
         </p>
         
-        <p class='mr-auto text-xs font-medium px-2.5 py-0.5 rounded-2xl
-                ";
+        <p class='font-bold text-green-600 text-xl'>
+            " . $title . " 
+        </p>
+        
+        <p class='text-sm text-gray-500 pb-2'>
+            ". $row['place_details'] ."
+        </p>
+        
+        <p class='text-lg text-gray-500'>
+            ". $row['area'] ." sqft
+        </p>
+       
+        
+        <p class='mr-auto mt-1 mb-1 text-xs font-medium px-2.5 py-0.5 rounded-2xl
+        ";
                 if ($row['environment_point'] > 0 && $row['environment_point'] <= 20) {
                     echo " bg-green-100 text-green-500'> Ecologically Excellent ";
                 } else if ($row['environment_point'] > 20 && $row['environment_point'] <= 40) {
@@ -152,29 +164,10 @@ if (!$connection) {
                 } else if ($row['environment_point'] > 80 && $row['environment_point'] <= 100) {
                     echo "  bg-red-100 text-red-500'> Ecologically Poor";
                 }
-
                 echo "
         </p>
         
-</div>
-        
-        
-
-       
-        
-        <p class='font-bold text-green-600 text-xl'>
-            " . $title . " 
-        </p>
-        
-        <p class='text-sm text-gray-500 pb-2'>
-            ". $row['place_details'] ."
-        </p>
-        
-        <p class='text-lg text-gray-500 pb-2'>
-            ". $row['area'] ." sqft
-        </p>
-        
-        <p class='text-2xl text-green-600 font-black'>
+        <p class='text-2xl font-black group-hover:text-green-600'>
             $". $row['area'] * 0.3  ."
         </p> 
        
