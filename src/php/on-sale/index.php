@@ -94,34 +94,92 @@ if (!$connection) {
     <header id="shelf-one" class="flex justify-between items-center pb-24">
 
     </header>
-    
-    <div >
-        
-    </div>
 
-    <section class="grid grid-cols-3 justify-items-stretch gap-4">
+    <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
         $sql = "SELECT * FROM Land";
         $result = $connection->query($sql);
-        
-        if($result->num_rows > 0) {
+
+        if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo 
+                $title = $row['title'];
+                $_land_type = $row['land_type'];
                 
+                // HTML variables
+                $land_type = null;
+                
+                
+
+                if ($_land_type == 0) {
+                    $land_type = "Residential";
+                } else if ($_land_type == 1) {
+                    $land_type = "Commercial";
+                } else if ($_land_type == 2) {
+                    $land_type = "Industrial";
+                }
+                
+                
+                echo
+
 "<a href='#' class='bg-white rounded-2xl w-full block shadow-md 
                     transform motion-safe:hover:scale-[1.02]
                     transition-all hover:shadow-lg'>
-    <img class='h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl'
-         src='https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg'
+    <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
+         src='../../resource/img/image_placeholder.webp'
     />
 
-    <div class='mt-2 p-4 flex flex-col'>
-        <h1>
-            <span class='font-bold text-green-600 text-xl'>" . $row['title'] . "</span> 
-        </h1>
+    <div class='mt-1 p-4 flex flex-col'>
+    
+        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5'>
+            ". $row['address'] ."
+        </p>
+        
+        <div class='flex align-middle justify-between items-center'>
+         <p class='text-xs font-extrabold opacity-75 text-gray-600 py-0.5'>
+            " . $land_type . "
+        </p>
+        
+        <p class='mr-auto text-xs font-medium px-2.5 py-0.5 rounded-2xl
+                ";
+                if ($row['environment_point'] > 0 && $row['environment_point'] <= 20) {
+                    echo " bg-green-100 text-green-500'> Ecologically Excellent ";
+                } else if ($row['environment_point'] > 20 && $row['environment_point'] <= 40) {
+                    echo " bg-green-100 text-green-500'> Ecologically Very Good";
+                } else if ($row['environment_point'] > 40 && $row['environment_point'] <= 60) {
+                    echo " bg-green-100 text-green-500'> Ecologically Good";
+                } else if ($row['environment_point'] > 60 && $row['environment_point'] <= 80) {
+                    echo "  bg-yellow-100 text-yellow-600'> Ecologically Fair";
+                } else if ($row['environment_point'] > 80 && $row['environment_point'] <= 100) {
+                    echo "  bg-red-100 text-red-500'> Ecologically Poor";
+                }
+
+                echo "
+        </p>
+        
+</div>
+        
+        
+
+       
+        
+        <p class='font-bold text-green-600 text-xl'>
+            " . $title . " 
+        </p>
+        
+        <p class='text-sm text-gray-500 pb-2'>
+            ". $row['place_details'] ."
+        </p>
+        
+        <p class='text-lg text-gray-500 pb-2'>
+            ". $row['area'] ." sqft
+        </p>
+        
+        <p class='text-2xl text-green-600 font-black'>
+            $". $row['area'] * 0.3  ."
+        </p> 
+       
     </div>
 </a>";
-                
             }
         } else {
             echo
@@ -129,13 +187,10 @@ if (!$connection) {
 "<div class='text-2xl text-center text-red-400 col-span-3 flex-col flex items-center'>
    <span class='font-bold text-red-500'> No results found.</span> Try a different search or contact us for help.
 </div>";
-            
+
         }
         ?>
     </section>
-
-   
-
 
 
 </section>
@@ -257,7 +312,8 @@ if (!$connection) {
                 />
                 <label for="search_text-field"></label>
                 <button type="button"
-                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="defaultModal">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
                 rounded-lg">Esc</kbd>
                 </button>
@@ -291,7 +347,7 @@ if (!$connection) {
         visible_bullet.style.display = "none";
     });
 
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
         }
