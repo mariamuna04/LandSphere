@@ -8,6 +8,8 @@ if (isset($_POST["sign_out"])) {
     session_destroy();
     header("Location: ../../");
 }
+$name = $_SESSION["name"];
+
 ?>
 
 <!DOCTYPE html>
@@ -58,12 +60,37 @@ if (isset($_POST["sign_out"])) {
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
 <!--    USER DASHBOARD -->
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        USER DASHBOARD
+    <main class="w-full h-72 bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center">
+        <h1 class="text-3xl text-black text-white"> Dashboard </h1>
     </main>
 
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        BUTTON
+    <main class="bg-white h-72 rounded-3xl overflow-y-auto mt-[-40px]">
+
+    </main>
+
+    <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 ">
+        <h1 class = "col-span-5 text-2xl font-bold">Features</h1>
+        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+           <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
+            <span class="  text-lg font-bold pt-4"> Owned Land </span>
+        </a>
+        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
+            <span class="  text-lg font-bold pt-4"> List for Sale </span>
+        </a>
+        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
+            <span class="  text-lg font-bold pt-4"> Successors</span>
+        </a>
+        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
+            <span class="  text-lg font-bold pt-4"> Payment </span>
+        </a>
+        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
+            <span class="  text-lg font-bold pt-4"> Bookings </span>
+        </a>
+
     </main>
 
     <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
