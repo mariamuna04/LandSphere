@@ -21,12 +21,6 @@ if (!$connection) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
-    <style>
-        .outlined-text {
-            color: #1F2937;
-            text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
-        }
-    </style>
 </head>
 
 <body class="bg-beige-default">
@@ -88,6 +82,41 @@ if (!$connection) {
     </div>
 </nav>
 
+<!-- Breadcrumb -->
+<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+    <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
+    justify-center group-hover:shadow-lg transition-all duration-300"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1">
+            <li class="inline-flex items-center">
+                <a href="../../index.php"
+                   class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#"
+                       class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
+                        On Sale
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+</div>
+
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
 
@@ -97,18 +126,17 @@ if (!$connection) {
 
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
-        $sql = "SELECT * FROM Land";
+        $sql = "SELECT * FROM LAND";
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $title = $row['title'];
                 $_land_type = $row['land_type'];
-                
+
                 // HTML variables
                 $land_type = null;
-                
-                
+
 
                 if ($_land_type == 0) {
                     $land_type = "Residential";
@@ -117,42 +145,45 @@ if (!$connection) {
                 } else if ($_land_type == 2) {
                     $land_type = "Industrial";
                 }
-                
-                
+
+
                 echo
 
-"<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
-                    transform motion-safe:hover:scale-[1.03]
-                    transition-all hover:shadow-lg  text-gray-600'>
+                    "<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
+transform motion-safe:hover:scale-[1.03]
+transition-all hover:shadow-lg text-gray-600 duration-300'>
     <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
          src='../../resource/img/image_placeholder.webp'
     />
 
     <div class='mt-1 p-4 flex flex-col'>
     
-        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5'>
-            ". $row['address'] ."
+        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5
+        group-hover:bg-beige-dark'>
+            " . $row['address'] . "
         </p>
 
         <p class='text-xs font-extrabold pb-1 opacity-75 text-gray-600'>
             " . $land_type . "
         </p>
         
-        <p class='font-bold text-green-600 text-xl'>
+
+       <p class='font-bold text-green-600 text-xl col-span-7'>
             " . $title . " 
-        </p>
-        
-        <p class='text-sm text-gray-500 pb-2'>
-            ". $row['place_details'] ."
-        </p>
-        
-        <p class='text-lg text-gray-500'>
-            ". $row['area'] ." sqft
-        </p>
+        </p> 
        
         
+        
+        <p class='text-sm text-gray-500 pb-2 pt-1 group-hover:text-black'>
+            " . $row['place_details'] . "
+        </p>
+        
+        <p class='text-lg text-gray-500 pb-3'>
+            " . $row['area'] . " sqft
+        </p>
+        
         <p class='mr-auto mt-1 mb-1 text-xs font-medium px-2.5 py-0.5 rounded-2xl
-        ";
+       ";
                 if ($row['environment_point'] > 0 && $row['environment_point'] <= 20) {
                     echo " bg-green-100 text-green-500'> Ecologically Excellent ";
                 } else if ($row['environment_point'] > 20 && $row['environment_point'] <= 40) {
@@ -165,10 +196,10 @@ if (!$connection) {
                     echo "  bg-red-100 text-red-500'> Ecologically Poor";
                 }
                 echo "
-        </p>
+       </p>
         
         <p class='text-2xl font-black group-hover:text-green-600'>
-            $". $row['area'] * 0.3  ."
+            $" . $row['area'] * 0.3 . "
         </p> 
        
     </div>
@@ -176,8 +207,8 @@ if (!$connection) {
             }
         } else {
             echo
-            
-"<div class='text-2xl text-center text-red-400 col-span-3 flex-col flex items-center'>
+
+            "<div class='text-2xl text-center text-red-400 col-span-3 flex-col flex items-center'>
    <span class='font-bold text-red-500'> No results found.</span> Try a different search or contact us for help.
 </div>";
 
@@ -326,19 +357,6 @@ if (!$connection) {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 <script>
-    const card_privacy = document.getElementById("privacy");
-    const hidden_bullet = document.getElementById("hidden_bullet");
-    const visible_bullet = document.getElementById("visible_bullet");
-
-    card_privacy.addEventListener("mouseover", () => {
-        hidden_bullet.style.display = "none";
-        visible_bullet.style.display = "inline";
-    });
-
-    card_privacy.addEventListener("mouseout", () => {
-        hidden_bullet.style.display = "inline";
-        visible_bullet.style.display = "none";
-    });
 
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {

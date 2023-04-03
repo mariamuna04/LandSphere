@@ -8,14 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
-    <title>Title</title>
+    <title>Contact Us</title>
     <script src="../../js/utility.js"></script>
 </head>
 
 <body class="bg-beige-default">
-<nav class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-md items-center top-0 mb-12 z-50">
+    backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
         <a href="../../index.php" class="flex select-none">
@@ -24,34 +24,84 @@
 
         <div class="flex gap-2 items-center">
             <a href="#"
-               class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">About</a>
+               class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
+                About</a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">Projects</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                Projects</a>
             <a href="../on-sale"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">On Sale</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                On Sale
+            </a>
             <a href="#"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">News</a>
-            <a href="#"
-               class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
-                    text-green-700 font-medium">Contact</a>
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                News</a>
+            <a href="php/contact-us"
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                Contact</a>
         </div>
     </div>
 
+    <button id="search_button" type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
+            class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
+                    flex gap-12 items-center">
+        <span class="flex items-center gap-2">
+            <img src="../../resource/icons/search-navbar.svg" alt=" ">
+            <span class="text-xs font-medium text-gray-800">Search</span>
+        </span>
+        <span class="flex gap-1 select-none">
+            <kbd id="keyboard_shortcut" class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">⌘</kbd><kbd class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100
+                rounded-lg">K</kbd>
+        </span>
+    </button>
 
     <div class="flex gap-6 items-center">
-        <button onclick="window.location.href = '../sign-in';" 
-                class="hover:border-green-600 border border-beige-darker pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle">
+        <button onclick="window.location.href = '../sign-in';"
+                class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
+                pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
         <button onclick="window.location.href = '../sign-up';"
-                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
+                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
+                pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
-
-
+    </div>
+</nav>
+<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+    <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
+    justify-center group-hover:shadow-lg transition-all duration-300"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1">
+            <li class="inline-flex items-center">
+                <a href="../../index.php"
+                   class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#"
+                       class="ml-1 text-sm font-medium text-gray-700 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                        Contact Us
+                    </a>
+                </div>
+            </li>
+        </ol>
     </div>
 
-</nav>
+</div>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
     <p class="text-4xl font-bold text-center text-green-600 pb-2 ">

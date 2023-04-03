@@ -20,7 +20,8 @@ session_start();
 <body class="bg-beige-default">
 <nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-lg items-center top-0 mb-12 z-50">
+    backdrop-blur-lg items-center top-0 z-50">
+    
     <div class="flex gap-5 items-center">
 
         <a href="#" class="flex select-none">
@@ -74,7 +75,7 @@ session_start();
         </button>
     </div>
 </nav>
-
+<h1 class="mt-20"></h1>
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
 
@@ -117,7 +118,7 @@ session_start();
         <div id="twoC2" class="flex gap-4 justify-evenly">
 
             <a id="c2-1" href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg text-gray-500  hover:text-black">
+            transition-all hover:shadow-lg text-gray-500 hover:text-black duration-300">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Exterior-01-Full-Exterior-Wide-angle-View.jpg"
                 />
@@ -129,7 +130,7 @@ session_start();
             </a>
 
             <a id="c2-2" href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg text-gray-500  hover:text-black">
+            transition-all hover:shadow-lg text-gray-500  hover:text-black duration-300">
 
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/Ext_Cam2-1920x2317.jpg"
@@ -142,7 +143,7 @@ session_start();
             </a>
 
             <a id="c2-3" href="#" class="bg-white rounded-2xl w-full block shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg text-gray-500  hover:text-black">
+            transition-all hover:shadow-lg text-gray-500  hover:text-black duration-300">
                 <img alt="Home" class="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                      src="https://www.unitedrealestatebd.com/wp-content/uploads/2020/07/DSC_0012-1920x2891.jpg"
                 />
@@ -164,13 +165,13 @@ session_start();
         <div id="threeC2" class="grid grid-cols-2 gap-4">
             <a id="threeC2-1" href="#" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
-                        bg-s3c2-1">
+                        bg-s3c2-1 duration-300">
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
             <a id="threeC2-2" href="#" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
-                        items-center justify-between">
+                        items-center justify-between duration-300">
                 <p class="font-medium text-2xl">Get to know about laws, rules and regulations</p>
                 <img src="resource/icons/index/main-section_shelf-three_c2-2_law.svg"
                      alt="shelf-three_c2-2_law.svg">
@@ -178,7 +179,7 @@ session_start();
             </a>
             <a id="threeC2-3" href="#" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8
-            bg-s3c2-3">
+            bg-s3c2-3 duration-300">
                 <p class="font-medium text-2xl ">Get expert service <br> and support</p>
                 <img src="resource/icons/index/main-section_shelf-three_c2-3_expert.svg"
                      alt="shelf-three_c2-3_expert.svg">
@@ -193,7 +194,7 @@ session_start();
 
         <main id="fourC2" class="grid grid-cols-3 gap-6 select-none">
             <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-1.svg"
                      alt="shelf-four_c2-1.svg">
                 <p class="text-black font-medium text-2xl pb-4">
@@ -202,7 +203,7 @@ session_start();
                 </p>
             </div>
             <div class="bg-white  justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-2.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     <span class="text-blue-500"> Booking </span> was never this much
@@ -210,36 +211,36 @@ session_start();
                 </p>
             </div>
             <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-3.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Take a shortcut and <span class="text-purple-500">say goodbye to middlemen</span>
                 </p>
             </div>
             <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-4.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Pay in full or <span class="text-green-500"> pay over time.</span> Your choice.
                 </p>
             </div>
             <div class="bg-white justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-5.svg" alt="">
                 <p class="text-black font-medium text-2xl pb-4">
                     Even if you have a <span style="color: #FFAB45">big family </span>, there won't be any land
                     <span style="color: #FFAB45"> disputes </span> at dinner table!</p>
             </div>
             <div id="privacy" class=" bg-gray-800 justify-self-stretch p-6 rounded-2xl shadow-md transform motion-safe:hover:scale-[1.02]
-            transition-all hover:shadow-lg">
+            transition-all hover:shadow-lg duration-300">
                 <img class="pb-4" src="resource/icons/index/main-section_shelf-four_c2-6.svg" alt="">
-                <p class="text-white font-medium text-2xl pb-4 transition-all">
+                <p class="text-white font-medium text-2xl pb-4 transition-all duration-300 animate-fadeIn">
                     Privacy and
                     <span class="outlined-text font-bold"> security </span>
                     is our priority. <br>
                     <span id="hidden_bullet">Stay sa
                     &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
-                    <span id="visible_bullet" class="hidden">Stay safe and secure!</span>
+                    <span id="visible_bullet" class="hidden animate-bounce">Stay safe and secure!</span>
                 </p>
             </div>
         </main>
