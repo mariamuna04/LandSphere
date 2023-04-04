@@ -10,6 +10,8 @@
     <link href="../../../dist/output.css" rel="stylesheet">
     <title>Contact Us</title>
     <script src="../../js/utility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+
 </head>
 
 <body class="bg-beige-default">
@@ -273,5 +275,26 @@ drop-shadow-xl">
 
 </footer>
 </body>
+
+<script>
+
+
+    document.addEventListener('keydown', function(event) {
+        if (event.metaKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+        if (event.ctrlKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+    });
+
+    const os = navigator.platform;
+    if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
+        document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
+    }
+
+</script>
+
+
 
 </html>

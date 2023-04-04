@@ -43,7 +43,6 @@ if (isset($_POST['submit'])) {
 
             if (is_array($row)) {
                 $_SESSION["id"] = $row['nid'];
-                $_SESSION["email"] = $row['email'];
                 $_SESSION["name"] = $row['_name_'];
                 header("Location: ../user-dashboard");
             } else {

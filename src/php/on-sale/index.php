@@ -120,9 +120,108 @@ if (!$connection) {
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
 
-    <header id="shelf-one" class="flex justify-between items-center pb-24">
+    <form id="shelf-one" class="bg-white grid grid-cols-3 p-6 mb-12 rounded-2xl shadow-sm">
+        <div class="col-span-3">
+            <label for="default-search"
+                   class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative focus:border-black">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg aria-hidden="true"
+                         class="w-5 h-5 text-gray-500"
+                         fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input type="search" id="default-search"
+                       class="block w-full p-4 pl-10 text-md text-gray-600 font-medium
+                       rounded-lg bg-white hover:text-black focus:outline-none"
+                       placeholder="Type keyword to search">
+                <button type="submit"
+                        class="text-white absolute right-2.5
+                        bottom-2.5 bg-green-600 hover:bg-green-700 hover:shadow-lg
+                        font-medium rounded-lg text-sm px-4 py-2">
+                    Search
+                </button>
+            </div>
 
-    </header>
+        </div>
+
+        <div class="col-span-3 mt-4 mb-6">
+            <ul class="grid w-full gap-6 grid-cols-3">
+                <li>
+                    <input type="checkbox" id="residential" value="" class="hidden peer" required="">
+                    <label for="residential" class="flex
+                    items-center justify-between w-full h-full p-4 text-gray-500
+                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
+                    hover:text-gray-600
+                    peer-checked:text-gray-600 hover:bg-gray-50
+                    ">
+                        <span class="block select-none">
+                            <img class="pb-2" src="../../resource/icons/search-cat-res.svg">
+                            <div class="w-full text-lg font-semibold">Residential</div>
+                            <div class="w-full text-xs">
+                                Build your dream home on this perfect plot of land and make every day a staycation.
+                            </div>
+                        </span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="commercial" value="" class="hidden peer" required="">
+                    <label for="commercial" class="flex
+                    items-center justify-between w-full h-full p-4 text-gray-500
+                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
+                    hover:text-gray-600
+                    peer-checked:text-gray-600 hover:bg-gray-50
+                    ">
+                        <span class="block select-none">
+                            <img class="pb-2" src="../../resource/icons/shopping-mall.svg">
+                            <div class="w-full text-lg font-semibold ">Commercial</div>
+                            <div class="w-full text-xs">
+                                Unlock the potential of your business with this prime commercial land in a
+                                thriving location.
+                            </div>
+                        </span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="industrial" value="" class="hidden peer" required="">
+                    <label for="industrial" class="flex 
+                    items-center justify-between w-full p-4 h-full text-gray-500
+                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
+                    hover:text-gray-600
+                    peer-checked:text-gray-600 hover:bg-gray-50
+                    ">
+                        <span class="block select-none">
+                            <img class="pb-2" src="../../resource/icons/manufacturing.svg">
+                            <div class="w-full text-lg font-semibold">Industrial</div>
+                            <div class="w-full text-xs">
+                                Maximize your industrial potential with all these prime plot.</div>
+                        </span>
+                    </label>
+                </li>
+            </ul>
+
+        </div>
+
+        <div id="" class="p-4">
+            Listing Type: For sale or auction
+        </div>
+
+        <div id="" class="p-4">
+            Area range
+        </div>
+
+        <div id="" class="p-4">
+            Price Range
+        </div>
+
+
+    </form>
 
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
@@ -149,7 +248,9 @@ if (!$connection) {
 
                 echo
 
-                    "<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
+                    "
+
+<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
 transform motion-safe:hover:scale-[1.03]
 transition-all hover:shadow-lg text-gray-600 duration-300'>
     <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
@@ -173,7 +274,6 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
         </p> 
        
         
-        
         <p class='text-sm text-gray-500 pb-2 pt-1 group-hover:text-black'>
             " . $row['place_details'] . "
         </p>
@@ -184,15 +284,15 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
         
         <p class='mr-auto mt-1 mb-1 text-xs font-medium px-2.5 py-0.5 rounded-2xl
        ";
-                if ($row['environment_point'] > 0 && $row['environment_point'] <= 20) {
+                if ($row['environment_point'] > 0 && $row['environment_point'] <= 2) {
                     echo " bg-green-100 text-green-500'> Ecologically Excellent ";
-                } else if ($row['environment_point'] > 20 && $row['environment_point'] <= 40) {
+                } else if ($row['environment_point'] > 2 && $row['environment_point'] <= 4) {
                     echo " bg-green-100 text-green-500'> Ecologically Very Good";
-                } else if ($row['environment_point'] > 40 && $row['environment_point'] <= 60) {
+                } else if ($row['environment_point'] > 4 && $row['environment_point'] <= 6) {
                     echo " bg-green-100 text-green-500'> Ecologically Good";
-                } else if ($row['environment_point'] > 60 && $row['environment_point'] <= 80) {
+                } else if ($row['environment_point'] > 6 && $row['environment_point'] <= 8) {
                     echo "  bg-yellow-100 text-yellow-600'> Ecologically Fair";
-                } else if ($row['environment_point'] > 80 && $row['environment_point'] <= 100) {
+                } else if ($row['environment_point'] > 8 && $row['environment_point'] <= 10) {
                     echo "  bg-red-100 text-red-500'> Ecologically Poor";
                 }
                 echo "
@@ -235,7 +335,6 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 <a href="#" class="hover:text-green-300"> Option </a>
                 <a href="#" class="hover:text-green-300"> Option </a>
                 <a href="#" class="hover:text-green-300"> Option </a>
-
             </div>
             <a></a>
         </div>
