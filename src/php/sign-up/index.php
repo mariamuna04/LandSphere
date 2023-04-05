@@ -202,14 +202,59 @@ if (isset($_SESSION["id"])) {
                                 <label for="dob" class="text-xs"></label>
                             </div>
                         </div>
+
+                        <div id="nid_number" class="mb-5">
+                            <div class="mb-5">
+                                <input type="text"
+                                       name="permanent_address"
+                                       id="permanent_address"
+                                       placeholder="Permanent address"
+                                       class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                                />
+                                <label for="dob" class="text-xs"></label>
+                            </div>
+                        </div>
+
+                        <div id="nid_number" class="mb-5">
+                            <div class="mb-5">
+                                <input type="text"
+                                       name="occupation"
+                                       id="occupation"
+                                       placeholder="Occupation"
+                                       class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                                />
+                                <label for="dob" class="text-xs"></label>
+                            </div>
+                        </div>
+
+                        <div id="nid_number" class="mb-5">
+                            <div class="mb-5">
+                                <input type="text"
+                                       name="yearly_income"
+                                       id="yearly_income"
+                                       placeholder="Yearly income"
+                                       class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                                />
+                                <label for="dob" class="text-xs"></label>
+                            </div>
+                        </div>
                     </div>
                     <div class="hidden animate-fadeIn" id="page3">
                         <div id="email" class="mb-5">
                             <div class="mb-5">
                                 <input type="text"
-                                       name="job"
-                                       id="job"
-                                       placeholder="Give job"
+                                       name="passport_number"
+                                       id="passport_number"
+                                       placeholder="Passport Number (Optional)"
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
@@ -218,7 +263,26 @@ if (isset($_SESSION["id"])) {
                                 <label for="job" class="text-xs"></label>
                             </div>
                         </div>
+                    
+
+                        <div id="email" class="mb-5">
+                            <div class="mb-5">
+                                <input type="text"
+                                       name="birth_certificate_number"
+                                       id="birth_certificate_number"
+                                       placeholder="Birth Certificate Number (Optional)"
+                                       class="w-full rounded-md border border-[#e0e0e0]
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:border-[#6A64F1] focus:shadow-md
+                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                                />
+                                <label for="job" class="text-xs"></label>
+                            </div>
+                        </div>
+                        
                     </div>
+                    
+                    
                     <div class="hidden animate-fadeIn" id="page4">
                         <div id="email" class="mb-5">
                             <div class="mb-5">
@@ -236,8 +300,9 @@ if (isset($_SESSION["id"])) {
                                 <label for="agreement">Permission to sell your data</label>
                             </div>
                         </div>
-
                     </div>
+                    
+                    
                 </section>
 
 
