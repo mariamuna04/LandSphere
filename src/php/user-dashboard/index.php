@@ -8,7 +8,47 @@ if (isset($_POST["sign_out"])) {
     session_destroy();
     header("Location: ../../");
 }
-$name = $_SESSION["name"];
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$databasename = "dbms_project";
+
+// CREATE CONNECTION
+$conn = new mysqli($servername,
+    $username, $password, $databasename);
+
+// GET CONNECTION ERRORS
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$DB_HOST = 'localhost';
+$DB_USER = 'root';
+$DB_NAME = 'dbms_project';
+$DB_PASS = '';
+
+$connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+if (!$connection) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// fetch user data
+$query = "SELECT * FROM LAND on USER.nid = LAND.user_nid WHERE USER.nid = " . $_SESSION["id"];
+// FETCHING DATA FROM DATABASE
+$land_result = mysqli_query($conn, $query);
+
+if (mysqli_num_rows($land_result) > 0) {
+
+    // OUTPUT DATA OF EACH ROW
+    while($row = mysqli_fetch_assoc($land_result)) {
+        echo "Land Id: " . $row["land_id"]. " - Area: " . $row["area"]. " - land_type: " . $row["land_type"] . "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
 
 ?>
 
@@ -52,8 +92,13 @@ $name = $_SESSION["name"];
 
     <div class="flex gap-6 items-center">
         <div>profile_picture</div>
-        <div>user_name</div>
-        <div><form method="post" action=""><button name="sign_out">Bhago PLS</button></form></div>
+        <div>
+            <p>
+            <?php echo $_SESSION["name"];
+            ?>
+            </p>
+        </div>
+        <div><form method="post" action=""><button name="sign_out">Log out</button></form></div>
     </div>
 </nav>
 

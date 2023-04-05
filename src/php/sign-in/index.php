@@ -3,6 +3,21 @@ session_start();
 
 if (isset($_SESSION["id"])) {
     header("Location: ../user-dashboard");
+
+// User login
+$servername = "localhost";
+$username = "root";
+$password = "";
+$databasename = "dbms_project";
+
+// CREATE CONNECTION
+$conn = new mysqli($servername,
+    $username, $password, $databasename);
+
+// GET CONNECTION ERRORS
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 }
 
 $DB_HOST = 'localhost';
@@ -37,13 +52,13 @@ if (isset($_POST['submit'])) {
             $email = mysqli_real_escape_string($connection, $email);
             $password = mysqli_real_escape_string($connection, $password);
 
-            $sql = "SELECT nid, password FROM USER JOIN LOGIN AS L on USER.nid = L.user_nid";
+            $sql = "SELECT nid, password, full_name FROM USER JOIN LOGIN AS L on USER.nid = L.user_nid";
             $result = mysqli_query($connection, $sql);
             $row = mysqli_fetch_array($result);
 
             if (is_array($row)) {
                 $_SESSION["id"] = $row['nid'];
-                $_SESSION["name"] = $row['_name_'];
+                $_SESSION["name"] = $row['full_name'];
                 header("Location: ../user-dashboard");
             } else {
                 $error_message = 'Invalid Credentials';

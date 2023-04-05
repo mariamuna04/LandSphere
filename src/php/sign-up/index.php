@@ -1,11 +1,38 @@
 <?php
 
 session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dbms_project";
 
-if (isset($_SESSION["id"])) {
-    header("Location: ../userPanel.php");
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nid_number = mysqli_real_escape_string($conn, $_POST['nid_number']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+    $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
+    $dob = mysqli_real_escape_string($conn, $_POST['dob']);
+    $permanent_address = mysqli_real_escape_string($conn, $_POST['permanent_address']);
+    $occupation = mysqli_real_escape_string($conn, $_POST['occupation']);
+    $yearly_income = mysqli_real_escape_string($conn, $_POST['yearly_income']);
+    $passport = mysqli_real_escape_string($conn, $_POST['passport']);
+    $birth_certificate = mysqli_real_escape_string($conn, $_POST['birth_certificate']);
+    $sql = "INSERT INTO USER(nid,full_name,email,phone_number,date_of_birth,birth_certificate_number,passport_number,address,yearly_income,occupation) VALUES('$nid_number','$full_name','$email','','$dob','$birth_certificate','$passport','$permanent_address','$yearly_income','$occupation')";
+    $sql2 = "INSERT INTO LOGIN(user_nid,password) VALUES('$nid_number','$password')";
+    if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
+        echo "New record created successfully";
+        header("Location: ../sign-in");
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
 
 ?>
 
@@ -263,7 +290,7 @@ if (isset($_SESSION["id"])) {
                                 <label for="job" class="text-xs"></label>
                             </div>
                         </div>
-                    
+
 
                         <div id="email" class="mb-5">
                             <div class="mb-5">
@@ -279,10 +306,10 @@ if (isset($_SESSION["id"])) {
                                 <label for="job" class="text-xs"></label>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
-                    
+
+
                     <div class="hidden animate-fadeIn" id="page4">
                         <div id="email" class="mb-5">
                             <div class="mb-5">
@@ -301,8 +328,8 @@ if (isset($_SESSION["id"])) {
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </section>
 
 
@@ -311,13 +338,13 @@ if (isset($_SESSION["id"])) {
             <div class="flex flex-col items-center justify-center gap-2 max-w-xl mx-auto my-3">
                 <div class="flex gap-24 justify-end flex-auto pb-2">
                     <a id="previousButton" onclick="onPreviousClick()"
-                            class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                       class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                    outline-none items-center select-none hidden text-primary">
                         Previous
                     </a>
 
                     <a id="nextButton" onclick="onNextClick()"
-                            class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
+                       class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
                 outline-none items-center select-none bg-primary text-white">
                         Next
                     </a>
@@ -334,7 +361,7 @@ if (isset($_SESSION["id"])) {
                     <p class="text-black dark:text-white select-none">Already Have an Account?</p>
                     <a href="../sign-in"
                        class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">
-                       Sign In
+                        Sign In
                     </a>
                 </div>
             </div>
