@@ -9,20 +9,6 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../");
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$databasename = "dbms_project";
-
-// CREATE CONNECTION
-$conn = new mysqli($servername,
-    $username, $password, $databasename);
-
-// GET CONNECTION ERRORS
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_NAME = 'dbms_project';
@@ -35,9 +21,10 @@ if (!$connection) {
 }
 
 // fetch user data
-$query = "SELECT * FROM LAND on USER.nid = LAND.user_nid WHERE USER.nid = " . $_SESSION["id"];
+$query = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owns.owner_id = " . $_SESSION["id"] . ";";
+
 // FETCHING DATA FROM DATABASE
-$land_result = mysqli_query($conn, $query);
+$land_result = mysqli_query($connection, $query);
 
 if (mysqli_num_rows($land_result) > 0) {
 
