@@ -16,22 +16,19 @@ if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$nid = $key = '';
+$key = '';
 $account_not_found = false;
 $input_error = false;
 
 if (isset($_POST['submit'])) {
     $key = $_POST['email_or_phone'];
-    $nid = $_POST['nid'];
 
-    if (empty($key) || empty($nid)) {
+    if (empty($key)) {
         $input_error = true;
     } else {
         if (isEmail($key) || isPhone($key) || isNID($key)) {
             $key = mysqli_real_escape_string($connection, $key);
-            $nid = mysqli_real_escape_string($connection, $nid);
-
-            $sql = "SELECT * FROM user WHERE (email = '$key' OR phone_number = '$key' OR nid = '$key') AND nid = '$nid'";
+            $sql = "SELECT * FROM user WHERE (email = '$key' OR phone_number = '$key' OR nid = '$key')";
             $result = mysqli_query($connection, $sql);
             $row = mysqli_fetch_array($result);
 
@@ -43,7 +40,6 @@ if (isset($_POST['submit'])) {
             }
         } else {
             $input_error = true;
-
         }
     }
 }
@@ -93,7 +89,7 @@ function isNID($keyword): bool
             <div class="mb-5">
                 <div class="mb-5">
                     <input type="text" name="email_or_phone" id="email_or_phone"
-                           placeholder="Search By Email or Phone Number"
+                           placeholder="Search By Email, Phone Number or NID"
                            class="w-full rounded-md border border-[#e0e0e0]
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:border-[#6A64F1] focus:shadow-md
@@ -105,24 +101,14 @@ function isNID($keyword): bool
                     <label for="email_or_phone" class="text-sm">
                 </div>
                 <div class="mb-5">
-                    <input type="text" name="nid" id="nid"
-                           placeholder="Provide NID Number"
-                           class="w-full rounded-md border border-[#e0e0e0]
-                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:border-[#6A64F1] focus:shadow-md
-                           dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
-                        <?php if ($account_not_found || $input_error) {
-                            echo "value='$nid'";
-                        } ?>
-                    />
-                    <label for="nid" class="text-sm">
-                        <?php if ($account_not_found) {
-                            echo "<div class='mt-2 text-red-600 text-center select-none dark:text-red-300'>Account not found, please contact for support</div>";
-                        } ?>
 
-                        <?php if ($input_error) {
-                            echo "<div class='mt-2 text-red-600 text-center select-none dark:text-red-300'>Please provide all fields</div>";
-                        } ?>
+                    <?php if ($account_not_found) {
+                        echo "<div class='mt-2 text-red-600 text-center select-none dark:text-red-300'>Account not found, please contact for support</div>";
+                    } ?>
+
+                    <?php if ($input_error) {
+                        echo "<div class='mt-2 text-red-600 text-center select-none dark:text-red-300'>Please enter a valid keyword</div>";
+                    } ?>
 
                 </div>
             </div>

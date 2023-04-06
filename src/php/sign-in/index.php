@@ -3,21 +3,6 @@ session_start();
 
 if (isset($_SESSION["id"])) {
     header("Location: ../user-dashboard");
-
-// User login
-$servername = "localhost";
-$username = "root";
-$password = "";
-$databasename = "dbms_project";
-
-// CREATE CONNECTION
-$conn = new mysqli($servername,
-    $username, $password, $databasename);
-
-// GET CONNECTION ERRORS
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 }
 
 $DB_HOST = 'localhost';
@@ -36,29 +21,34 @@ $authentication_error = false;
 $error_message = '';
 
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
+    $email_or_phone = $_POST['email'];
     $password = $_POST['password'];
 
     // If One of the field is empty, exit
-    if (empty($email) || empty($password)) {
+    if (empty($email_or_phone) || empty($password)) {
         $error_message = 'Please fill in all fields';
         $authentication_error = true;
     } else {
         // Validate Email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email_or_phone, FILTER_VALIDATE_EMAIL)) {
             $error_message = 'Please use a valid email address';
             $authentication_error = true;
         } else {
-            $email = mysqli_real_escape_string($connection, $email);
+            $email_or_phone = mysqli_real_escape_string($connection, $email_or_phone);
             $password = mysqli_real_escape_string($connection, $password);
 
-            $sql = "SELECT nid, password, full_name FROM USER JOIN LOGIN AS L on USER.nid = L.user_nid";
+            $sql = "SELECT nid, full_name 
+                    FROM USER 
+                    JOIN LOGIN AS L on user.nid = L.user_nid 
+                    WHERE (email LIKE '". $email_or_phone ."' OR phone_number LIKE ' ". $email_or_phone ." ')
+                    AND password LIKE '". $password ."';";
+
             $result = mysqli_query($connection, $sql);
             $row = mysqli_fetch_array($result);
 
             if (is_array($row)) {
                 $_SESSION["id"] = $row['nid'];
-                $_SESSION["name"] = $row['full_name'];
+                $_SESSION["name"] = $row['_name_'];
                 header("Location: ../user-dashboard");
             } else {
                 $error_message = 'Invalid Credentials';
@@ -97,8 +87,8 @@ if (isset($_POST['submit'])) {
                 <div class="mb-5">
                     <input type="email" name="email" id="email"
                         <?php if ($authentication_error) {
-                            if (!empty($email)) {
-                                echo "value='$email'";
+                            if (!empty($email_or_phone)) {
+                                echo "value='$email_or_phone'";
                             }
                         } ?>
                            placeholder="Email address or Phone Number"

@@ -1,5 +1,31 @@
 <?php
+session_start();
 
+$DB_HOST = 'localhost';
+$DB_USER = 'root';
+$DB_NAME = 'dbms_project';
+$DB_PASS = '';
+
+try {
+    $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+} catch (Exception $e) {
+    $db_connection_error = true;
+    header('Location: ../../html/404.html');
+}
+
+if (isset($_POST['submit'])) {
+    $full_name = $_POST['full_name'];
+    $email = $_POST['email'];
+    $phone_number = $_POST['telephone'];
+    $post = $_POST['message'];
+
+    $sql = "INSERT INTO contact_anonymous (full_name, email, phone_number, post) 
+            VALUES ('$full_name', '$email', '$phone_number', '$post')";
+    $go = mysqli_query($connection, $sql);
+    mysqli_close($connection);
+    $_SESSION['okay'] = true;
+    header('refresh:0');
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +65,8 @@
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
             <a href="php/contact-us"
-               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+               class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
+                    text-green-700 font-medium">
                 Contact</a>
         </div>
     </div>
@@ -95,7 +122,7 @@
                               clip-rule="evenodd"></path>
                     </svg>
                     <a href="#"
-                       class="ml-1 text-sm font-medium text-gray-700 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                       class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
                         Contact Us
                     </a>
                 </div>
@@ -120,7 +147,7 @@
         <div class="mb-5 col-span-2">
             <input type="text" name="full_name" id="full_name"
                    placeholder="Full Name"
-                   class="w-full rounded-md border border-[#e0e0e0]
+                   class="w-full rounded-2xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md"
             />
@@ -132,7 +159,7 @@
                    name="email"
                    id="email"
                    placeholder="Email address"
-                   class="w-full rounded-md border border-[#e0e0e0]
+                   class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md "
             />
@@ -144,7 +171,7 @@
                    name="telephone"
                    id="telephone"
                    placeholder="Telephone number"
-                   class="w-full rounded-md border border-[#e0e0e0]
+                   class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md"
             />
@@ -152,11 +179,11 @@
         </div>
 
         <div class="mb-5 col-span-2">
-            <textarea type="tel"
-                      name="text"
+            <textarea type="text"
+                      name="message"
                       id="message"
                       placeholder="Write your message here..."
-                      class="w-full rounded-md border border-[#e0e0e0]
+                      class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md h-32"></textarea>
             <label for="message" class="text-sm">
@@ -164,9 +191,10 @@
 
         <button name="submit" type="submit"
                 class="hover:shadow-form bg-green-700
-                        py-3 px-8 text-center text-base font-semibold
+                        py-3 px-8 text-center text-base
                         font-bold text-white outline-none items-center
-                        col-span-2 rounded-3xl hover:bg-green-800 font-bold">
+                        col-span-2 rounded-2xl hover:bg-green-800
+                        hover:shadow-lg">
             Submit
         </button>
 

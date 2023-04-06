@@ -5,7 +5,7 @@ if (!isset($_SESSION['nid'])) {
 }
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
-$DB_NAME = 'cse3522';
+$DB_NAME = 'dbms_project';
 $DB_PASS = '';
 
 $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
@@ -16,7 +16,6 @@ if (!$connection) {
 
 $_SESSION['success'] = false;
 $error = '';
-$nid = $_SESSION['nid'];
 
 if (isset($_POST['submit'])) {
     $password = $_POST['password'];
@@ -24,7 +23,7 @@ if (isset($_POST['submit'])) {
     if ($password != $confirm_password) {
         $error = 'Passwords do not match!';
     } else {
-        $query = "UPDATE user SET password = '$password' WHERE nid = '$nid'";
+        $query = "UPDATE login SET password = '$password' WHERE user_nid = '" . $_SESSION['nid'] . "'";
         $result = mysqli_query($connection, $query);
         if ($result) {
             $_SESSION['success'] = true;
@@ -151,7 +150,7 @@ if (!$_SESSION['success']) {
         </div>
     </div>
 ';
-    header('refresh:3;url=../sign-in');
+    header('refresh:3; url=../sign-in');
     session_destroy();
 }
 ?>

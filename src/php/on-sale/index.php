@@ -148,10 +148,10 @@ if (!$connection) {
 
         </div>
 
-        <div class="col-span-3 mt-4 mb-6">
+        <div class="col-span-3 mt-4">
             <ul class="grid w-full gap-6 grid-cols-3">
                 <li>
-                    <input type="checkbox" id="residential" value="" class="hidden peer" required="">
+                    <input type="checkbox" id="residential" class="hidden peer" value="0">
                     <label for="residential" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -159,17 +159,17 @@ if (!$connection) {
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
                     ">
-                        <span class="block select-none">
-                            <img class="pb-2" src="../../resource/icons/search-cat-res.svg">
-                            <div class="w-full text-lg font-semibold">Residential</div>
-                            <div class="w-full text-xs">
+                        <span class="flex-col flex select-none">
+                            <img class="pb-2 w-[32px]" src="../../resource/icons/search-cat-res.svg" alt="">
+                            <span class="w-full text-lg font-semibold">Residential</span>
+                            <span class="w-full text-xs">
                                 Build your dream home on this perfect plot of land and make every day a staycation.
-                            </div>
+                            </span>
                         </span>
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="commercial" value="" class="hidden peer" required="">
+                    <input type="checkbox" id="commercial" value="" class="hidden peer" >
                     <label for="commercial" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -177,30 +177,30 @@ if (!$connection) {
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
                     ">
-                        <span class="block select-none">
-                            <img class="pb-2" src="../../resource/icons/shopping-mall.svg">
-                            <div class="w-full text-lg font-semibold ">Commercial</div>
-                            <div class="w-full text-xs">
+                        <span class="flex-col flex select-none">
+                            <img class="pb-2 w-[32px]" src="../../resource/icons/shopping-mall.svg" alt="">
+                            <span class="w-full text-lg font-semibold ">Commercial</span>
+                            <span class="w-full text-xs">
                                 Unlock the potential of your business with this prime commercial land in a
                                 thriving location.
-                            </div>
+                            </span>
                         </span>
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="industrial" value="" class="hidden peer" required="">
-                    <label for="industrial" class="flex 
+                    <input type="checkbox" id="industrial" value="" class="hidden peer">
+                    <label for="industrial" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
                     ">
-                        <span class="block select-none">
-                            <img class="pb-2" src="../../resource/icons/manufacturing.svg">
-                            <div class="w-full text-lg font-semibold">Industrial</div>
-                            <div class="w-full text-xs">
-                                Maximize your industrial potential with all these prime plot.</div>
+                        <span class="flex-col flex select-none">
+                            <img class="pb-2 w-[32px]" src="../../resource/icons/manufacturing.svg" alt="">
+                            <span class="w-full text-lg font-semibold">Industrial</span>
+                            <span class="w-full text-xs">
+                                Maximize your industrial potential with all these prime plot.</span>
                         </span>
                     </label>
                 </li>
@@ -208,24 +208,68 @@ if (!$connection) {
 
         </div>
 
-        <div id="" class="p-4">
-            Listing Type: For sale or auction
+        <div id="" class="pt-4 col-span-3">
+            <ul class="grid w-full gap-6 md:grid-cols-2">
+                <li>
+                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required>
+                    <label for="hosting-small" class="flex
+                    items-center justify-between w-full p-4 h-full text-gray-500
+                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
+                    hover:text-gray-600
+                    peer-checked:text-gray-600 hover:bg-gray-50">
+                        <div class="block">
+                            <div class="w-full text-lg font-semibold">For Sale</div>
+                            <div class="w-full">Good for small websites</div>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <input type="radio" id="hosting-big" name="hosting" value="hosting-big" class="hidden peer">
+                    <label for="hosting-big" class="flex
+                    items-center justify-between w-full p-4 h-full text-gray-500
+                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
+                    hover:text-gray-600
+                    peer-checked:text-gray-600 hover:bg-gray-50">
+                        <div class="block">
+                            <div class="w-full text-lg font-semibold">For Auction</div>
+                            <div class="w-full">Good for large websites</div>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+
         </div>
 
-        <div id="" class="p-4">
-            Area range
+        <div class="col-span-3"><hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
         </div>
 
-        <div id="" class="p-4">
-            Price Range
-        </div>
+        <div id="" class="col-span-3">
+            <div class="flex gap-6">
+                <div class="w-full pl-4 pr-4">
+                    <label for="default-range"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area Range</label>
+                    <input id="default-range" type="range" min="0" max="1000000" value="1000000"
+                           class="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer">
+                </div>
 
+                <div class="w-full pl-4 pr-4">
+                    <label for="default-range" class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price Range</label>
+                    <input id="default-range" min="0" max="1000000" type="range" value="1000000"
+                           class="w-full h-2 rounded-lg bg-green-600 cursor-pointer">
+
+                </div>
+
+            </div>
+
+        </div>
 
     </form>
 
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
-        $sql = "SELECT * FROM LAND";
+        $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id";
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {
