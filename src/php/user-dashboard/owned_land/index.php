@@ -1,50 +1,27 @@
 <?php
 session_start();
-if (!isset($_SESSION["id"])) {
-    header("Location: ../sign-in");
-}
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dbms_project";
 
-if (isset($_POST["sign_out"])) {
-    session_destroy();
-    header("Location: ../../");
-}
-
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_NAME = 'dbms_project';
-$DB_PASS = '';
-
-$connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-
-if (!$connection) {
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
-}
-
-// fetch user data
-$query = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owns.owner_id = " . $_SESSION["id"] . ";";
-
-// FETCHING DATA FROM DATABASE
-$land_result = mysqli_query($connection, $query);
-
-if (mysqli_num_rows($land_result) > 0) {
-
-    // OUTPUT DATA OF EACH ROW
-    while($row = mysqli_fetch_assoc($land_result)) {
-        echo "Land Id: " . $row["land_id"]. " - Area: " . $row["area"]. " - land_type: " . $row["land_type"] . "<br>";
-    }
-} else {
-    echo "0 results";
 }
 
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../dist/output.css" rel="stylesheet">
+    <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
 </head>
 
@@ -55,7 +32,7 @@ if (mysqli_num_rows($land_result) > 0) {
     <div class="flex gap-5 items-center">
 
         <a href="#" class="flex select-none">
-            <img alt="" src="../../resource/icons/landSphere.svg">
+            <img alt="" src="../../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
@@ -92,49 +69,43 @@ if (mysqli_num_rows($land_result) > 0) {
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
 <!--    USER DASHBOARD -->
-    <main class="w-full h-72 bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center">
-        <h1 class="text-3xl text-black text-white"> Dashboard </h1>
+    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
+        <div class=" flex flex-col">
+            <?php
+            $sql = "SELECT * FROM OWNS join LAND on OWNS.land_id=LAND.land_id WHERE owner_id = ".$_SESSION["id"];
+            $result = mysqli_query($conn, $sql);
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<div class='flex flex-col gap-2'>";
+                echo "<div class='flex gap-2'>";
+                echo "<div class='flex flex-col gap-2'>";
+                echo "<p class='font-bold'>Land Name: ".$row["title"]."</p>";
+                echo "<p class='font-bold'>Land Area: ".$row["area"]."</p>";
+                echo "<p class='font-bold'>Land Location: ".$row["address"]."</p>";
+                echo "</div>";
+                echo "<div class='flex flex-col gap-2'>";
+                echo "<p class='font-bold'>Land Type: ".$row["land_type"]."</p>";
+                echo "<p class='font-bold'>Land Description: ".$row["place_details"]."</p>";
+                echo "</div>";
+                echo "</div>";
+                echo "<div class='flex gap-2'>";
+                echo "<div class='flex flex-col gap-2'>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+            ?>
+        </div>
+        <div>
+            pictures
+        </div>
     </main>
 
-    <main class="bg-white h-72 rounded-3xl overflow-y-auto mt-[-40px]">
+    <main class="bg-white h-72 rounded-3xl">
 
     </main>
 
     <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 ">
-        <h1 class = "col-span-5 text-2xl font-bold">Features</h1>
-        <a href="./owned_land" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-           <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
-            <span class="  text-lg font-bold pt-4"> Owned Land </span>
-        </a>
-        <a href="./sale_list" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
-            <span class="  text-lg font-bold pt-4"> List for Sale </span>
-        </a>
-        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
-            <span class="  text-lg font-bold pt-4"> Successors</span>
-        </a>
-        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
-            <span class="  text-lg font-bold pt-4"> Payment </span>
-        </a>
-        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png">
-            <span class="  text-lg font-bold pt-4"> Bookings </span>
-        </a>
 
-    </main>
-
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        LAND STATUS
-    </main>
-
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        NOTICE
-    </main>
-
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        NEWS
     </main>
 
 </section>
@@ -202,16 +173,16 @@ if (mysqli_num_rows($land_result) > 0) {
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
             <a href="#">
-                <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
+                <img src="../../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
+                <img src="../../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
+                <img src="../../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
             <a href="#">
-                <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
+                <img src="../../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
 
