@@ -70,7 +70,7 @@ if (!$conn) {
     <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
         <div class=" flex flex-col">
             <?php
-            $sql = "SELECT * FROM SELL_LIST join LAND on SELL_LIST.land_id=LAND.land_id WHERE owner_id = ".$_SESSION["id"];
+            $sql = "SELECT * FROM SELL_LIST join LAND on SELL_LIST.land_id=LAND.land_id WHERE user_id = ".$_SESSION["id"];
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<div class='flex flex-col gap-2'>";
