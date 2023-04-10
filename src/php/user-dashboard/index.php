@@ -93,7 +93,7 @@ if (mysqli_num_rows($land_result) > 0) {
 
 <!--    USER DASHBOARD -->
     <main class="w-full h-72 bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center">
-        <h1 class="text-3xl text-black text-white"> Dashboard </h1>
+        <h1 class="text-3xl text-black"> Dashboard </h1>
     </main>
 
     <main class="bg-white h-72 rounded-3xl overflow-y-auto mt-[-40px]">

@@ -1,15 +1,21 @@
 <?php
 session_start();
+include '../../php/connection/connection.php';
 
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_NAME = 'dbms_project';
 $DB_PASS = '';
 
-$connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+try {
+    $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+} catch (Exception $e) {
+    $db_connection_error = true;
+    header('Location: ../../html/404.html');
+}
 
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
+if (isset($_POST['submit'])) {
+    $search_thing = $_POST['search_bar'];
 }
 
 ?>
@@ -93,7 +99,8 @@ if (!$connection) {
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>
                     Home
                 </a>
@@ -120,7 +127,7 @@ if (!$connection) {
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
 
-    <form id="shelf-one" class="bg-white grid grid-cols-3 p-6 mb-12 rounded-2xl shadow-sm">
+    <form method="post" action="" id="shelf-one" class="bg-white grid grid-cols-3 p-6 mb-12 rounded-2xl shadow-sm">
         <div class="col-span-3">
             <label for="default-search"
                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -135,15 +142,28 @@ if (!$connection) {
                     </svg>
                 </div>
                 <input type="search" id="default-search"
+                       name="search_bar"
+                       value="<?php if (isset($search_thing)) echo htmlspecialchars($search_thing); ?>"
                        class="block w-full p-4 pl-10 text-md text-gray-600 font-medium
                        rounded-lg bg-white hover:text-black focus:outline-none"
                        placeholder="Type keyword to search">
-                <button type="submit"
-                        class="text-white absolute right-2.5
+                <div>
+                    <button type="submit"
+                            name="submit"
+                            class="text-white absolute right-2.5
                         bottom-2.5 bg-green-600 hover:bg-green-700 hover:shadow-lg
                         font-medium rounded-lg text-sm px-4 py-2">
-                    Search
-                </button>
+                        Search
+                    </button>
+
+                    <button type="submit"
+                            name="reset_button"
+                            class="text-white absolute right-2.5
+                        bottom-2.5 bg-gray-500 hover:bg-gray-600 hover:shadow-lg
+                        font-medium rounded-lg text-sm px-4 py-2 mr-24">
+                        Reset
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -151,7 +171,7 @@ if (!$connection) {
         <div class="col-span-3 mt-4">
             <ul class="grid w-full gap-6 grid-cols-3">
                 <li>
-                    <input type="checkbox" id="residential" class="hidden peer" value="0">
+                    <input type="checkbox" name="residential" id="residential" class="hidden peer" value="residential">
                     <label for="residential" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -169,7 +189,7 @@ if (!$connection) {
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="commercial" value="" class="hidden peer" >
+                    <input type="checkbox" name="commercial" id="commercial" value="commercial" class="hidden peer">
                     <label for="commercial" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -188,7 +208,7 @@ if (!$connection) {
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="industrial" value="" class="hidden peer">
+                    <input type="checkbox" name="industrial" id="industrial" value="industrial" class="hidden peer">
                     <label for="industrial" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -211,7 +231,7 @@ if (!$connection) {
         <div id="" class="pt-4 col-span-3">
             <ul class="grid w-full gap-6 md:grid-cols-2">
                 <li>
-                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required>
+                    <input type="radio" id="hosting-small" name="radio_button_hosting" value="sale" class="hidden peer">
                     <label for="hosting-small" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -225,7 +245,8 @@ if (!$connection) {
                     </label>
                 </li>
                 <li>
-                    <input type="radio" id="hosting-big" name="hosting" value="hosting-big" class="hidden peer">
+                    <input type="radio" id="hosting-big" name="radio_button_hosting" value="auction"
+                           class="hidden peer">
                     <label for="hosting-big" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -242,21 +263,25 @@ if (!$connection) {
 
         </div>
 
-        <div class="col-span-3"><hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
+        <div class="col-span-3">
+            <hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
         </div>
 
         <div id="" class="col-span-3">
             <div class="flex gap-6">
                 <div class="w-full pl-4 pr-4">
                     <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area Range</label>
-                    <input id="default-range" type="range" min="0" max="1000000" value="1000000"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area
+                        Range</label>
+                    <input id="default-range" name="area_range" type="range" min="0" max="1000000" value="1000000"
                            class="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer">
                 </div>
 
                 <div class="w-full pl-4 pr-4">
-                    <label for="default-range" class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price Range</label>
-                    <input id="default-range" min="0" max="1000000" type="range" value="1000000"
+                    <label for="default-range"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price
+                        Range</label>
+                    <input id="default-range" min="0" max="1000000" name="price_range" type="range" value="1000000"
                            class="w-full h-2 rounded-lg bg-green-600 cursor-pointer">
 
                 </div>
@@ -270,6 +295,36 @@ if (!$connection) {
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
         $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id";
+
+        if (isset($_POST['submit'])) {
+            $search_query = $_POST['search_bar'];
+            $residential = $_POST['residential'];
+            $commercial = $_POST['commercial'];
+            $industrial = $_POST['industrial'];
+            $radio_button_hosting = $_POST['radio_button_hosting'];
+            $area_range = $_POST['area_range'];
+            $price_range = $_POST['price_range'];
+
+            $sql = "";
+
+
+
+            if ($residential == "residential") {
+                $sql .= " AND land_type = 0";
+            }
+            if ($commercial == "commercial") {
+                $sql .= " AND land_type = 1";
+            }
+            if ($industrial == "industrial") {
+                $sql .= " AND land_type = 2";
+            }
+
+        }
+
+        if (isset($_POST['reset_button'])) {
+            $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id";
+        }
+
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {

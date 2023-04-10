@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>We&#39;ve got some trouble | 401 - Unauthorized</title>
+    <link href="../../../dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-beige-dark">
+<div class="flex items-center justify-center h-screen flex-col gap-2">
+    <h1 class="text-center text-8xl font-mono text-red-900">401</h1>
+    <h1 class="font-bold text-3xl font-mono">Unauthorized</h1>
+    <p class="lead font-mono text-gray-600">The requested resource requires an authentication.</p>
+
+    <div class="p-6 flex gap-12">
+        <button onclick="history.back();"
+                class="p-12 hover:shadow-lg hover:bg-green-700
+                rounded-lg bg-green-600 py-3 px-8 text-center text-base font-semibold
+                text-white outline-none items-center">
+            Go Back
+        </button>
+
+        <button onclick="window.location.href = '../../index.php';"
+                class="p-12
+                rounded-lg  py-3 px-8 text-center font-medium
+                text-green-600 outline-none items-center">
+            Go to Home
+        </button>
+
+    </div>
+</div>
+
+</body>
+</html>
+
