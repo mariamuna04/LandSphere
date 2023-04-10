@@ -56,6 +56,9 @@ module.exports = {
                 'Apple Color Emoji',
                 'Segoe UI Emoji',
                 'Segoe UI Symbol'],
+            'mono': ['SFMono-Regular',
+                'JetBrains Mono',
+                ],
         }
     },
     plugins: [

@@ -10,10 +10,11 @@ $DB_USER = 'root';
 $DB_NAME = 'cse3522';
 $DB_PASS = '';
 
-$connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
+try {
+    $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+} catch (Exception $e) {
+    $db_connection_error = true;
+    header('Location: ../../html/404.html');
 }
 
 $key = '';
