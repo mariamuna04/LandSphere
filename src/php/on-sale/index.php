@@ -211,17 +211,23 @@ if (!$connection) {
         <div id="" class="pt-4 col-span-3">
             <ul class="grid w-full gap-6 md:grid-cols-2">
                 <li>
-                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required>
+                    <input type="radio"
+                           id="hosting-small"
+                           name="hosting"
+                           value="hosting-small"
+                           class="hidden peer">
                     <label for="hosting-small" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">For Sale</div>
-                            <div class="w-full">Good for small websites</div>
-                        </div>
+                        <span class="flex flex-col">
+                            <span class="w-full text-lg font-semibold">For Sale</span>
+                            <span class="w-full">
+                                Own a piece of paradise, land for sale now!
+                            </span>
+                        </span>
                     </label>
                 </li>
                 <li>
@@ -232,17 +238,20 @@ if (!$connection) {
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">For Auction</div>
-                            <div class="w-full">Good for large websites</div>
-                        </div>
+                        <span class="flex flex-col">
+                            <span class="w-full text-lg font-semibold">For Auction</span>
+                            <span class="w-full">
+                                Bid now and seize your chance to own a prime land!
+                            </span>
+                        </span>
                     </label>
                 </li>
             </ul>
 
         </div>
 
-        <div class="col-span-3"><hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
+        <div class="col-span-3">
+            <hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
         </div>
 
         <div id="" class="col-span-3">
