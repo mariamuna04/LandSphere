@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (isset($_SESSION['id'])) {
+    header("Location: ./php/user-dashboard");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,17 +35,17 @@ session_start();
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="#"
+            <a href="./php/about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="#"
+            <a href="./php/news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
             <a href="php/on-sale"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 On Sale
             </a>
-            <a href="#"
+            <a href="php/news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
             <a href="php/contact-us"
@@ -251,10 +257,10 @@ session_start();
             Quick Links
         </h1>
         <div id="fiveC2" class="flex gap-4 font-normal">
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Status </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Terms and
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Status </a>
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Terms and
                 conditions </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="#"> Our
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Our
                 Commitments </a>
         </div>
     </main>
@@ -278,13 +284,13 @@ session_start();
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
 
             </div>
             <a></a>
@@ -295,11 +301,11 @@ session_start();
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
             </div>
         </div>
 
@@ -308,10 +314,10 @@ session_start();
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Help and Support </a>
-                <a href="#" class="hover:text-green-300"> Blog </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> News Archive </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -320,11 +326,11 @@ session_start();
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> About Us </a>
-                <a href="#" class="hover:text-green-300"> Leadership </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> Press </a>
-                <a href="#" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 

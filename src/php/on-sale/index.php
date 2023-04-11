@@ -21,6 +21,8 @@ if (!$connection) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </head>
 
 <body class="bg-beige-default">
@@ -68,7 +70,68 @@ if (!$connection) {
         </span>
     </button>
 
+    <?php
+    if (isset($_SESSION["id"])) {
+        $first_name = explode(" ", $_SESSION["name"])[0];
+        $last_name = explode(" ", $_SESSION["name"])[1];
+        $email = $_SESSION["email"];
+
+        if (isset($_POST["sign_out_action"])) {
+            session_destroy();
+            header("Location: ../../");
+        }
+
+        $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
+        <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
+                class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+                type="button">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 mr-2 rounded-full"
+                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                 alt="user photo" height="32px" width="32px">
+                    {$_SESSION["name"]}
+            <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+
+        <!-- Dropdown menu -->
+        <div id="dropdownAvatarName"
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700 dark:divide-gray-600">
+            <div class="px-4 py-3 text-lg text-gray-900 dark:text-white">
+                <div class="font-semibold">$first_name<span class="text-green-600">$last_name</span>
+
+    </div>
+    <div class="truncate text-sm">
+        {$_SESSION["email"]}
+    </div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+        </li>
+    </ul>
+    <form method="post" action=""  class="py-2 w-full font-semibold">
+        <button name="sign_out_action" class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
+            Sign out
+        </button>
+    </form>
+    </div>
+    </div>
+HTML;
+        echo $loggedIn;
+    } else {
+        $loggedOut =
+            <<<HTML
+        <div class="flex gap-6 items-center">
         <button onclick="window.location.href = '../sign-in';"
                 class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
                 pl-6 pr-6 rounded-3xl align-middle">
@@ -79,7 +142,13 @@ if (!$connection) {
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
-    </div>
+        </div>
+HTML;
+        echo $loggedOut;
+    }
+    ?>
+
+
 </nav>
 
 <!-- Breadcrumb -->
@@ -93,7 +162,8 @@ if (!$connection) {
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>
                     Home
                 </a>
@@ -169,7 +239,7 @@ if (!$connection) {
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="commercial" value="" class="hidden peer" >
+                    <input type="checkbox" id="commercial" value="" class="hidden peer">
                     <label for="commercial" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -211,7 +281,8 @@ if (!$connection) {
         <div id="" class="pt-4 col-span-3">
             <ul class="grid w-full gap-6 md:grid-cols-2">
                 <li>
-                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required>
+                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer"
+                           required>
                     <label for="hosting-small" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
@@ -242,20 +313,24 @@ if (!$connection) {
 
         </div>
 
-        <div class="col-span-3"><hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
+        <div class="col-span-3">
+            <hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
         </div>
 
         <div id="" class="col-span-3">
             <div class="flex gap-6">
                 <div class="w-full pl-4 pr-4">
                     <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area Range</label>
+                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area
+                        Range</label>
                     <input id="default-range" type="range" min="0" max="1000000" value="1000000"
                            class="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer">
                 </div>
 
                 <div class="w-full pl-4 pr-4">
-                    <label for="default-range" class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price Range</label>
+                    <label for="default-range"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price
+                        Range</label>
                     <input id="default-range" min="0" max="1000000" type="range" value="1000000"
                            class="w-full h-2 rounded-lg bg-green-600 cursor-pointer">
 

@@ -21,7 +21,9 @@ if (isset($_POST['submit'])) {
 
     $sql = "INSERT INTO contact_anonymous (full_name, email, phone_number, post) 
             VALUES ('$full_name', '$email', '$phone_number', '$post')";
-    $go = mysqli_query($connection, $sql);
+
+    mysqli_query($connection, $sql);
+
     mysqli_close($connection);
     $_SESSION['okay'] = true;
     header('refresh:0');
