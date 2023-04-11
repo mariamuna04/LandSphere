@@ -165,7 +165,7 @@ HTML;
             <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
             <span class="  text-lg font-bold pt-4"> List for Sale </span>
         </a>
-        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
+        <a href="./successors" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
             <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
             <span class="  text-lg font-bold pt-4"> Successors</span>
         </a>
