@@ -67,11 +67,27 @@ if (!$conn) {
 </nav>
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
+    <main class="w-full bg-white rounded-3xl p-4 flex justify-between">
         <div class=" flex flex-col">
             <?php
             $sql = "SELECT * FROM CHILDREN WHERE parent_nid = ".$_SESSION["id"].";";
             $result = mysqli_query($conn, $sql);
+            $sql2 = "SELECT sum(area) FROM owns join land on owns.land_id = land.land_id WHERE owner_id = ".$_SESSION["id"].";";
+            $result2 = mysqli_query($conn, $sql2);
+            //get value of total land
+            $total_land = 0;
+            while ($row2 = mysqli_fetch_assoc($result2)) {
+                $total_land = $row2["sum(area)"];
+            }
+            //count the number of chidren of a single owner
+            $sql3 = "SELECT count(*) FROM CHILDREN WHERE parent_nid = ".$_SESSION["id"].";";
+            $result3 = mysqli_query($conn, $sql3);
+            //get the value of total children
+            $total_children = 0;
+            while ($row3 = mysqli_fetch_assoc($result3)) {
+                $total_children = $row3["count(*)"];
+            }
+            echo "Children details and inherited land amount:";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<div class='flex flex-col gap-2'>";
                 echo "<div class='flex gap-2'>";
@@ -83,6 +99,7 @@ if (!$conn) {
                 echo "<div class='flex flex-col gap-2'>";
                 echo "<p class='font-bold'>Phone Number: ".$row["phone_number"]."</p>";
                 echo "<p class='font-bold'>Birth Certificate: ".$row["birth_certificate_number"]."</p>";
+                echo "<p class='font-bold'>Inherited land from parents: ".$total_land/(3*$total_children)."</p>";
                 echo "</div>";
                 echo "</div>";
                 echo "<div class='flex gap-2'>";
@@ -94,22 +111,25 @@ if (!$conn) {
             ?>
         </div>
     </main>
-
-    <main class="bg-white h-72 rounded-3xl">
+    <main class="w-full bg-white h-12 rounded-3xl p-4 flex justify-between"></main>
+    <main class="w-full bg-white h-72 rounded-3xl p-4 flex justify-between">
         <div class=" flex flex-col">
             <?php
             $sql = "SELECT * FROM MARITAL_STATUS WHERE partner_nid = ".$_SESSION["id"].";";
             $result = mysqli_query($conn, $sql);
+
+            echo "Spouse details and inherited land amount:";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<div class='flex flex-col gap-2'>";
                 echo "<div class='flex gap-2'>";
                 echo "<div class='flex flex-col gap-2'>";
                 echo "<p class='font-bold'>NID: ".$row["nid"]."</p>";
                 echo "<p class='font-bold'>Full Name: ".$row["full_name"]."</p>";
-                echo "<p class='font-bold'>Parent NID: ".$row["parent_nid"]."</p>";
+                echo "<p class='font-bold'>Partner NID: ".$row["partner_nid"]."</p>";
                 echo "</div>";
                 echo "<div class='flex flex-col gap-2'>";
                 echo "<p class='font-bold'>Birth Certificate: ".$row["birth_certificate_number"]."</p>";
+                echo "<p class='font-bold'>Inherited land from partner: ".($total_land/3)."</p>";
                 echo "</div>";
                 echo "</div>";
                 echo "<div class='flex gap-2'>";
