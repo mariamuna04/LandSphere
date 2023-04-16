@@ -132,10 +132,10 @@ HTML;
     </div>
 </nav>
 
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+<section id="index_main-section" class="container mx-auto my-auto mt-36 mb-16 pl-20 pr-20">
 
-    <main class="w-full h-72 bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center">
-        <h1 class="text-3xl text-black"> Dashboard </h1>
+    <main class="w-full h-[28rem] bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center bg-fixed">
+        <h1 class="text-3xl text-white font-bold"> Dashboard </h1>
     </main>
 
     <main class="bg-white h-72 rounded-3xl overflow-y-auto mt-[-40px]">
@@ -143,40 +143,54 @@ HTML;
     </main>
 
     <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 pt-12">
-<!--        <h1 class="col-span-5 text-2xl font-bold">Features</h1>-->
-<!--        <a href="./owned_land" class="flex flex-col bg-white shadow-lg p-3 rounded-2xl-->
-<!--                transform motion-safe:hover:scale-[1.02]-->
-<!--            transition-all hover:shadow-lg duration-300">-->
-<!--            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">-->
-<!--            <span class="  text-lg font-bold pt-4"> Owned Land </span>-->
-<!--        </a>-->
-
+        
         <a href="./owned_land"
+           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white">
+            <img class="h-12 w-12 pb-4" src="../../resource/icons/dashboard/owned-land.svg" alt="">
+            <span class="text-lg font-bold"> Owned Land </span>
+
+        </a>
+
+        <a href="./sale_list"
+           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-700
+                  transition-all hover:shadow-lg duration-300 hover:bg-white"
+           style="-webkit-backface-visibility: hidden;">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/for-sale.svg" alt="">
+            <span class="text-lg font-bold pt-4"
+            style="-webkit-backface-visibility: hidden;"> Sale List </span>
+
+        </a>
+
+
+        <a href="./successors" 
+           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/successor.svg" alt="">
+            <span class="text-lg font-bold pt-4"> Successor </span>
+
+        </a>
+        <a href="./payment"
            class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
-                  transition-all hover:shadow-lg duration-300 ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
-            <span class="  text-lg font-medium pt-4"> Owned Land </span>
-
-        </a>
-
-
-        <a href="./sale_list" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
-            <span class="  text-lg font-bold pt-4"> List for Sale </span>
-        </a>
-        <a href="./successors" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
-            <span class="  text-lg font-bold pt-4"> Successors</span>
-        </a>
-        <a href="#" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
+                  transition-all hover:shadow-lg duration-300 hover:bg-white">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/payment.svg" alt="">
             <span class="  text-lg font-bold pt-4"> Payment </span>
+
         </a>
-        <a href="./booking_land" class=" flex flex-col bg-white shadow-md p-3 rounded-3xl ">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/icons8-inland-48.png" alt="">
+
+        <a href="./booking_land"
+           class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white">
+            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/booking.svg" alt="">
             <span class="  text-lg font-bold pt-4"> Bookings </span>
+
         </a>
+
 
     </main>
 

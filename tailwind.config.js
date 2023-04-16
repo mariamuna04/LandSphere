@@ -26,7 +26,7 @@ module.exports = {
                 'off-white' : '#C0C6C7',
             },
             backgroundImage: {
-                'user-dashboard-bg-image': "url('/src/resource/img/istockphoto-1086329452-170667a.jpg')",
+                'user-dashboard-bg-image': "url('/src/resource/img/user-dashboard.jpeg')",
                 'sign-in-background-light': "url('/src/resource/img/sign-in-background-light.webp')",
                 'sign-up-background-light': "url('/src/resource/img/sign-up-background-light.webp')",
                 'sign-in-background-dark': "url('/src/resource/img/sign-in-background-dark.webp')",
