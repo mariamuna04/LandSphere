@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 0);
 session_start();
 if (!isset($_SESSION["id"])) {
     header("Location: ../sign-in");
@@ -72,6 +73,19 @@ $hour = date('H', strtotime($current_time));
     <title>LandSphere | Your Personal Land Manager</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+    <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .container-snap::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .container-snap {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
 </head>
 
 <body class="bg-beige-default scroll-smooth">
@@ -176,7 +190,7 @@ HTML;
 HTML;
                     echo $printable_date;
 
-                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
+                    $json = file_get_contents("http://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
                     $json_output = json_decode($json, true);
                     $current_weather = $json_output['current_weather'];
                     $is_day = $current_weather['is_day'];
@@ -238,16 +252,16 @@ HTML;
 
                     <div class="flex flex-col items-center justify-between">
                         <img src="../../resource/icons/dashboard/leaf.svg" alt="">
-                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2
+                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 transition-all duration-300
                         <?php
-                    if ($average_env_pts >= 0 && $average_env_pts <= 4) {
-                        echo "bg-green-100 text-green-500";
-                    } else if ($average_env_pts > 4 && $average_env_pts <= 8) {
-                        echo "bg-yellow-100 text-yellow-600";
-                    } else if ($average_env_pts > 8 && $average_env_pts <= 10) {
-                        echo "bg-red-100 text-red-500";
-                    }
-                    ?>">
+                        if ($average_env_pts >= 0 && $average_env_pts <= 4) {
+                            echo "group-hover:bg-green-100 text-green-500";
+                        } else if ($average_env_pts > 4 && $average_env_pts <= 8) {
+                            echo "group-hover:bg-yellow-100 text-yellow-600";
+                        } else if ($average_env_pts > 8 && $average_env_pts <= 10) {
+                            echo "group-hover:bg-red-100 text-red-500";
+                        }
+                        ?>">
                             <p>Environment</p>
                             <p><?php echo $average_env_pts ?></p>
                         </div>
@@ -320,7 +334,7 @@ HTML;
                 <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl">
                     Notice
                 </h1>
-                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll">
+                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll container-snap">
                     <div class="flex flex-row gap-2">
                         <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
                             <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
@@ -385,72 +399,41 @@ HTML;
 
             </div>
 
-            <div id="news-board" class="h-full w-full rounded-2xl bg-beige-dark">
-                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl">
+            <div id="news-board" class="h-full w-full rounded-2xl">
+                <h1 class="h-auto w-full bg-beige-dark p-4 font-bold text-xl text-center rounded-2xl">
                     Latest News
                 </h1>
-                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll">
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 1 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
+                <div class="h-64 flex flex-col gap-6 p-4 overflow-y-scroll container-snap">
+                    <?php
+                    $news_sql = "SELECT * FROM news ORDER BY date DESC LIMIT 7";
+                    $news_result = mysqli_query($connection, $news_sql);
+                    while ($news_row = mysqli_fetch_assoc($news_result)) {
+                        $card = <<< HTML
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        <div class="group flex gap-2 align-middle items-center rounded-2xl bg-beige-darker p-4 
+                        hover:bg-green-100 transition-all duration-300">
+                            <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                                <img class="h-12 w-12 rounded-lg" src="../../resource/img/image_placeholder.webp" alt="">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-lg group-hover:text-primary"> {$news_row['title']} </span>
+                                <span class="text-sm"> {$news_row['subtitle']} </span>
+                                <span class="text-sm"> {$news_row['date']} </span>
+                            </div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
+HTML;
+                        echo $card;
+                    }
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-
-
+                    ?>
+                    <a href="../news" class="p-2 text-center hover:underline text-primary">
+                        See more...
+                    </a>
                 </div>
+
+
+            </div>
 
             </div>
 

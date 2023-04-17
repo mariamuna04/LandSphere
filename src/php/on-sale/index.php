@@ -12,6 +12,12 @@ if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+
+if (isset($_POST["sign_out"])) {
+    session_destroy();
+    header("Location: ../../../");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +90,7 @@ if (!$connection) {
         $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
-                class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+                class="flex items-center text-sm font-medium text-gray-900 rounded-full"
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
@@ -101,22 +107,22 @@ if (!$connection) {
 
         <!-- Dropdown menu -->
         <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700 dark:divide-gray-600">
-            <div class="px-4 py-3 text-lg text-gray-900 dark:text-white">
-                <div class="font-semibold">$first_name<span class="text-green-600">$last_name</span>
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64">
+            <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-lg">
+                <div class="font-semibold">$first_name <span class="text-green-600">$last_name</span>
 
     </div>
     <div class="truncate text-sm">
         {$_SESSION["email"]}
     </div>
     </div>
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+    <ul class="py-2 text-sm text-gray-700"
         aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
         <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
         </li>
         <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
         </li>
     </ul>
     <form method="post" action=""  class="py-2 w-full font-semibold">

@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 0);
 session_start();
 
 $DB_HOST = 'localhost';
@@ -66,7 +67,7 @@ if (isset($_POST['submit'])) {
             <a href="../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="../contact-us"
+            <a href="#"
                class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
                     text-green-700 font-medium">
                 Contact</a>
@@ -87,7 +88,68 @@ if (isset($_POST['submit'])) {
         </span>
     </button>
 
+    <?php
+    if (isset($_SESSION["id"])) {
+        $first_name = explode(" ", $_SESSION["name"])[0];
+        $last_name = explode(" ", $_SESSION["name"])[1];
+        $email = $_SESSION["email"];
+
+        if (isset($_POST["sign_out_action"])) {
+            session_destroy();
+            header("Location: ../../");
+        }
+
+        $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
+        <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
+                class="flex items-center text-sm font-medium text-gray-900 rounded-full"
+                type="button">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 mr-2 rounded-full"
+                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                 alt="user photo" height="32px" width="32px">
+                    {$_SESSION["name"]}
+            <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+
+        <!-- Dropdown menu -->
+        <div id="dropdownAvatarName"
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64">
+            <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-lg">
+                <div class="font-semibold">$first_name <span class="text-green-600">$last_name</span>
+
+    </div>
+    <div class="truncate text-sm">
+        {$_SESSION["email"]}
+    </div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700"
+        aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+        </li>
+    </ul>
+    <form method="post" action=""  class="py-2 w-full font-semibold">
+        <button name="sign_out_action" class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
+            Sign out
+        </button>
+    </form>
+    </div>
+    </div>
+HTML;
+        echo $loggedIn;
+    } else {
+        $loggedOut =
+            <<<HTML
+        <div class="flex gap-6 items-center">
         <button onclick="window.location.href = '../sign-in';"
                 class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
                 pl-6 pr-6 rounded-3xl align-middle">
@@ -98,7 +160,13 @@ if (isset($_POST['submit'])) {
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
-    </div>
+        </div>
+HTML;
+        echo $loggedOut;
+    }
+    ?>
+
+
 </nav>
 <div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
