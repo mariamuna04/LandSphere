@@ -86,7 +86,7 @@ $hour = date('H', strtotime($current_time));
 
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
-                class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 md:mr-0 focus:ring-4 focus:ring-gray-100"
+                class="flex items-center text-sm font-medium text-gray-900 rounded-full"
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
@@ -104,7 +104,7 @@ $hour = date('H', strtotime($current_time));
         <!-- Dropdown menu -->
         <div id="dropdownAvatarName"
              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64">
-            <div class="px-4 py-3 text-lg text-gray-900">
+            <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-lg">
                 <div class="font-semibold">
                     <?php
                     $section =
@@ -126,13 +126,17 @@ HTML;
                 <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
                 </li>
+
+                <li>
+                    <form method="post" action="" class="py-2 w-full font-semibold">
+                        <button name="sign_out_action"
+                                class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
+                            Sign out
+                        </button>
+                    </form>
+                </li>
             </ul>
-            <form method="post" action="" class="py-2 w-full font-semibold">
-                <button name="sign_out_action"
-                        class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
-                    Sign out
-                </button>
-            </form>
+
         </div>
     </div>
 </nav>
@@ -140,7 +144,7 @@ HTML;
 <section id="index_main-section">
 
     <main class="w-full h-[40rem] bg-blue-950 rounded-2xl p-4
-        bg-user-dashboard-bg-image bg-cover bg-fixed">
+        bg-user-dashboard-bg-image bg-cover">
         <div class="container mx-auto my-auto mt-36 pl-48 pr-48 grid grid-cols-2 gap-12">
 
             <div class="group h-full w-full bg-beige-light rounded-2xl backdrop-blur-lg p-6
@@ -149,7 +153,7 @@ HTML;
                     <?php
                     $date = date("l, d F Y");
                     $printable_date = <<< HTML
-                        <span class="font-bold">{$date}</span>
+                        <span class="font-bold text-zinc-200">{$date}</span>
 HTML;
                     echo $printable_date;
 
@@ -180,7 +184,7 @@ HTML;
 
                     ?>
                 </p>
-                <p class="font-bold text-white text-3xl">
+                <p class="font-bold text-white text-3xl pt-4">
                     <?php
                     $morning = date("H") < 12;
                     $afternoon = date("H") < 18;
@@ -196,12 +200,17 @@ HTML;
                         echo "Have a good night,";
                     }
                     ?>
+                </p>
                 <p class="font-semibold text-white text-2xl">
                     <?php
-                    echo "<span class='group-hover:text-green-200 transition-all duration-300'>$first_name</span> $last_name"
+                    echo "$first_name <span class='group-hover:text-green-950 transition-all duration-300'>$last_name</span>"
                     ?>
 
                 </p>
+
+                <div class=" hidden h-full w-full mt-6 p-4 bg-zinc-100 rounded-2xl bg-opacity-60 shadow-inner">
+
+                </div>
             </div>
 
 
@@ -211,18 +220,16 @@ HTML;
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600 backdrop-blur-sm
                   transition-all hover:shadow-lg duration-300 hover:bg-white col-span-2">
                     <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/owned-land.svg" alt="">
-                    <span class="text-lg font-bold pl-2"> Owned Land </span>
+                    <span class="text-lg font-bold pl-2"> Your Owned Land </span>
 
                 </a>
 
                 <a href="./sale_list"
                    class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
                   transform motion-safe:hover:scale-[1.02] hover:text-green-700
-                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100"
-                   style="-webkit-backface-visibility: hidden;">
+                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/for-sale.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"
-                          style="-webkit-backface-visibility: hidden;"> Sale List </span>
+                    <span class="text-lg font-bold pt-4 pl-2"> Your Sale List </span>
 
                 </a>
 
@@ -232,7 +239,7 @@ HTML;
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/successor.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Successor </span>
+                    <span class="text-lg font-bold pt-4 pl-2"> Your Successor </span>
 
                 </a>
                 <a href="./payment"
@@ -240,7 +247,7 @@ HTML;
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/payment.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Payment </span>
+                    <span class="text-lg font-bold pt-4 pl-2"> Your Payment </span>
 
                 </a>
 
@@ -249,75 +256,155 @@ HTML;
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/booking.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Bookings </span>
+                    <span class="text-lg font-bold pt-4 pl-2"> Your Bookings </span>
 
                 </a>
             </div>
         </div>
     </main>
 
-    <main class="hidden grid grid-cols-5 gap-3 pb-12 h-36 mb-10 pt-12">
+    <main class="container mx-auto my-auto mt-12 mb-16 pl-36 pr-36">
+        <section class="grid grid-cols-2 gap-12">
+            <div id="notice-board" class="h-full w-full rounded-2xl bg-beige-dark">
+                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl">
+                    Notice
+                </h1>
+                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll">
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 1 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
-        <a href="./owned_land"
-           class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
-                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
-                  transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/owned-land.svg" alt="">
-            <span class="text-lg font-bold pl-2"> Owned Land </span>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
-        </a>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
-        <a href="./sale_list"
-           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
-                  transform motion-safe:hover:scale-[1.02] hover:text-green-700
-                  transition-all hover:shadow-lg duration-300 hover:bg-white"
-           style="-webkit-backface-visibility: hidden;">
-            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/for-sale.svg" alt="">
-            <span class="text-lg font-bold pt-4 pl-2"
-                  style="-webkit-backface-visibility: hidden;"> Sale List </span>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
-        </a>
-
-
-        <a href="./successors"
-           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
-                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
-                  transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/successor.svg" alt="">
-            <span class="text-lg font-bold pt-4 pl-2"> Successor </span>
-
-        </a>
-        <a href="./payment"
-           class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
-                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
-                  transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/payment.svg" alt="">
-            <span class="text-lg font-bold pt-4 pl-2"> Payment </span>
-
-        </a>
-
-        <a href="./booking_land"
-           class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
-                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
-                  transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/booking.svg" alt="">
-            <span class="text-lg font-bold pt-4 pl-2"> Bookings </span>
-
-        </a>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
 
-    </main>
+                </div>
 
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        Registered Lan
-    </main>
+            </div>
 
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        NOTICE
-    </main>
+            <div id="news-board" class="h-full w-full rounded-2xl bg-beige-dark">
+                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl">
+                    Latest News
+                </h1>
+                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll">
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 1 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
 
-    <main class="flex flex-col gap-4 pb-12 h-36 text-center rounded-2xl bg-white mb-10">
-        NEWS
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row gap-2">
+                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg"> Notice 4 </span>
+                            <span class="text-sm"> 2021-09-09 </span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
     </main>
 
 </section>
