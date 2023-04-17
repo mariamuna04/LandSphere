@@ -86,7 +86,7 @@ $result = mysqli_query($connection, $sql);
             session_destroy();
             header("Location: ../../");
         }
-
+        $rnd = rand(0, 1000000);
         $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
@@ -94,7 +94,7 @@ $result = mysqli_query($connection, $sql);
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -209,7 +209,7 @@ HTML;
                   transition-all hover:shadow-lg duration-300">
     <img class="object-cover rounded-lg h-full w-32" src="https://api.dicebear.com/6.x/shapes/svg?seed={$rnd}" alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
-        <h5 class="mb-2 font-bold tracking-tight text-gray-900">{$news_row['date']}</h5>
+        <h5 class="mb-2 font-bold tracking-tight text-gray-500">{$news_row['date']}</h5>
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 group-hover:text-primary transition-all duration-300">{$news_row['title']}</h5>
         <h5 class="mb-2 text-md font-bold tracking-tight text-gray-600">{$news_row['subtitle']}</h5>
         <p class="mb-3 text-sm text-gray-700">{$news_row['body']}</p>
