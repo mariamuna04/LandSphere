@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     <title>Sign In</title>
 </head>
 
-<body class="bg-sign-in-background-light bg-cover filter dark:bg-sign-in-background-dark">
+<body class="bg-sign-in-background-light bg-cover filter">
 
 <?php
 if (!$_SESSION['success']) {
@@ -54,17 +54,16 @@ if (!$_SESSION['success']) {
 
     <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-xl
     bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
-    animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
-    dark:border-gray-800 ">
+    animate-fadeIn overflow-y-auto">
 
-        <h2 class="align-middle pb-12 text-center font-black text-2xl dark:text-white 
+        <h2 class="align-middle pb-12 text-center font-black text-2xl
         select-none">
             Reset Password
         </h2>
 
         <form action="" method="POST">
             <div class="mb-5">
-                <p class="text-xs text-gray-500 text-center dark:text-gray-300 select-none pb-4">
+                <p class="text-xs text-gray-500 text-center select-none pb-4">
                     Please check your email or phone number. A verification code is sent.
                 </p>
             </div>
@@ -75,11 +74,9 @@ if (!$_SESSION['success']) {
                            name="OTP"
                            id="OTP"
                            placeholder="Enter Six Digit OTP"
-                           class="input w-full rounded-md border border-[#e0e0e0]
+                           class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:border-[#6A64F1] focus:shadow-md
-                           dark:border-gray-900 dark:bg-[#393939] dark:text-white 
-                           dark:placeholder-gray-400"
+                           outline-none focus:shadow-md"
                     />
                     <label for="password" class="text-sm">
                 </div>
@@ -91,11 +88,9 @@ if (!$_SESSION['success']) {
                            name="password"
                            id="password"
                            placeholder="New Password"
-                           class="input w-full rounded-md border border-[#e0e0e0]
+                           class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:border-[#6A64F1] focus:shadow-md
-                           dark:border-gray-900 dark:bg-[#393939] dark:text-white 
-                           dark:placeholder-gray-400"
+                           outline-none focus:shadow-md"
                     />
                     <label for="password" class="text-sm">                   
                 </div>
@@ -105,11 +100,9 @@ if (!$_SESSION['success']) {
                            name="confirm_password"
                            id="confirm_password"
                            placeholder="Confirm New Password"
-                           class="input w-full rounded-md border border-[#e0e0e0]
+                           class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:border-[#6A64F1] focus:shadow-md
-                           dark:border-gray-900 dark:bg-[#393939] dark:text-white
-                           dark:placeholder-gray-400"
+                           outline-none focus:shadow-md"
                     />
                     <label for="password" class="text-sm">
                 </div>
@@ -120,7 +113,7 @@ if (!$_SESSION['success']) {
                     <button name="submit" type="submit"
                             class="hover:shadow-form rounded-md bg-primary py-3 px-8 
                             text-center text-base font-semibold text-white outline-none 
-                            items-center">
+                            items-center hover:bg-green-800 hover:shadow-lg">
                         Submit
                     </button>
                 </div>
@@ -132,18 +125,17 @@ if (!$_SESSION['success']) {
 ';
 } else {
     echo '
-    <div class="loading rounded h-1 w-[0%] bg-green-800 transition-all duration-200 absolute z-40 top-0 dark:bg-green-500">
+    <div class="loading rounded h-1 w-[0%] bg-green-800 transition-all duration-200 absolute z-40 top-0">
     </div>
     
     <div class="flex items-center justify-center h-screen">
     
         <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-xl
         bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
-        animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
-        dark:border-gray-800">
+        animate-fadeIn overflow-y-auto">
     
             <img src="../../resource/icons/checkmark.svg" class="h-[100px] pb-5" alt="success_img">
-                <h2 class="align-middle text-center font-black text-2xl dark:text-white select-none">
+                <h2 class="align-middle text-center font-black text-2xl select-none">
                     Password Changed Successfully!
                     Redirecting...
                 </h2>

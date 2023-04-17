@@ -25,25 +25,25 @@
 
     <div class="flex gap-5 items-center">
 
-        <a href="#" class="flex select-none">
+        <a href="../../../" class="flex select-none">
             <img alt="" src="../../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="./php/about-us"
+            <a href="../../about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="./php/news"
+            <a href="../../projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
-            <a href="php/on-sale"
+            <a href="../../on-sale"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 On Sale
             </a>
-            <a href="php/news"
+            <a href="../../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="php/contact-us"
+            <a href="../../contact-us"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Contact</a>
         </div>
@@ -70,19 +70,55 @@
             Sign In
         </button>
         <button onclick="window.location.href = '../../sign-up';"
-                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
+                class="bg-primary border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
     </div>
 </nav>
-<h1 class="mt-20"></h1>
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
+
+<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+    <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
+    justify-center group-hover:shadow-lg transition-all duration-300"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1">
+            <li class="inline-flex items-center">
+                <a href="../../../index.php"
+                   class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#"
+                       class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
+                        Terms and Conditions
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+</div>
+
+
+<section id="index_main-section" class="container mx-auto my-auto mt-44 mb-16
                 pl-36 pr-36">
 
     <header id="shelf-one" class="flex flex-col pb-12">
         <div id="oneC1">
-            <h1 class="text-5xl font-medium text-gray-600 text-center pb-6">
+            <h1 class="text-4xl font-bold text-gray-600 text-center pb-6">
                 Terms and Conditions
             </h1>
         </div>

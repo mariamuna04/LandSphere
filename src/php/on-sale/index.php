@@ -36,10 +36,10 @@ if (!$connection) {
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="#"
+            <a href="../about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="#"
+            <a href="../projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
             <a href="#"
@@ -47,7 +47,7 @@ if (!$connection) {
                     text-green-700 font-medium">
                 On Sale
             </a>
-            <a href="#"
+            <a href="../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
             <a href="../contact-us"
@@ -138,7 +138,7 @@ HTML;
             Sign In
         </button>
         <button onclick="window.location.href = '../sign-up';"
-                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
+                class="bg-primary border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
@@ -210,7 +210,7 @@ HTML;
                        placeholder="Type keyword to search">
                 <button type="submit"
                         class="text-white absolute right-2.5
-                        bottom-2.5 bg-green-600 hover:bg-green-700 hover:shadow-lg
+                        bottom-2.5 bg-primary hover:bg-green-700 hover:shadow-lg
                         font-medium rounded-lg text-sm px-4 py-2">
                     Search
                 </button>
@@ -289,10 +289,10 @@ HTML;
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">For Sale</div>
-                            <div class="w-full">Good for small websites</div>
-                        </div>
+                        <span class="block">
+                            <span class="w-full text-lg font-semibold">For Sale</span>
+                            <span class="w-full">Get your dream land with stunning prices</span>
+                        </span>
                     </label>
                 </li>
                 <li>
@@ -303,10 +303,10 @@ HTML;
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">For Auction</div>
-                            <div class="w-full">Good for large websites</div>
-                        </div>
+                        <span class="block">
+                            <span class="w-full text-lg font-semibold">For Auction</span>
+                            <span class="w-full">Bid high, win big, and secure your slice of paradise</span>
+                        </span>
                     </label>
                 </li>
             </ul>
@@ -321,7 +321,7 @@ HTML;
             <div class="flex gap-6">
                 <div class="w-full pl-4 pr-4">
                     <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Area
+                           class="block mb-2 text-md font-medium text-gray-900 text-center">Area
                         Range</label>
                     <input id="default-range" type="range" min="0" max="1000000" value="1000000"
                            class="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer">
@@ -329,10 +329,10 @@ HTML;
 
                 <div class="w-full pl-4 pr-4">
                     <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center font-black">Price
+                           class="block mb-2 text-md font-medium text-gray-900 text-center">Price
                         Range</label>
                     <input id="default-range" min="0" max="1000000" type="range" value="1000000"
-                           class="w-full h-2 rounded-lg bg-green-600 cursor-pointer">
+                           class="w-full h-2 rounded-lg bg-primary cursor-pointer">
 
                 </div>
 
@@ -447,13 +447,13 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
             </div>
             <a></a>
         </div>
@@ -463,11 +463,11 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
             </div>
         </div>
 
@@ -476,10 +476,10 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Help and Support </a>
-                <a href="#" class="hover:text-green-300"> Blog </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> News Archive </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -488,26 +488,26 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> About Us </a>
-                <a href="#" class="hover:text-green-300"> Leadership </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> Press </a>
-                <a href="#" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
@@ -517,10 +517,10 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="#" class="hover:text-green-300"> Terms of Service </a>
-                <a href="#" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="#" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="#" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
@@ -542,7 +542,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t flex items-center">
+            <div class="justify-between p-4 border-b rounded-t flex items-center">
                 <img src="../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
@@ -550,7 +550,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                        placeholder="Type anything to search"
                        class="w-full rounded-md
                                bg-white px-3 text-base font-medium text-[#6B7280]
-                               outline-none text-lg"
+                               outline-none"
                 />
                 <label for="search_text-field"></label>
                 <button type="button"

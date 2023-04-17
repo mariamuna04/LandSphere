@@ -45,14 +45,13 @@ if (isset($_POST['submit'])) {
     <link href="../../../dist/output.css" rel="stylesheet">
     <title>Sign In</title>
 </head>
-<body class="bg-sign-up-background-light bg-cover dark:bg-sign-up-background-dark">
+<body class="bg-sign-up-background-light bg-cover">
 
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] h-[700px] p-12 flex flex-col justify-between
                 rounded-xl bg-opacity-60 backdrop-blur-md bg-beige-light
-                shadow-2xl animate-fadeIn dark:bg-black dark:bg-opacity-30
-                dark:border-gray-800">
+                shadow-2xl animate-fadeIn">
 
         <div class="max-w-xl mx-auto my-3 border-b-2 pb-4 select-none">
 
@@ -61,7 +60,7 @@ if (isset($_POST['submit'])) {
                     <div id="step-one-circle"
                          class="w-10 h-10 mx-auto rounded-full text-lg flex
                          items-center border-4 border-green-600 text-black
-                         animate-pulse dark:text-white">
+                         animate-pulse">
                         <span class="text-center w-full">1</span>
                     </div>
                 </div>
@@ -70,7 +69,7 @@ if (isset($_POST['submit'])) {
                 <div class="flex-1">
                     <div id="step-two-circle"
                          class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center dark:text-white">
+                         items-center">
                         <span class="text-center w-full">2</span>
                     </div>
                 </div>
@@ -78,7 +77,7 @@ if (isset($_POST['submit'])) {
                 <div class="flex-1">
                     <div id="step-three-circle"
                          class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center dark:text-white">
+                         items-center">
                         <span class="text-center w-full">3</span>
                     </div>
                 </div>
@@ -86,13 +85,13 @@ if (isset($_POST['submit'])) {
                 <div class="flex-1">
                     <div id="step-four-circle"
                          class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center dark:text-white">
+                         items-center">
                         <span class="text-center w-full">4</span>
                     </div>
                 </div>
             </div>
 
-            <div class="flex text-xs content-center text-center dark:text-white">
+            <div class="flex text-xs content-center text-center">
                 <div id="step-one" class="w-1/4">
                     Account Registration
                 </div>
@@ -114,19 +113,19 @@ if (isset($_POST['submit'])) {
 
         <div id="card-title">
             <h2 id="header-page-one"
-                class="align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white">
+                class="align-middle pt-4 pb-4 text-center font-black text-2xl select-none">
                 Create an Account
             </h2>
             <h2 id="header-page-two"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
                 A Few More Information...
             </h2>
             <h2 id="header-page-three"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
                 Almost There!
             </h2>
             <h2 id="header-page-four"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none dark:text-white animate-fadeIn">
+                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
                 Finishing...
             </h2>
         </div>
@@ -146,7 +145,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="email" class="text-xs"></label>
                             </div>
@@ -161,7 +160,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="nid_number" class="text-xs"></label>
                             </div>
@@ -177,7 +176,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="password" class="text-xs"></label>
                             </div>
@@ -192,7 +191,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="confirm_password" class="text-xs"></label>
                             </div>
@@ -209,7 +208,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="name" class="text-xs"></label>
                             </div>
@@ -224,7 +223,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="dob" class="text-xs"></label>
                             </div>
@@ -232,6 +231,7 @@ if (isset($_POST['submit'])) {
 
                         <div id="nid_number" class="mb-5">
                             <div class="mb-5">
+                                <label for="permanent_address"></label>
                                 <input type="text"
                                        name="permanent_address"
                                        id="permanent_address"
@@ -239,7 +239,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="dob" class="text-xs"></label>
                             </div>
@@ -247,6 +247,7 @@ if (isset($_POST['submit'])) {
 
                         <div id="nid_number" class="mb-5">
                             <div class="mb-5">
+                                <label for="occupation"></label>
                                 <input type="text"
                                        name="occupation"
                                        id="occupation"
@@ -254,7 +255,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="dob" class="text-xs"></label>
                             </div>
@@ -262,6 +263,7 @@ if (isset($_POST['submit'])) {
 
                         <div id="nid_number" class="mb-5">
                             <div class="mb-5">
+                                <label for="yearly_income"></label>
                                 <input type="text"
                                        name="yearly_income"
                                        id="yearly_income"
@@ -269,7 +271,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="dob" class="text-xs"></label>
                             </div>
@@ -278,6 +280,7 @@ if (isset($_POST['submit'])) {
                     <div class="hidden animate-fadeIn" id="page3">
                         <div id="email" class="mb-5">
                             <div class="mb-5">
+                                <label for="passport_number"></label>
                                 <input type="text"
                                        name="passport_number"
                                        id="passport_number"
@@ -285,7 +288,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="job" class="text-xs"></label>
                             </div>
@@ -294,6 +297,7 @@ if (isset($_POST['submit'])) {
 
                         <div id="email" class="mb-5">
                             <div class="mb-5">
+                                <label for="birth_certificate_number"></label>
                                 <input type="text"
                                        name="birth_certificate_number"
                                        id="birth_certificate_number"
@@ -301,7 +305,7 @@ if (isset($_POST['submit'])) {
                                        class="w-full rounded-md border border-[#e0e0e0]
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:border-[#6A64F1] focus:shadow-md
-                               dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               "
                                 />
                                 <label for="job" class="text-xs"></label>
                             </div>
@@ -344,24 +348,30 @@ if (isset($_POST['submit'])) {
                     </a>
 
                     <a id="nextButton" onclick="onNextClick()"
-                       class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
-                outline-none items-center select-none bg-primary text-white">
+                       class="hover:shadow-form bg-green-700
+                        py-3 px-8 text-center text-base
+                        font-bold text-white outline-none items-center
+                        col-span-2 rounded-xl hover:bg-green-800
+                        hover:shadow-lg">
                         Next
                     </a>
 
                     <button name="submit" id="submitButton"
-                            class="hidden cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
-                outline-none items-center select-none bg-primary text-white">
+                            class="hidden hover:shadow-form bg-green-700
+                        py-3 px-8 text-center text-base
+                        font-bold text-white outline-none items-center
+                        col-span-2 rounded-xl hover:bg-green-800
+                        hover:shadow-lg">
                         Submit
                     </button>
 
                 </div>
 
                 <div class="flex">
-                    <p class="text-black dark:text-white select-none">Already Have an Account?</p>
                     <a href="../sign-in"
-                       class="text-center text-base text-secondary outline-none items-center font-bold pl-2 select-none">
-                        Sign In
+                       class="cursor-hand rounded-md text-center text-base font-semibold
+                outline-none items-center hover:underline select-none text-gray-500 flex flex-row gap-2">
+                        Already Have an Account? <span class="font-bold text-green-600"> Sign In </span>
                     </a>
                 </div>
             </div>

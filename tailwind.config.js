@@ -3,10 +3,10 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'primary': '#6A64F1',
+                'primary': '#16A34A',
                 'primary-dark': '#5a54d1',
 
-                'secondary': '#918dea',
+                'secondary': '#E1BB80',
                 'secondary-dark': '#7f7cd9',
 
                 'accent': '#FFC107',
@@ -26,11 +26,9 @@ module.exports = {
                 'off-white' : '#C0C6C7',
             },
             backgroundImage: {
-                'user-dashboard-bg-image': "url('/src/resource/img/user-dashboard.jpeg')",
+                'user-dashboard-bg-image': "url('/src/resource/img/user-dashboard.webp')",
                 'sign-in-background-light': "url('/src/resource/img/sign-in-background-light.webp')",
                 'sign-up-background-light': "url('/src/resource/img/sign-up-background-light.webp')",
-                'sign-in-background-dark': "url('/src/resource/img/sign-in-background-dark.webp')",
-                'sign-up-background-dark': "url('/src/resource/img/sign-up-background-dark.webp')",
                 's3c2-1': "url('/src/resource/icons/index/main-section_shelf-three_c2-1_specialists.jpg')",
                 's3c2-3': "url('/src/resource/icons/index/main-section_shelf-three_c2-3_expert_bg.jpg')",
             },
@@ -64,7 +62,6 @@ module.exports = {
     plugins: [
         require('@tailwindcss/typography'),
     ],
-
     variants: {
         extend: {
             animation: ['motion-safe'],

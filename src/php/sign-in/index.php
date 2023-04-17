@@ -76,16 +76,15 @@ if (isset($_POST['submit'])) {
     <title>Sign In</title>
 </head>
 
-<body class="bg-sign-in-background-light bg-cover filter dark:bg-sign-in-background-dark">
+<body class="bg-sign-in-background-light bg-cover">
 
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-2xl
     bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
-    animate-fadeIn overflow-y-auto dark:bg-black dark:bg-opacity-30
-    dark:border-gray-800 ">
+    animate-fadeIn overflow-y-auto">
 
-        <h2 class="align-middle pb-8 text-center font-black text-2xl dark:text-white select-none">
+        <h2 class="align-middle pb-8 text-center font-black text-2xl select-none">
             Sign in to your account
         </h2>
 
@@ -101,8 +100,7 @@ if (isset($_POST['submit'])) {
                            placeholder="Email address or Phone Number"
                            class="w-full rounded-xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md
-                           dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                           outline-none focus:shadow-md"
                     />
                     <label for="email" class="text-sm"></label>
                     <p class="text-sm pt-2 text-center text-red-600">
@@ -131,7 +129,7 @@ if (isset($_POST['submit'])) {
                            placeholder="Password"
                            class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md dark:border-gray-900 dark:bg-[#393939] dark:text-white dark:placeholder-gray-400"
+                               outline-none focus:shadow-md"
                     />
                     <label for="password" class="text-sm"></label>
                     <p class="text-sm pt-2 text-center text-red-600">
@@ -166,7 +164,7 @@ if (isset($_POST['submit'])) {
 
                 </div>
                 <div class="flex pt-4 pb-4 py-3 px-8">
-                    <a href="../forgot-password" class="cursor-hand rounded-md text-center text-base font-semibold
+                    <a href="../forgot-passwordsign" class="cursor-hand rounded-md text-center text-base font-semibold
                 outline-none items-center hover:underline select-none text-gray-500 flex flex-row gap-2">
                         Having trouble signing in?
                     </a>

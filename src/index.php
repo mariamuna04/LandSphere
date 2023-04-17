@@ -11,7 +11,7 @@ if (isset($_SESSION['id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">f
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
@@ -67,15 +67,15 @@ if (isset($_SESSION['id'])) {
                 rounded-lg">K</kbd>
         </span>
     </button>
-    
+
     <div class="flex gap-6 items-center">
         <button onclick="window.location.href = './php/sign-in';"
-                class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem] 
+                class="hover:border-primary border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
                 pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
         <button onclick="window.location.href = './php/sign-up';"
-                class="bg-green-600 border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem] 
+                class="bg-primary border border-primary hover:bg-green-800 transition-colors pt-[0.60rem]
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
         </button>
@@ -97,7 +97,8 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-one_c2-1_help.svg">
                 <div class="flex flex-col gap-0.5">
                     <p class="font-medium text-sm">Need any help?</p>
-                    <a href="#" class="text-green-600 text-sm hover:underline">Ask a specialist</a>
+                    <a href="./html/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Ask a
+                        specialist</a>
                 </div>
             </div>
 
@@ -106,7 +107,8 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-one-c2-2_office.svg">
                 <div class="flex flex-col gap-0.5">
                     <p class="font-medium text-sm">Visit our office</p>
-                    <a href="#" class="text-green-600 text-sm hover:underline">Find our locations</a>
+                    <a href="./html/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Find our
+                        locations</a>
                 </div>
             </div>
 
@@ -169,13 +171,13 @@ if (isset($_SESSION['id'])) {
             Help is here. <span class="text-gray-500">Whenever and however you need it.</span>
         </h1>
         <div id="threeC2" class="grid grid-cols-2 gap-4">
-            <a id="threeC2-1" href="#" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
+            <a id="threeC2-1" href="./html/error/HTTP501.html" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
                         bg-s3c2-1 duration-300">
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
-            <a id="threeC2-2" href="#" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
+            <a id="threeC2-2" href="./html/error/HTTP501.html" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
                         items-center justify-between duration-300">
                 <p class="font-medium text-2xl">Get to know about laws, rules and regulations</p>
@@ -183,7 +185,7 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-three_c2-2_law.svg">
 
             </a>
-            <a id="threeC2-3" href="#" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
+            <a id="threeC2-3" href="./html/error/HTTP501.html" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8
             bg-s3c2-3 duration-300">
                 <p class="font-medium text-2xl ">Get expert service <br> and support</p>
@@ -257,10 +259,13 @@ if (isset($_SESSION['id'])) {
             Quick Links
         </h1>
         <div id="fiveC2" class="flex gap-4 font-normal">
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Status </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Terms and
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
+               href="./html/error/HTTP501.html"> Status </a>
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
+               href="./php/__misc_files/terms-and-conditions"> Terms and
                 conditions </a>
-            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest" href="./html/error/HTTP501.html"> Our
+            <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
+               href="./html/error/HTTP501.html"> Our
                 Commitments </a>
         </div>
     </main>
@@ -336,16 +341,16 @@ if (isset($_SESSION['id'])) {
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="#">
+            <a href="./html/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="#">
+            <a href="./html/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="#">
+            <a href="./html/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="#">
+            <a href="./html/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
@@ -355,10 +360,10 @@ if (isset($_SESSION['id'])) {
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="#" class="hover:text-green-300"> Terms of Service </a>
-                <a href="#" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="#" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="#" class="hover:text-green-300"> Accessibility </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
@@ -374,13 +379,13 @@ if (isset($_SESSION['id'])) {
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto 
      md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
     backdrop-blur-md transition-all">
-    
-    
+
+
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t flex items-center">
+            <div class="flex justify-between p-4 border-b rounded-t items-center">
                 <img src="resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
@@ -388,18 +393,19 @@ if (isset($_SESSION['id'])) {
                        placeholder="Type anything to search"
                        class="w-full rounded-md
                                bg-white px-3 text-base font-medium text-[#6B7280]
-                               outline-none text-lg"
+                               outline-none"
                 />
                 <label for="search_text-field"></label>
                 <button type="button"
-                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                        data-modal-hide="defaultModal">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
                 rounded-lg">Esc</kbd>
                 </button>
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                
+
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">

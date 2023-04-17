@@ -35,7 +35,11 @@ if (isset($_POST["sign_out_action"])) {
     header("Location: ../../");
 }
 
-
+// Get current time
+date_default_timezone_set('Asia/Dhaka');
+$current_time = date('Y-m-d H:i:s');
+// Extract hour
+$hour = date('H', strtotime($current_time));
 
 
 ?>
@@ -51,10 +55,10 @@ if (isset($_POST["sign_out_action"])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </head>
 
-<body class="bg-beige-default">
+<body class="bg-beige-default scroll-smooth">
 <nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
-    pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-lg items-center top-0 mb-12 z-50">
+    pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-90
+    backdrop-blur-lg items-center top-0 mb-12 z-50 transition-all">
     <div class="flex gap-5 items-center">
 
         <a href="#" class="flex select-none">
@@ -82,7 +86,7 @@ if (isset($_POST["sign_out_action"])) {
 
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
-                class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+                class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 md:mr-0 focus:ring-4 focus:ring-gray-100"
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
@@ -99,8 +103,8 @@ if (isset($_POST["sign_out_action"])) {
 
         <!-- Dropdown menu -->
         <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700 dark:divide-gray-600">
-            <div class="px-4 py-3 text-lg text-gray-900 dark:text-white">
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64">
+            <div class="px-4 py-3 text-lg text-gray-900">
                 <div class="font-semibold">
                     <?php
                     $section =
@@ -114,17 +118,18 @@ HTML;
                     <?php echo $_SESSION["email"]; ?>
                 </div>
             </div>
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
                 </li>
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
                 </li>
             </ul>
-            <form method="post" action=""  class="py-2 w-full font-semibold">
-                <button name="sign_out_action" class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
+            <form method="post" action="" class="py-2 w-full font-semibold">
+                <button name="sign_out_action"
+                        class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
                     Sign out
                 </button>
             </form>
@@ -132,24 +137,133 @@ HTML;
     </div>
 </nav>
 
-<section id="index_main-section" class="container mx-auto my-auto mt-36 mb-16 pl-20 pr-20">
+<section id="index_main-section">
 
-    <main class="w-full h-[28rem] bg-blue-950 rounded-3xl p-4 bg-user-dashboard-bg-image bg-cover bg-center bg-fixed">
-        <h1 class="text-3xl text-white font-bold"> Dashboard </h1>
+    <main class="w-full h-[40rem] bg-blue-950 rounded-2xl p-4
+        bg-user-dashboard-bg-image bg-cover bg-fixed">
+        <div class="container mx-auto my-auto mt-36 pl-48 pr-48 grid grid-cols-2 gap-12">
+
+            <div class="group h-full w-full bg-beige-light rounded-2xl backdrop-blur-lg p-6
+            bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 flex flex-col">
+                <p class="text-white flex justify-between">
+                    <?php
+                    $date = date("l, d F Y");
+                    $printable_date = <<< HTML
+                        <span class="font-bold">{$date}</span>
+HTML;
+                    echo $printable_date;
+
+                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude=23.73&longitude=90.41&current_weather=true&forecast_days=1&timezone=auto");
+                    $json_output = json_decode($json, true);
+                    $current_weather = $json_output['current_weather'];
+                    $is_day = $current_weather['is_day'];
+                    $printable_temp = $current_weather['temperature'] . " °C";
+
+                    $day = <<< HTML
+                        <span class="flex gap-1 align-middle items-center">
+                            <img src="../../resource/icons/dashboard/sun.svg">
+                            <span class="font-bold">{$printable_temp}</span>
+                        </span>
+HTML;
+                    $night = <<< HTML
+                        <span class="flex gap-1 align-middle items-center">
+                            <img src="../../resource/icons/dashboard/moon.svg">
+                            <span class="font-bold">{$printable_temp}</span>
+                        </span>
+HTML;
+
+                    if ($is_day) {
+                        echo $day;
+                    } else {
+                        echo $night;
+                    }
+
+                    ?>
+                </p>
+                <p class="font-bold text-white text-3xl">
+                    <?php
+                    $morning = date("H") < 12;
+                    $afternoon = date("H") < 18;
+                    $evening = date("H") < 21;
+                    $night = date("H") < 24;
+                    if ($morning) {
+                        echo "Good Morning,";
+                    } else if ($afternoon) {
+                        echo "Good Afternoon,";
+                    } else if ($evening) {
+                        echo "Good Evening,";
+                    } else if ($night) {
+                        echo "Have a good night,";
+                    }
+                    ?>
+                <p class="font-semibold text-white text-2xl">
+                    <?php
+                    echo "<span class='group-hover:text-green-200 transition-all duration-300'>$first_name</span> $last_name"
+                    ?>
+
+                </p>
+            </div>
+
+
+            <div class="grid grid-cols-2 gap-2">
+                <a href="./owned_land"
+                   class="flex flex-col justify-between bg-beige-light bg-opacity-80 hover:bg-opacity-100 shadow-md p-4 rounded-2xl
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600 backdrop-blur-sm
+                  transition-all hover:shadow-lg duration-300 hover:bg-white col-span-2">
+                    <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/owned-land.svg" alt="">
+                    <span class="text-lg font-bold pl-2"> Owned Land </span>
+
+                </a>
+
+                <a href="./sale_list"
+                   class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-700
+                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100"
+                   style="-webkit-backface-visibility: hidden;">
+                    <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/for-sale.svg" alt="">
+                    <span class="text-lg font-bold pt-4 pl-2"
+                          style="-webkit-backface-visibility: hidden;"> Sale List </span>
+
+                </a>
+
+
+                <a href="./successors"
+                   class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
+                    <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/successor.svg" alt="">
+                    <span class="text-lg font-bold pt-4 pl-2"> Successor </span>
+
+                </a>
+                <a href="./payment"
+                   class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
+                    <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/payment.svg" alt="">
+                    <span class="text-lg font-bold pt-4 pl-2"> Payment </span>
+
+                </a>
+
+                <a href="./booking_land"
+                   class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
+                  transform motion-safe:hover:scale-[1.02] hover:text-green-600
+                  transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
+                    <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/booking.svg" alt="">
+                    <span class="text-lg font-bold pt-4 pl-2"> Bookings </span>
+
+                </a>
+            </div>
+        </div>
     </main>
 
-    <main class="bg-white h-72 rounded-3xl overflow-y-auto mt-[-40px]">
+    <main class="hidden grid grid-cols-5 gap-3 pb-12 h-36 mb-10 pt-12">
 
-    </main>
-
-    <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 pt-12">
-        
         <a href="./owned_land"
-           class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
+           class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class="h-12 w-12 pb-4" src="../../resource/icons/dashboard/owned-land.svg" alt="">
-            <span class="text-lg font-bold"> Owned Land </span>
+            <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/owned-land.svg" alt="">
+            <span class="text-lg font-bold pl-2"> Owned Land </span>
 
         </a>
 
@@ -158,27 +272,27 @@ HTML;
                   transform motion-safe:hover:scale-[1.02] hover:text-green-700
                   transition-all hover:shadow-lg duration-300 hover:bg-white"
            style="-webkit-backface-visibility: hidden;">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/for-sale.svg" alt="">
-            <span class="text-lg font-bold pt-4"
-            style="-webkit-backface-visibility: hidden;"> Sale List </span>
+            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/for-sale.svg" alt="">
+            <span class="text-lg font-bold pt-4 pl-2"
+                  style="-webkit-backface-visibility: hidden;"> Sale List </span>
 
         </a>
 
 
-        <a href="./successors" 
+        <a href="./successors"
            class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/successor.svg" alt="">
-            <span class="text-lg font-bold pt-4"> Successor </span>
+            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/successor.svg" alt="">
+            <span class="text-lg font-bold pt-4 pl-2"> Successor </span>
 
         </a>
         <a href="./payment"
            class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/payment.svg" alt="">
-            <span class="  text-lg font-bold pt-4"> Payment </span>
+            <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/payment.svg" alt="">
+            <span class="text-lg font-bold pt-4 pl-2"> Payment </span>
 
         </a>
 
@@ -186,8 +300,8 @@ HTML;
            class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white">
-            <img class=" h-12 w-12 pb-4" src="../../resource/icons/dashboard/booking.svg" alt="">
-            <span class="  text-lg font-bold pt-4"> Bookings </span>
+            <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/booking.svg" alt="">
+            <span class="text-lg font-bold pt-4 pl-2"> Bookings </span>
 
         </a>
 
@@ -218,13 +332,13 @@ HTML;
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
 
             </div>
             <a></a>
@@ -235,11 +349,11 @@ HTML;
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
             </div>
         </div>
 
@@ -248,10 +362,10 @@ HTML;
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Help and Support </a>
-                <a href="#" class="hover:text-green-300"> Blog </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> News Archive </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -260,26 +374,26 @@ HTML;
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> About Us </a>
-                <a href="#" class="hover:text-green-300"> Leadership </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> Press </a>
-                <a href="#" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../html/error/HTTP501.html">
                 <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
@@ -289,10 +403,10 @@ HTML;
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="#" class="hover:text-green-300"> Terms of Service </a>
-                <a href="#" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="#" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="#" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../html/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
@@ -300,5 +414,23 @@ HTML;
     </div>
 
 </footer>
+
 </body>
+
+<script>
+    // After certain amount of scrolling, the navbar will change to a different color
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 440 || document.documentElement.scrollTop > 440) {
+            document.getElementById("index_navbar").classList.add("bg-opacity-60")
+            document.getElementById("index_navbar").classList.remove("bg-opacity-90")
+        } else {
+            document.getElementById("index_navbar").classList.remove("bg-opacity-60")
+            document.getElementById("index_navbar").classList.add("bg-opacity-90")
+        }
+    }
+</script>
 </html>
