@@ -289,9 +289,9 @@ HTML;
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <span class="block">
+                        <span class="flex flex-col">
                             <span class="w-full text-lg font-semibold">For Sale</span>
-                            <span class="w-full">Get your dream land with stunning prices</span>
+                            <span class="w-full text-zinc-400">Get your dream land with stunning prices</span>
                         </span>
                     </label>
                 </li>
@@ -303,9 +303,9 @@ HTML;
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
-                        <span class="block">
+                        <span class="flex flex-col">
                             <span class="w-full text-lg font-semibold">For Auction</span>
-                            <span class="w-full">Bid high, win big, and secure your slice of paradise</span>
+                            <span class="w-full text-zinc-400">Bid high, win big, and secure your slice of paradise</span>
                         </span>
                     </label>
                 </li>

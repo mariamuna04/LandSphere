@@ -9,6 +9,13 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../");
 }
 
+// ip
+$json_ip = file_get_contents('http://ip-api.com/json');
+$json_ip = json_decode($json_ip, true);
+$lat = $json_ip['lat'];
+$lon = $json_ip['lon'];
+$timezone = $json_ip['timezone'];
+
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_NAME = 'dbms_project';
@@ -24,8 +31,20 @@ $query = "SELECT * FROM owns
           JOIN land l on l.land_id = owns.land_id 
           WHERE owns.owner_id = " . $_SESSION["id"] . ";";
 
+$get_average_env_pts_query = "SELECT AVG(environment_point) AS 'avg_env_pts' 
+                              FROM owns JOIN land l ON l.land_id = owns.land_id 
+                              WHERE owns.owner_id = " . $_SESSION["id"] . ";";
+
+$get_total_area_query = "SELECT SUM(area) AS 'total_area' 
+                         FROM owns JOIN land l ON l.land_id = owns.land_id 
+                         WHERE owns.owner_id = " . $_SESSION["id"] . ";";
+
 
 $land_result = mysqli_query($connection, $query);
+$average_env_pts_result = mysqli_query($connection, $get_average_env_pts_query);
+$average_env_pts = mysqli_fetch_assoc($average_env_pts_result)["avg_env_pts"];
+$total_area_result = mysqli_query($connection, $get_total_area_query);
+$total_area = mysqli_fetch_assoc($total_area_result)["total_area"];
 
 $first_name = explode(" ", $_SESSION["name"])[0];
 $last_name = explode(" ", $_SESSION["name"])[1];
@@ -36,7 +55,7 @@ if (isset($_POST["sign_out_action"])) {
 }
 
 // Get current time
-date_default_timezone_set('Asia/Dhaka');
+date_default_timezone_set($timezone);
 $current_time = date('Y-m-d H:i:s');
 // Extract hour
 $hour = date('H', strtotime($current_time));
@@ -157,7 +176,7 @@ HTML;
 HTML;
                     echo $printable_date;
 
-                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude=23.73&longitude=90.41&current_weather=true&forecast_days=1&timezone=auto");
+                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
                     $json_output = json_decode($json, true);
                     $current_weather = $json_output['current_weather'];
                     $is_day = $current_weather['is_day'];
@@ -201,14 +220,46 @@ HTML;
                     }
                     ?>
                 </p>
-                <p class="font-semibold text-white text-2xl">
+                <p class="font-semibold text-white text-2xl mt-2">
                     <?php
                     echo "$first_name <span class='group-hover:text-green-950 transition-all duration-300'>$last_name</span>"
                     ?>
 
                 </p>
 
-                <div class=" hidden h-full w-full mt-6 p-4 bg-zinc-100 rounded-2xl bg-opacity-60 shadow-inner">
+                <div class="p-4 grid grid-cols-3 gap-2 bg-white bg-opacity-60 rounded-2xl mt-12">
+                    <div class="flex flex-col items-center justify-between">
+                        <img src="../../resource/icons/dashboard/area.svg" alt="">
+                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-blue-800">
+                            <p>Total Area</p>
+                            <p><?php echo $total_area ?></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-between">
+                        <img src="../../resource/icons/dashboard/leaf.svg" alt="">
+                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2
+                        <?php
+                    if ($average_env_pts >= 0 && $average_env_pts <= 4) {
+                        echo "bg-green-100 text-green-500";
+                    } else if ($average_env_pts > 4 && $average_env_pts <= 8) {
+                        echo "bg-yellow-100 text-yellow-600";
+                    } else if ($average_env_pts > 8 && $average_env_pts <= 10) {
+                        echo "bg-red-100 text-red-500";
+                    }
+                    ?>">
+                            <p>Environment</p>
+                            <p><?php echo $average_env_pts ?></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-between">
+                        <img src="../../resource/icons/dashboard/worth.svg" alt="">
+                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-amber-800">
+                            <p>Net Worth</p>
+                            <p>$<?php echo $total_area * 0.7 ?></p>
+                        </div>
+                    </div>
 
                 </div>
             </div>

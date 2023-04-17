@@ -10,7 +10,7 @@ try {
     $connection = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 } catch (Exception $e) {
     $db_connection_error = true;
-    header('Location: ../../html/404.html');
+    header('Location: ../../html/error/HTTP521.html');
 }
 
 if (isset($_POST['submit'])) {
