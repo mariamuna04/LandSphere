@@ -370,6 +370,7 @@ HTML;
                     $land_type = "Industrial";
                 }
 
+                $rnd = rand(0, 1000000);
 
                 echo
 
@@ -378,8 +379,8 @@ HTML;
 <a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
 transform motion-safe:hover:scale-[1.03]
 transition-all hover:shadow-lg text-gray-600 duration-300'>
-    <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
-         src='../../resource/img/image_placeholder.webp'
+    <img class='w-full h-48 object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
+         src='https://api.dicebear.com/6.x/shapes/svg?seed=" . $rnd . "'
     />
 
     <div class='mt-1 p-4 flex flex-col'>

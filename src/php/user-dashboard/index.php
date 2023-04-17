@@ -61,7 +61,6 @@ $current_time = date('Y-m-d H:i:s');
 // Extract hour
 $hour = date('H', strtotime($current_time));
 
-
 ?>
 
 <!DOCTYPE html>
@@ -122,9 +121,13 @@ $hour = date('H', strtotime($current_time));
                 class="flex items-center text-sm font-medium text-gray-900 rounded-full"
                 type="button">
             <span class="sr-only">Open user menu</span>
-            <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-                 alt="user photo" height="32px" width="32px">
+            <?php
+            $rnd = rand(0, 1000000);
+            echo "<img class='w-8 h-8 mr-2 rounded-full'
+                 src='https://api.dicebear.com/6.x/avataaars/svg?seed=" . $rnd . "%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9'
+                 alt='user photo' height='32px' width='32px'>"
+            ?>
+
             <?php echo $_SESSION["name"]; ?>
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
@@ -182,15 +185,15 @@ HTML;
 
             <div class="group h-full w-full bg-beige-light rounded-2xl backdrop-blur-lg p-6
             bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 flex flex-col">
-                <p class="text-white flex justify-between">
+                <p class="text-white flex justify-between align-middle items-center">
                     <?php
                     $date = date("l, d F Y");
                     $printable_date = <<< HTML
-                        <span class="font-bold text-zinc-200">{$date}</span>
+                        <span class="font-bold">{$date}</span>
 HTML;
                     echo $printable_date;
 
-                    $json = file_get_contents("http://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
+                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
                     $json_output = json_decode($json, true);
                     $current_weather = $json_output['current_weather'];
                     $is_day = $current_weather['is_day'];
@@ -217,6 +220,7 @@ HTML;
 
                     ?>
                 </p>
+                <hr class="mt-4 border-2 border-zinc-300 rounded">
                 <p class="font-bold text-white text-3xl pt-4">
                     <?php
                     $morning = date("H") < 12;
@@ -230,13 +234,13 @@ HTML;
                     } else if ($evening) {
                         echo "Good Evening,";
                     } else if ($night) {
-                        echo "Have a good night,";
+                        echo "Have a Good Night,";
                     }
                     ?>
                 </p>
                 <p class="font-semibold text-white text-2xl mt-2">
                     <?php
-                    echo "$first_name <span class='group-hover:text-green-950 transition-all duration-300'>$last_name</span>"
+                    echo "$first_name <span class='group-hover:text-green-800 transition-all duration-300'>$last_name</span>"
                     ?>
 
                 </p>
@@ -246,7 +250,13 @@ HTML;
                         <img src="../../resource/icons/dashboard/area.svg" alt="">
                         <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-blue-800">
                             <p>Total Area</p>
-                            <p><?php echo $total_area ?></p>
+                            <p><?php
+                                if (empty($total_area) || $total_area == 0) {
+                                    echo "-";
+                                } else {
+                                    echo $total_area;
+                                }
+                                ?></p>
                         </div>
                     </div>
 
@@ -263,7 +273,13 @@ HTML;
                         }
                         ?>">
                             <p>Environment</p>
-                            <p><?php echo $average_env_pts ?></p>
+                            <p><?php
+                                if (empty($average_env_pts) || $average_env_pts == 0) {
+                                    echo "-";
+                                } else {
+                                    echo $average_env_pts;
+                                }
+                                ?></p>
                         </div>
                     </div>
 
@@ -271,7 +287,13 @@ HTML;
                         <img src="../../resource/icons/dashboard/worth.svg" alt="">
                         <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-amber-800">
                             <p>Net Worth</p>
-                            <p>$<?php echo $total_area * 0.7 ?></p>
+                            <p><?php
+                                if ($total_area == 0 || empty($total_area)) {
+                                    echo "-";
+                                } else {
+                                    echo "$" . $total_area * 0.7;
+                                }
+                                ?></p>
                         </div>
                     </div>
 
@@ -330,77 +352,41 @@ HTML;
 
     <main class="container mx-auto my-auto mt-12 mb-16 pl-36 pr-36">
         <section class="grid grid-cols-2 gap-12">
-            <div id="notice-board" class="h-full w-full rounded-2xl bg-beige-dark">
-                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl">
+            <div id="notice-board" class="h-full w-full rounded-2xl">
+                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl text-primary">
                     Notice
                 </h1>
-                <div class="h-64 flex flex-col gap-2 p-2 overflow-y-scroll container-snap">
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 1 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
+                <div class="h-64 flex flex-col gap-6 p-4 overflow-y-scroll container-snap">
+                    <?php
+                    $notice_sql = "SELECT * FROM notice ORDER BY date DESC";
+                    $notice_result = mysqli_query($connection, $notice_sql);
+                    while ($notice_row = mysqli_fetch_assoc($notice_result)) {
+                        $rnd = rand(1, 100000);
+                        $card = <<< HTML
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
+                        <div data-popover-target="popover-right" data-popover-placement="right" type="button"
+                         class="group flex gap-4 align-middle items-center rounded-2xl bg-beige-darker p-4 
+                        hover:bg-green-100 transition-all duration-300">
+                            <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
+                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed={$rnd}" alt="">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-zinc-600"> {$notice_row['date']} </span>
+                                <span class="font-bold text-lg group-hover:text-primary"> {$notice_row['title']} </span>
+                            </div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
+HTML;
+                        echo $card;
+                    }
 
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row gap-2">
-                        <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                            <img class="h-12 w-12" src="../../resource/icons/dashboard/notice.svg" alt="">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg"> Notice 4 </span>
-                            <span class="text-sm"> 2021-09-09 </span>
-                        </div>
-                    </div>
-
-
+                    ?>
                 </div>
 
             </div>
 
             <div id="news-board" class="h-full w-full rounded-2xl">
-                <h1 class="h-auto w-full bg-beige-dark p-4 font-bold text-xl text-center rounded-2xl">
+                <h1 class="h-auto w-full bg-beige-dark p-4 font-bold text-xl text-center rounded-2xl text-primary">
                     Latest News
                 </h1>
                 <div class="h-64 flex flex-col gap-6 p-4 overflow-y-scroll container-snap">
@@ -408,17 +394,18 @@ HTML;
                     $news_sql = "SELECT * FROM news ORDER BY date DESC LIMIT 7";
                     $news_result = mysqli_query($connection, $news_sql);
                     while ($news_row = mysqli_fetch_assoc($news_result)) {
+                        $rnd = rand(1, 100000);
                         $card = <<< HTML
 
-                        <div class="group flex gap-2 align-middle items-center rounded-2xl bg-beige-darker p-4 
+                        <div class="group flex gap-4 align-middle items-center rounded-2xl bg-beige-darker p-4 
                         hover:bg-green-100 transition-all duration-300">
                             <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                                <img class="h-12 w-12 rounded-lg" src="../../resource/img/image_placeholder.webp" alt="">
+                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed={$rnd}" alt="">
                             </div>
                             <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-zinc-600"> {$news_row['date']} </span>
                                 <span class="font-bold text-lg group-hover:text-primary"> {$news_row['title']} </span>
                                 <span class="text-sm"> {$news_row['subtitle']} </span>
-                                <span class="text-sm"> {$news_row['date']} </span>
                             </div>
                         </div>
 

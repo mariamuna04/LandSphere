@@ -202,11 +202,12 @@ HTML;
     <div class="grid grid-cols-2 gap-6">
         <?php
         while ($news_row = mysqli_fetch_assoc($result)) {
+            $rnd = rand(1, 100000);
             $card = <<< HTML
                         
 <a href="#" class="group flex items-center bg-white rounded-lg flex-row max-w-xl shadow-lg transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300">
-    <img class="object-cover rounded-lg h-full w-32" src="../../resource/img/image_placeholder.webp" alt="">
+    <img class="object-cover rounded-lg h-full w-32" src="https://api.dicebear.com/6.x/shapes/svg?seed={$rnd}" alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 font-bold tracking-tight text-gray-900">{$news_row['date']}</h5>
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 group-hover:text-primary transition-all duration-300">{$news_row['title']}</h5>
