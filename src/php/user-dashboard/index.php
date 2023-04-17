@@ -128,7 +128,7 @@ $hour = date('H', strtotime($current_time));
                  alt='user photo' height='32px' width='32px'>"
             ?>
 
-            <?php echo $_SESSION["name"]; ?>
+            <?php echo "<span class='font-medium'>" . $_SESSION["name"] . "</span>"; ?>
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -139,8 +139,8 @@ $hour = date('H', strtotime($current_time));
 
         <!-- Dropdown menu -->
         <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64">
-            <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-lg">
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow w-64">
+            <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
                 <div class="font-semibold">
                     <?php
                     $section =
@@ -157,16 +157,29 @@ HTML;
             <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                        <span>
+                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
+                        </span>
+                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                    </a>
                 </li>
+                <hr>
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                        <span>
+                            <img src="../../resource/icons/dashboard/account.svg" alt="">
+                        </span>
+                        <span>Manage your Account</span>
+                    </a>
                 </li>
-
+                <hr>
                 <li>
-                    <form method="post" action="" class="py-2 w-full font-semibold">
-                        <button name="sign_out_action"
-                                class="px-4 py-2 text-sm text-gray-700 hover:bg-red-500 hover:text-white w-full">
+                    <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                        <button name="sign_out_action" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
+                            <span>
+                                <img src="../../resource/icons/dashboard/cancel.svg">
+                            </span>
                             Sign out
                         </button>
                     </form>
@@ -184,7 +197,7 @@ HTML;
         <div class="container mx-auto my-auto mt-36 pl-48 pr-48 grid grid-cols-2 gap-12">
 
             <div class="group h-full w-full bg-beige-light rounded-2xl backdrop-blur-lg p-6
-            bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 flex flex-col">
+            bg-opacity-40 hover:bg-opacity-50 transition-all duration-300 flex flex-col">
                 <p class="text-white flex justify-between align-middle items-center">
                     <?php
                     $date = date("l, d F Y");
@@ -262,14 +275,14 @@ HTML;
 
                     <div class="flex flex-col items-center justify-between">
                         <img src="../../resource/icons/dashboard/leaf.svg" alt="">
-                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 transition-all duration-300
+                        <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 transition-all duration-400
                         <?php
                         if ($average_env_pts >= 0 && $average_env_pts <= 4) {
                             echo "group-hover:bg-green-100 text-green-500";
                         } else if ($average_env_pts > 4 && $average_env_pts <= 8) {
-                            echo "group-hover:bg-yellow-100 text-yellow-600";
+                            echo "group-hover:bg-yellow-100 text-yellow-600 animate-pulse";
                         } else if ($average_env_pts > 8 && $average_env_pts <= 10) {
-                            echo "group-hover:bg-red-100 text-red-500";
+                            echo "group-hover:bg-red-100 text-red-500 animate-pulse";
                         }
                         ?>">
                             <p>Environment</p>
@@ -386,7 +399,7 @@ HTML;
             </div>
 
             <div id="news-board" class="h-full w-full rounded-2xl">
-                <h1 class="h-auto w-full bg-beige-dark p-4 font-bold text-xl text-center rounded-2xl text-primary">
+                <h1 class="h-auto w-full bg-zinc-200 p-4 font-bold text-xl text-center rounded-2xl text-primary">
                     Latest News
                 </h1>
                 <div class="h-64 flex flex-col gap-6 p-4 overflow-y-scroll container-snap">
