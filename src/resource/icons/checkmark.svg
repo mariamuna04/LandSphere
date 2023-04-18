@@ -1,31 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="144px"
-     height="144px" fill-rule="nonzero">
-    <defs>
-        <linearGradient x1="9.858" y1="9.858" x2="38.142" y2="38.142" gradientUnits="userSpaceOnUse" id="color-1">
-            <stop offset="0" stop-color="#9bffcd"></stop>
-            <stop offset="1" stop-color="#2acc4d"></stop>
-        </linearGradient>
-        <linearGradient x1="13" y1="24.793" x2="36" y2="24.793" gradientUnits="userSpaceOnUse" id="color-2">
-            <stop offset="0.824" stop-color="#135d36"></stop>
-            <stop offset="0.931" stop-color="#125933"></stop>
-            <stop offset="1" stop-color="#11522f"></stop>
-        </linearGradient>
-    </defs>
-    <g transform="translate(21.33333,21.33333) scale(0.83333,0.83333)">
-        <g fill-opacity="0" fill="#dddddd" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-           stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-           font-size="none" style="mix-blend-mode: normal">
-            <path d="M-25.6,281.6v-307.2h307.2v307.2z" id="bgRectangle"></path>
-        </g>
-        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
-           stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-           font-size="none"  style="mix-blend-mode: normal">
-            <g transform="scale(5.33333,5.33333)">
-                <path d="M44,24c0,11.045 -8.955,20 -20,20c-11.045,0 -20,-8.955 -20,-20c0,-11.045 8.955,-20 20,-20c11.045,0 20,8.955 20,20z"
-                      fill="url(#color-1)"></path>
-                <path d="M21.293,32.707l-8,-8c-0.391,-0.391 -0.391,-1.024 0,-1.414l1.414,-1.414c0.391,-0.391 1.024,-0.391 1.414,0l5.879,5.879l10.879,-10.879c0.391,-0.391 1.024,-0.391 1.414,0l1.414,1.414c0.391,0.391 0.391,1.024 0,1.414l-13,13c-0.39,0.391 -1.024,0.391 -1.414,0z"
-                      fill="url(#color-2)"></path>
-            </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,255.98959,255.98959"
+     width="50px" height="50px" fill-rule="nonzero">
+    <g fill="#00ad24" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
+       stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none"
+       font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+        <g transform="scale(5.12,5.12)">
+            <path d="M13,42c-0.52734,0 -1.03906,-0.21094 -1.41406,-0.58594l-11,-11c-0.78125,-0.78125 -0.78125,-2.04687 0,-2.82812c0.78125,-0.78125 2.04688,-0.78125 2.82813,0l9.44531,9.44531l22.60156,-27.30469c0.70313,-0.85547 1.96484,-0.97266 2.8125,-0.26562c0.85156,0.70313 0.97266,1.96484 0.26563,2.8125l-24,29c-0.35547,0.4375 -0.88281,0.69922 -1.44531,0.72266c-0.03125,0.00391 -0.0625,0.00391 -0.09375,0.00391zM24.09375,41.99609c0.5625,-0.02344 1.08594,-0.28516 1.44531,-0.72266l24,-29c0.70703,-0.84766 0.58594,-2.10937 -0.26562,-2.8125c-0.84766,-0.70703 -2.10937,-0.58594 -2.8125,0.26563l-22.60156,27.30469l-0.44531,-0.44531c-0.78125,-0.78125 -2.04687,-0.78125 -2.82812,0c-0.78125,0.78125 -0.78125,2.04688 0,2.82813l2,2c0.375,0.375 0.88672,0.58594 1.41406,0.58594c0.03125,0 0.0625,0 0.09375,-0.00391z"></path>
         </g>
     </g>
 </svg>

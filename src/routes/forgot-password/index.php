@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
                 <div class="mb-5">
                     <input type="text" name="email_or_phone" id="email_or_phone"
                            placeholder="Search By Email, Phone Number or NID"
-                           class="w-full rounded-md
+                           class="w-full rounded-xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono"
                         <?php if ($account_not_found || $input_error) {
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
             <div class="flex flex-col items-center justify-center gap-2 align-middle mt-4">
                 <div class="flex items-center justify-center gap-24">
                     <button name="submit" type="submit"
-                            class="hover:shadow-form rounded-md bg-primary py-3 px-8
+                            class="hover:shadow-form rounded-full bg-primary py-3 px-8
                             text-center text-base font-semibold text-white outline-none
                             items-center select-none hover:shadow-lg hover:bg-green-800">
                         Search

@@ -308,13 +308,11 @@ drop-shadow-xl">
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Community </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Rules and Regulations </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Volunteers </a>
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Opt Out </a>
             </div>
         </div>
 
@@ -323,11 +321,10 @@ drop-shadow-xl">
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
+                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
             </div>
         </div>
 

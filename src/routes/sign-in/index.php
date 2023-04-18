@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
                             class="hover:shadow-form bg-green-700
                         py-3 px-8 text-center text-base
                         font-bold text-white outline-none items-center
-                        col-span-2 rounded-xl hover:bg-green-800
+                        col-span-2 rounded-full hover:bg-green-800
                         hover:shadow-lg">
                         Sign in
                     </button>

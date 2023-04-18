@@ -239,13 +239,12 @@ HTML;
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
-                <a href="#" class="hover:text-green-300"> Option </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Community </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Rules and Regulations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Volunteers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Opt Out </a>
+
 
             </div>
             <a></a>
@@ -256,11 +255,10 @@ HTML;
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
-                <a href="#" class="hover:text-green-300"> Options </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
             </div>
         </div>
 
@@ -269,10 +267,10 @@ HTML;
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> Help and Support </a>
-                <a href="#" class="hover:text-green-300"> Blog </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> News Archive </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -281,26 +279,26 @@ HTML;
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="#" class="hover:text-green-300"> About Us </a>
-                <a href="#" class="hover:text-green-300"> Leadership </a>
-                <a href="#" class="hover:text-green-300"> Careers </a>
-                <a href="#" class="hover:text-green-300"> Press </a>
-                <a href="#" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="#">
+            <a href="../../../static/error/HTTP501.html">
                 <img src="../../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../../static/error/HTTP501.html">
                 <img src="../../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../../static/error/HTTP501.html">
                 <img src="../../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="#">
+            <a href="../../../static/error/HTTP501.html">
                 <img src="../../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
@@ -310,10 +308,10 @@ HTML;
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="#" class="hover:text-green-300"> Terms of Service </a>
-                <a href="#" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="#" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="#" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>

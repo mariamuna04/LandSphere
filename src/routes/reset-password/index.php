@@ -71,7 +71,7 @@ if (!$_SESSION['success']) {
                            name="OTP"
                            id="OTP"
                            placeholder="Enter Six Digit OTP"
-                           class="input w-full rounded-md
+                           class="input w-full rounded-xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono text-center"
                     />
@@ -85,7 +85,7 @@ if (!$_SESSION['success']) {
                            name="password"
                            id="password"
                            placeholder="New Password"
-                           class="input w-full rounded-md
+                           class="input w-full rounded-xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono text-center"
                     />
@@ -96,7 +96,7 @@ if (!$_SESSION['success']) {
                            name="confirm_password"
                            id="confirm_password"
                            placeholder="Confirm New Password"
-                           class="input w-full rounded-md
+                           class="input w-full rounded-xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono text-center"
                     />
@@ -119,7 +119,7 @@ if (!$_SESSION['success']) {
             <div class="flex flex-col items-center justify-center gap-2 align-middle pt-4">
                 <div class="flex items-center justify-center">
                     <button name="submit" type="submit"
-                            class="hover:shadow-form rounded-md bg-primary py-3 px-8 
+                            class="hover:shadow-form rounded-full bg-primary py-3 px-8 
                             text-center text-base font-semibold text-white outline-none 
                             items-center hover:bg-green-800 hover:shadow-lg">
                         Submit
@@ -143,9 +143,9 @@ if (!$_SESSION['success']) {
         animate-fadeIn overflow-y-auto">
     
             <img src="../../resource/icons/checkmark.svg" class="h-[100px] pb-5" alt="success_img">
-                <h2 class="align-middle text-center font-black text-2xl select-none">
+                <h2 class="align-middle text-center font-bold text-2xl select-none text-primary">
                     Password Changed Successfully!
-                    Redirecting...
+                    <span class="pt-2 text-xl text-zinc-600">Redirecting to Sign In...</span>
                 </h2>
         </div>
     </div>
