@@ -53,8 +53,7 @@ if (!$_SESSION['success']) {
     bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
     animate-fadeIn overflow-y-auto">
 
-        <h2 class="align-middle pb-12 text-center font-black text-2xl
-        select-none">
+        <h2 class="align-middle pb-8 text-center font-black text-2xl select-none">
             Reset Password
         </h2>
 
@@ -73,7 +72,7 @@ if (!$_SESSION['success']) {
                            placeholder="Enter Six Digit OTP"
                            class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md"
+                           outline-none focus:shadow-md font-mono text-center"
                     />
                     <label for="password" class="text-sm">
                 </div>
@@ -87,9 +86,8 @@ if (!$_SESSION['success']) {
                            placeholder="New Password"
                            class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md"
+                           outline-none focus:shadow-md font-mono text-center"
                     />
-                    <label for="password" class="text-sm">                   
                 </div>
 
                 <div class="mb-5">
@@ -99,9 +97,21 @@ if (!$_SESSION['success']) {
                            placeholder="Confirm New Password"
                            class="input w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md"
+                           outline-none focus:shadow-md font-mono text-center"
                     />
                     <label for="password" class="text-sm">
+                </div>
+                
+                <div class="pl-4 text-sm text-zinc-500 text-center">
+                    <span class="font-bold text-green-800">Must have at least 6 characters.</span>
+                    <span class="text-gray-400">It is better to have
+                    upper & lower case letters
+                    a symbol (#$&),
+                    a symbol (#$&),
+                    a longer password (min. 12 chars.)
+                    </span>
+                    
+                    
                 </div>
             </div>
 
@@ -145,6 +155,7 @@ if (!$_SESSION['success']) {
 ?>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <?php
 if (!$_SESSION['success']) {
     echo "<script>
@@ -155,6 +166,8 @@ if (!$_SESSION['success']) {
     otp.addEventListener('keyup', (e) => {
         otpValue = e.target.value;
         if (otpValue.length === 6) {
+            otp.disabled = true;
+            otp.classList.add('opacity-50');
             password.classList.remove('hidden')
         } else {
             password.classList.add('hidden')

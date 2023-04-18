@@ -1,11 +1,21 @@
 <?php
 session_start();
 
+if (!isset($_SESSION["id"])) {
+    header("Location: ../../sign-in");
+}
+
+
 include "../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../../../static/error/HTTP521.html');
     die();
+}
+
+if (isset($_POST["sign_out"])) {
+    session_destroy();
+    header("Location: ../../../");
 }
 
 ?>
@@ -72,10 +82,6 @@ if (!$connection) {
     $last_name = explode(" ", $_SESSION["name"])[1];
     $email = $_SESSION["email"];
 
-    if (isset($_POST["sign_out_action"])) {
-        session_destroy();
-        header("Location: ../../");
-    }
     $rnd = rand(0, 1000000);
     $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
@@ -128,7 +134,7 @@ if (!$connection) {
                 <hr>
                 <li>
                     <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
-                        <button name="sign_out_action" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
+                        <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
                                 <img src="../../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>
@@ -320,5 +326,62 @@ HTML;
     </div>
 
 </footer>
+<!-- Search modal -->
+<div id="defaultModal"
+     tabindex="-1"
+     aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
+    backdrop-blur-md transition-all">
+
+
+    <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between p-4 border-b rounded-t items-center">
+                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
+                <input type="text"
+                       name="search_box"
+                       id="search_text-field"
+                       placeholder="Type anything to search"
+                       class="w-full rounded-md
+                               bg-white px-3 text-base font-medium text-[#6B7280]
+                               outline-none"
+                />
+                <label for="search_text-field"></label>
+                <button type="button"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                        data-modal-hide="defaultModal">
+                    <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">Esc</kbd>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
+<script>
+    document.addEventListener('keydown', function (event) {
+        if (event.metaKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+        if (event.ctrlKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+    });
+
+    const os = navigator.platform;
+    if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
+        document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
+    }
+</script>
 </html>

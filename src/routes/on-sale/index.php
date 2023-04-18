@@ -10,7 +10,7 @@ if (!$connection) {
 
 if (isset($_POST["sign_out"])) {
     session_destroy();
-    header("Location: ../../../");
+    header("Location: ../../");
 }
 
 ?>

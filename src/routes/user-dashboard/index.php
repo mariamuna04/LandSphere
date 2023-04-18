@@ -10,11 +10,6 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../");
 }
 
-if (isset($_POST["sign_out_action"])) {
-    session_destroy();
-    header("Location: ../../");
-}
-
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
@@ -99,6 +94,20 @@ $hour = date('H', strtotime($current_time));
         </div>
     </div>
 
+    <button id="search_button" type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
+            class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
+                    flex gap-12 items-center">
+        <span class="flex items-center gap-2">
+            <img src="../../resource/icons/search-navbar.svg" alt=" ">
+            <span class="text-xs font-medium text-gray-800">Search</span>
+        </span>
+        <span class="flex gap-1 select-none">
+            <kbd id="keyboard_shortcut" class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">⌘</kbd><kbd class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100
+                rounded-lg">K</kbd>
+        </span>
+    </button>
+
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
                 class="flex items-center text-sm font-bold text-gray-900 rounded-full"
@@ -159,7 +168,7 @@ HTML;
                 <li>
                     <form method="post" action=""
                           class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
-                        <button name="sign_out_action" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
+                        <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
                                 <img src="../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>
@@ -185,11 +194,11 @@ HTML;
                     <?php
                     $date = date("l, d F Y");
                     $printable_date = <<< HTML
-                        <span class="font-bold">{$date}</span>
+                        <span class="font-bold">$date</span>
 HTML;
                     echo $printable_date;
 
-                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lon}&current_weather=true&forecast_days=1&timezone=auto");
+                    $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current_weather=true&forecast_days=1&timezone=auto");
                     $json_output = json_decode($json, true);
                     $current_weather = $json_output['current_weather'];
                     $is_day = $current_weather['is_day'];
@@ -197,14 +206,14 @@ HTML;
 
                     $day = <<< HTML
                         <span class="flex gap-1 align-middle items-center">
-                            <img src="../../resource/icons/dashboard/sun.svg">
-                            <span class="font-bold">{$printable_temp}</span>
+                            <img src="../../resource/icons/dashboard/sun.svg" alt="">
+                            <span class="font-bold">$printable_temp</span>
                         </span>
 HTML;
                     $night = <<< HTML
                         <span class="flex gap-1 align-middle items-center">
-                            <img src="../../resource/icons/dashboard/moon.svg">
-                            <span class="font-bold">{$printable_temp}</span>
+                            <img src="../../resource/icons/dashboard/moon.svg" alt="">
+                            <span class="font-bold">$printable_temp</span>
                         </span>
 HTML;
 
@@ -246,7 +255,7 @@ HTML;
                         <img src="../../resource/icons/dashboard/area.svg" alt="">
                         <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-blue-800">
                             <p>Total Area</p>
-                            <p><?php
+                            <p class="font-mono"><?php
                                 if (empty($total_area) || $total_area == 0) {
                                     echo "-";
                                 } else {
@@ -269,7 +278,7 @@ HTML;
                         }
                         ?>">
                             <p>Environment</p>
-                            <p><?php
+                            <p class="font-mono"><?php
                                 if (empty($average_env_pts) || $average_env_pts == 0) {
                                     echo "-";
                                 } else {
@@ -283,7 +292,7 @@ HTML;
                         <img src="../../resource/icons/dashboard/worth.svg" alt="">
                         <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 text-amber-800">
                             <p>Net Worth</p>
-                            <p><?php
+                            <p class="font-mono"><?php
                                 if ($total_area == 0 || empty($total_area)) {
                                     echo "-";
                                 } else {
@@ -364,7 +373,7 @@ HTML;
                          class="group flex gap-4 align-middle items-center rounded-2xl bg-beige-darker p-4 
                         hover:bg-green-100 transition-all duration-300">
                             <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed={$rnd}" alt="">
+                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed=$rnd" alt="">
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-sm font-semibold text-zinc-600"> {$notice_row['date']} </span>
@@ -396,7 +405,7 @@ HTML;
                         <div class="group flex gap-4 align-middle items-center rounded-2xl bg-beige-darker p-4 
                         hover:bg-green-100 transition-all duration-300">
                             <div class="h-12 w-12 bg-zinc-200 rounded-2xl">
-                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed={$rnd}" alt="">
+                                <img class="h-12 w-12 rounded-lg" src="https://api.dicebear.com/6.x/icons/svg?seed=$rnd" alt="">
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-sm font-semibold text-zinc-600"> {$news_row['date']} </span>
@@ -517,6 +526,49 @@ HTML;
 
 </footer>
 
+<!-- Search modal -->
+<div id="defaultModal"
+     tabindex="-1"
+     aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
+    backdrop-blur-md transition-all">
+
+
+    <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between p-4 border-b rounded-t items-center">
+                <img src="../../resource/icons/modal-search-icon.svg" alt="">
+                <input type="text"
+                       name="search_box"
+                       id="search_text-field"
+                       placeholder="Type anything to search"
+                       class="w-full rounded-md
+                               bg-white px-3 text-base font-medium text-[#6B7280]
+                               outline-none"
+                />
+                <label for="search_text-field"></label>
+                <button type="button"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                        data-modal-hide="defaultModal">
+                    <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
+                rounded-lg">Esc</kbd>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </body>
 
 <script>
@@ -533,6 +585,20 @@ HTML;
             document.getElementById("index_navbar").classList.remove("bg-opacity-60")
             document.getElementById("index_navbar").classList.add("bg-opacity-90")
         }
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.metaKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+        if (event.ctrlKey && event.keyCode === 75) {
+            document.getElementById('search_button').click();
+        }
+    });
+
+    const os = navigator.platform;
+    if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
+        document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
     }
 </script>
 </html>

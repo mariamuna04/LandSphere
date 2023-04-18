@@ -56,9 +56,15 @@ if (isset($_POST['submit'])) {
     bg-opacity-60 backdrop-blur-md bg-beige-light shadow-2xl
     animate-fadeIn overflow-y-auto">
 
-        <h2 class="align-middle pb-12 text-center font-black text-2xl select-none">
+        <h2 class="align-middle pb-8 text-center font-black text-2xl select-none">
             Okay, Let's find your account
         </h2>
+
+        <p class="text-xs text-gray-500 text-center select-none pb-6">
+            An authentication code will be sent to your email address or phone number <br>
+            You will need to enter the code to reset your password
+        </p>
+
 
         <form action="" method="POST">
             <div class="mb-5">
@@ -67,7 +73,7 @@ if (isset($_POST['submit'])) {
                            placeholder="Search By Email, Phone Number or NID"
                            class="w-full rounded-md
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md"
+                           outline-none focus:shadow-md font-mono"
                         <?php if ($account_not_found || $input_error) {
                             echo "value='$key'";
                         } ?>
@@ -87,10 +93,6 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
 
-            <p class="text-xs text-gray-500 text-center select-none pt-4">
-                An authentication code will be sent to your email address or phone number <br>
-                You will need to enter the code to reset your password
-            </p>
 
             <div class="flex flex-col items-center justify-center gap-2 align-middle mt-4">
                 <div class="flex items-center justify-center gap-24">
