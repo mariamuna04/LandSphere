@@ -13,7 +13,7 @@ if (isset($_POST["sign_out"])) {
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../../static/error/HTTP521.html');
     die();
 }
 
@@ -60,9 +60,9 @@ $hour = date('H', strtotime($current_time));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../resource/ico.svg">
     <title>LandSphere | Your Personal Land Manager</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </head>
 
 <body class="bg-beige-default scroll-smooth">
@@ -152,7 +152,7 @@ HTML;
                         <span>
                             <img src="../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        <span class="font-medium text-primary">LandSphere</span><span>Settings</span>
                     </a>
                 </li>
                 <hr>
@@ -570,6 +570,7 @@ HTML;
 </div>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
 <script>
     // After certain amount of scrolling, the navbar will change to a different color

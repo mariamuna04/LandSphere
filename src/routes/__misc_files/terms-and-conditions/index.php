@@ -6,16 +6,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    f
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../resource/ico.svg">
     <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
-    <style>
-        .outlined-text {
-            color: #1F2937;
-            text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
-        }
-    </style>
 </head>
 
 <body class="bg-beige-default">
@@ -321,15 +316,15 @@
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t flex items-center">
-                <img src="resource/icons/modal-search-icon.svg" alt="">
+            <div class="flex items-start justify-between p-4 border-b rounded-t">
+                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
                        id="search_text-field"
                        placeholder="Type anything to search"
                        class="w-full rounded-md
                                bg-white px-3 text-base font-medium text-[#6B7280]
-                               outline-none text-lg"
+                               outline-none"
                 />
                 <label for="search_text-field"></label>
                 <button type="button"

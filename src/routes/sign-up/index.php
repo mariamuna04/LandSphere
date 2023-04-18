@@ -4,7 +4,7 @@ session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../../static/error/HTTP521.html');
     die();
 }
 
@@ -39,6 +39,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../resource/ico.svg">
     <title>Sign In</title>
 </head>
 <body class="bg-sign-up-background-light bg-cover">

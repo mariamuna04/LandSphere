@@ -13,6 +13,7 @@ if (isset($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="resource/ico.svg">
     <link href="../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
     <style>

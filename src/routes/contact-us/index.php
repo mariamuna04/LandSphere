@@ -5,7 +5,7 @@ session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../../static/error/HTTP521.html');
     die();
 }
 
@@ -37,8 +37,8 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../resource/ico.svg">
     <title>Contact Us</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 </head>
 
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
                 class="flex items-center text-sm font-bold text-gray-900 rounded-full"
                 type="button">
             <img class="w-8 h-8 mr-2 rounded-full"
-                    src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 
+                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 
                     alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -195,7 +195,8 @@ HTML;
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>
                     Home
                 </a>
@@ -314,9 +315,7 @@ drop-shadow-xl">
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-
             </div>
-            <a></a>
         </div>
 
         <div class="flex flex-col">
@@ -383,11 +382,8 @@ drop-shadow-xl">
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
-
         </div>
-
     </div>
-
 </footer>
 
 <!-- Search modal -->
@@ -397,7 +393,6 @@ drop-shadow-xl">
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
     backdrop-blur-md transition-all">
-
 
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
@@ -430,14 +425,12 @@ drop-shadow-xl">
             </div>
         </div>
     </div>
-
 </div>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 <script>
-
-
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
@@ -453,7 +446,4 @@ drop-shadow-xl">
     }
 
 </script>
-
-
-
 </html>

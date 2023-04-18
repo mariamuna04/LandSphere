@@ -4,7 +4,7 @@ session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../../static/error/HTTP521.html');
     die();
 }
 
@@ -24,8 +24,8 @@ $result = mysqli_query($connection, $sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../resource/ico.svg">
     <title>Contact Us</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 </head>
 
@@ -92,7 +92,7 @@ $result = mysqli_query($connection, $sql);
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -204,7 +204,6 @@ HTML;
             </li>
         </ol>
     </div>
-
 </div>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
@@ -222,7 +221,7 @@ HTML;
                         
 <a href="#" class="group flex items-center bg-white rounded-lg flex-row max-w-xl shadow-lg transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300">
-    <img class="object-cover rounded-l-lg h-full w-32" src="https://api.dicebear.com/6.x/shapes/svg?seed={$rnd}" alt="">
+    <img class="object-cover rounded-l-lg h-full w-32" src="https://api.dicebear.com/6.x/shapes/svg?seed=$rnd" alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 font-bold tracking-tight text-gray-500">{$news_row['date']}</h5>
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 group-hover:text-primary transition-all duration-300">{$news_row['title']}</h5>
@@ -237,7 +236,6 @@ HTML;
         }
         ?>
     </div>
-
 </section>
 
 
@@ -326,11 +324,8 @@ drop-shadow-xl">
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
                 <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
-
         </div>
-
     </div>
-
 </footer>
 
 <!-- Search modal -->
@@ -373,13 +368,11 @@ drop-shadow-xl">
             </div>
         </div>
     </div>
-
 </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 <script>
-
-
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
@@ -395,6 +388,4 @@ drop-shadow-xl">
     }
 
 </script>
-
-
 </html>

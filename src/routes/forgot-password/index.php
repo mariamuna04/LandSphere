@@ -4,7 +4,7 @@ session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../../static/error/HTTP521.html');
     die();
 }
 
@@ -45,11 +45,11 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../resource/ico.svg">
     <title>Sign In</title>
 </head>
 
 <body class="bg-sign-in-background-light bg-cover filter">
-
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] p-12 flex flex-col justify-between rounded-xl
@@ -64,7 +64,6 @@ if (isset($_POST['submit'])) {
             An authentication code will be sent to your email address or phone number <br>
             You will need to enter the code to reset your password
         </p>
-
 
         <form action="" method="POST">
             <div class="mb-5">
@@ -108,8 +107,6 @@ if (isset($_POST['submit'])) {
 
     </div>
 </div>
-
-
 </body>
 </html>
 

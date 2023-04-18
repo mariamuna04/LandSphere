@@ -7,7 +7,7 @@ if (!isset($_SESSION["id"])) {
 include "../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../../static/error/HTTP521.html');
+    header('Location: ../../../static/error/HTTP521.html');
     die();
 }
 
@@ -26,8 +26,8 @@ if (isset($_POST["sign_out"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
+    <link rel="icon" href="../../../resource/ico.svg">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
 </head>
 
@@ -315,6 +315,8 @@ HTML;
 
 </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
 <script>
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
