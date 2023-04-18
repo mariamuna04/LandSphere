@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-    header("Location: ./php/user-dashboard");
+    header("Location: ./routes/user-dashboard");
     exit;
 }
 
@@ -35,20 +35,20 @@ if (isset($_SESSION['id'])) {
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="./php/about-us"
+            <a href="./routes/about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="./php/news"
+            <a href="./routes/projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
-            <a href="php/on-sale"
+            <a href="routes/on-sale"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 On Sale
             </a>
-            <a href="php/news"
+            <a href="routes/news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="php/contact-us"
+            <a href="routes/contact-us"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Contact</a>
         </div>
@@ -69,12 +69,12 @@ if (isset($_SESSION['id'])) {
     </button>
 
     <div class="flex gap-6 items-center">
-        <button onclick="window.location.href = './php/sign-in';"
+        <button onclick="window.location.href = 'routes/sign-in';"
                 class="hover:border-primary border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
                 pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
-        <button onclick="window.location.href = './php/sign-up';"
+        <button onclick="window.location.href = 'routes/sign-up';"
                 class="bg-primary border border-primary hover:bg-green-800 transition-colors pt-[0.60rem]
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
@@ -97,7 +97,7 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-one_c2-1_help.svg">
                 <div class="flex flex-col gap-0.5">
                     <p class="font-medium text-sm">Need any help?</p>
-                    <a href="./html/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Ask a
+                    <a href="static/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Ask a
                         specialist</a>
                 </div>
             </div>
@@ -107,7 +107,7 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-one-c2-2_office.svg">
                 <div class="flex flex-col gap-0.5">
                     <p class="font-medium text-sm">Visit our office</p>
-                    <a href="./html/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Find our
+                    <a href="static/error/HTTP501.html" class="text-green-600 text-sm hover:underline">Find our
                         locations</a>
                 </div>
             </div>
@@ -171,13 +171,13 @@ if (isset($_SESSION['id'])) {
             Help is here. <span class="text-gray-500">Whenever and however you need it.</span>
         </h1>
         <div id="threeC2" class="grid grid-cols-2 gap-4">
-            <a id="threeC2-1" href="./html/error/HTTP501.html" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
+            <a id="threeC2-1" href="static/error/HTTP501.html" class="bg-beige-dark rounded-3xl pt-10 pl-8 pr-8 w-full row-span-2 flex flex-col shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
                         bg-s3c2-1 duration-300">
                 <p class="font-bold text-sm pb-4 text-gray-500">LAND SPECIALIST</p>
                 <p class="font-medium text-2xl">Discuss one on one with our specialists. Online or in our office.</p>
             </a>
-            <a id="threeC2-2" href="./html/error/HTTP501.html" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
+            <a id="threeC2-2" href="static/error/HTTP501.html" class="bg-white rounded-3xl pt-8 pb-8 pl-8 pr-8 w-full flex shadow-md
                         transform motion-safe:hover:scale-[1.02] transition-all hover:shadow-lg
                         items-center justify-between duration-300">
                 <p class="font-medium text-2xl">Get to know about laws, rules and regulations</p>
@@ -185,7 +185,7 @@ if (isset($_SESSION['id'])) {
                      alt="shelf-three_c2-2_law.svg">
 
             </a>
-            <a id="threeC2-3" href="./html/error/HTTP501.html" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
+            <a id="threeC2-3" href="static/error/HTTP501.html" class="bg-white rounded-3xl pl-8 pr-8 w-full shadow-md transform motion-safe:hover:scale-[1.02]
             transition-all hover:shadow-lg flex items-center justify-between pt-8 pb-8
             bg-s3c2-3 duration-300">
                 <p class="font-medium text-2xl ">Get expert service <br> and support</p>
@@ -260,12 +260,12 @@ if (isset($_SESSION['id'])) {
         </h1>
         <div id="fiveC2" class="flex gap-4 font-normal">
             <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
-               href="./html/error/HTTP501.html"> Status </a>
+               href="static/error/HTTP501.html"> Status </a>
             <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
-               href="./php/__misc_files/terms-and-conditions"> Terms and
+               href="./routes/__misc_files/terms-and-conditions"> Terms and
                 conditions </a>
             <a class="bg-beige-dark rounded-3xl pt-2 pb-2 pr-6 pl-6 hover:bg-beige-darkest"
-               href="./html/error/HTTP501.html"> Our
+               href="static/error/HTTP501.html"> Our
                 Commitments </a>
         </div>
     </main>
@@ -289,13 +289,13 @@ if (isset($_SESSION['id'])) {
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
 
             </div>
             <a></a>
@@ -306,11 +306,11 @@ if (isset($_SESSION['id'])) {
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Options </a>
             </div>
         </div>
 
@@ -319,10 +319,10 @@ if (isset($_SESSION['id'])) {
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -331,26 +331,26 @@ if (isset($_SESSION['id'])) {
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Press </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="./html/error/HTTP501.html">
+            <a href="static/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="./html/error/HTTP501.html">
+            <a href="static/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="./html/error/HTTP501.html">
+            <a href="static/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="./html/error/HTTP501.html">
+            <a href="static/error/HTTP501.html">
                 <img src="resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
@@ -360,10 +360,10 @@ if (isset($_SESSION['id'])) {
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="./html/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
