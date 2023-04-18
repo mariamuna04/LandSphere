@@ -43,7 +43,6 @@ if (isset($_POST['submit'])) {
     <title>Sign In</title>
 </head>
 <body class="bg-sign-up-background-light bg-cover">
-
 <div class="flex items-center justify-center h-screen">
 
     <div class="mx-auto w-[550px] h-[700px] p-12 flex flex-col justify-between
