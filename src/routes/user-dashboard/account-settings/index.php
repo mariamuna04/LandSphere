@@ -28,7 +28,6 @@ $previous_birth_certificate = $row['birth_certificate_number'];
 $previous_passport_number = $row['passport_number'];
 $yearly_income = $row['yearly_income'];
 
-
 if (isset($_POST["sign_out"])) {
     session_destroy();
     header("Location: ../../../");
@@ -36,27 +35,37 @@ if (isset($_POST["sign_out"])) {
 
 
 if (isset($_POST["submit"])) {
-    $full_name = $_POST['full_name'];
-    $email = $_POST['email'];
-    $phone_number = $_POST['phone_number'];
-    $date_of_birth = $_POST['date_of_birth'];
-    $address = $_POST['address'];
-    $occupation = $_POST['occupation'];
-    $birth_certificate = $_POST['birth_certificate'];
-    $passport_number = $_POST['passport_number'];
-    $yearly_income = $_POST['yearly_income'];
+    $current_password = $_POST['current_password'];
+    $auth_sql = "SELECT * FROM user JOIN login l on user.nid = l.user_nid WHERE user_nid = '$nid';";
+    $auth_result = mysqli_query($connection, $auth_sql);
+    $auth_row = mysqli_fetch_assoc($auth_result);
+    $auth = $current_password == $auth_row['password'];
 
-    $sql = "UPDATE user SET full_name = '$full_name', email = '$email', phone_number = '$phone_number', address = '$address', occupation = '$occupation', yearly_income = '$yearly_income' WHERE nid = '$nid';";
-    $result = mysqli_query($connection, $sql);
+    if ($auth) {
+        $full_name = $_POST['full_name'];
+        $email = $_POST['email'];
+        $phone_number = $_POST['phone_number'];
+        $date_of_birth = $_POST['date_of_birth'];
+        $address = $_POST['address'];
+        $occupation = $_POST['occupation'];
+        $birth_certificate = $_POST['birth_certificate'];
+        $passport_number = $_POST['passport_number'];
+        $yearly_income = $_POST['yearly_income'];
 
-    if ($result) {
-        $_SESSION["name"] = $full_name;
-        $_SESSION["email"] = $email;
+        $sql = "UPDATE user SET full_name = '$full_name', email = '$email', phone_number = '$phone_number', address = '$address', occupation = '$occupation', yearly_income = '$yearly_income' WHERE nid = '$nid';";
+        $result = mysqli_query($connection, $sql);
 
-        header("Location: ../");
+        if ($result) {
+            $_SESSION["name"] = $full_name;
+            $_SESSION["email"] = $email;
+            header("Location: ../");
+        } else {
+            header("Location: ../../../../static/error/HTTP521.html");
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+        echo "Wrong Password";
     }
+
 }
 
 
@@ -310,21 +319,19 @@ if (isset($_POST["submit"])) {
                                outline-none focus:shadow-md font-mono text-center"
                 />
             </div>
-
         </div>
-
 
         <hr class="col-span-2 w-full h-2.5 mx-auto my-8 bg-gray-400 border-0 rounded-full">
         <div class="col-span-2 flex w-full justify-center gap-12">
             <input type="password"
-                   name="confirm_password"
-                   id="confirm_password"
+                   name="current_password"
+                   id="current_password"
                    placeholder="Enter Password to Save Changes"
                    class="mt-1 rounded-xl
-                               bg-white w-96 py-3 px-6 text-base font-medium text-[#6B7280]
+                               w-96 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono text-center"
             />
-
+            <label for="current_password"></label>
 
             <button name="submit" type="submit"
                     class="hover:shadow-form bg-green-700
