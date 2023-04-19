@@ -124,8 +124,8 @@ if (isset($_POST["submit"])) {
 </div>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
-    <form method="post" action="" class="grid grid-cols-2 place-items-start items-start">
-        <div id="profile_image" class="pl-12 flex flex-col items-center justify-center">
+    <form method="post" action="" class="grid grid-cols-2 gap-4 place-items-start align-middle items-center">
+        <div id="profile_image" class="w-full flex flex-col items-center justify-center">
             <?php
             $rnd = rand(0, 1000000);
             echo "<img class='h-48 w-48 rounded-full'
@@ -139,29 +139,21 @@ if (isset($_POST["submit"])) {
                 <?php echo $previous_email; ?>
             </p>
 
-            <div class="mt-12 flex flex-col g-4 items-center w-fit">
-
-                <button name="submit" type="submit"
-                        class="hover:shadow-form bg-green-700
-                        py-3 px-8 text-center text-base
-                        font-bold text-white outline-none items-center
-                        col-span-2 rounded-full hover:bg-green-800
-                        hover:shadow-lg">
-                    Save and Return to Home
-                </button>
-
+            <div class="mt-6 flex flex-col g-4 items-center w-fit">
+                <h1 class="text-center text-gray-400 font-light">
+                    To change <br>
+                    <span class="font-medium">Birthday</span>,
+                    <span class="font-medium">National ID number</span>,<br>
+                    <span class="font-medium">Birth Certificate Number</span>,
+                    <span class="font-medium">Passport Number</span>;<br>
+                    contact us.
+                </h1>
 
                 <a href="../index.php" class="hover:shadow-form w-full
-                        py-3 px-8 text-center text-base
-                        font-medium text-primary outline-none items-center
+                        py-3 px-8 text-center text-base mt-8 border border-primary text-primary
+                        font-medium  outline-none items-center hover:bg-green-700 hover:text-white
                         col-span-2 rounded-full">Return to Home</a>
-                <a class=" mt-6
-                        py-3 px-8 text-center text-base w-full
-                        font-bold text-red-700 outline-none items-center
-                        col-span-2 rounded-full border hover:border-red-800
-                        ">Delete Account
 
-                </a>
             </div>
         </div>
 
@@ -280,10 +272,71 @@ if (isset($_POST["submit"])) {
 
             </div>
         </div>
+
+        <hr class="col-span-2 w-full h-2.5 mx-auto my-8 bg-gray-400 border-0 rounded-full">
+
+        <div class="flex flex-col place-items-center w-full">
+            <img class="mb-4" src="../../../resource/icons/dashboard/lock.svg" alt="">
+            <h1 class="text-md text-gray-700 font-medium">
+                Secure your account
+            </h1>
+            <span class="font-light text-gray-600">
+                BY
+            </span>
+
+            <h1 class="text-xl font-bold font-mono text-primary">
+                Strong Password</h1>
+        </div>
+
+        <div class="w-full flex flex-col gap-4">
+            <div class="flex-col">
+                <label for="new_password" class="text-sm pl-2">New Password</label>
+                <input type="password"
+                       name="new_password"
+                       id="new_password"
+                       class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+                />
+            </div>
+
+            <div class="flex-col">
+                <label for="confirm_password" class="text-sm pl-2">Confirm Password</label>
+                <input type="password"
+                       name="confirm_password"
+                       id="confirm_password"
+                       class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+                />
+            </div>
+
+        </div>
+
+
+        <hr class="col-span-2 w-full h-2.5 mx-auto my-8 bg-gray-400 border-0 rounded-full">
+        <div class="col-span-2 flex w-full justify-center gap-12">
+            <input type="password"
+                   name="confirm_password"
+                   id="confirm_password"
+                   placeholder="Enter Password to Save Changes"
+                   class="mt-1 rounded-xl
+                               bg-white w-96 py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+            />
+
+
+            <button name="submit" type="submit"
+                    class="hover:shadow-form bg-green-700
+                        px-8 text-center text-base
+                        font-bold text-white outline-none items-center
+                        col-span-2 rounded-full hover:bg-green-800
+                        hover:shadow-lg">
+                Save and Return to Home
+            </button>
     </form>
 </section>
 
-<hr>
 
 <footer id="index_footer" class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
                                  pb-12 drop-shadow-xl">
