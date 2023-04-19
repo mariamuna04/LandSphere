@@ -232,14 +232,45 @@ HTML;
                     $afternoon = date("H") < 18;
                     $evening = date("H") < 21;
                     $night = date("H") < 24;
+                    $rnd = rand(0, 100);
                     if ($morning) {
-                        echo "Good Morning,";
+                        $choice = $rnd % 3;
+                        if ($choice == 0) {
+                            echo "Good Morning!";
+                        } else if ($choice == 1) {
+                            echo "Top of the morning to you!";
+                        } else {
+                            echo "Rise and shine!";
+                        }
                     } else if ($afternoon) {
-                        echo "Good Afternoon,";
+                        $choice = $rnd % 3;
+                        if ($choice == 0) {
+                            echo "Good Afternoon!";
+                        } else if ($choice == 1) {
+                            echo "Lovely to see you this afternoon!";
+                        } else {
+                            echo "Hope you're having a good afternoon!";
+                        }
+
                     } else if ($evening) {
-                        echo "Good Evening,";
+                        $choice = $rnd % 3;
+                        if ($choice == 0) {
+                            echo "Pleasant evening to you!";
+                        } else if ($choice == 1) {
+                            echo "Good Evening!";
+                        } else {
+                            echo "Evening!";
+                        }
+
                     } else if ($night) {
-                        echo "Have a Good Night,";
+                        $choice = $rnd % 3;
+                        if ($choice == 0) {
+                            echo "Sweet dreams!";
+                        } else if ($choice == 1) {
+                            echo "Sleep well!";
+                        } else {
+                            echo "Have a Great Night!";
+                        }
                     }
                     ?>
                 </p>
