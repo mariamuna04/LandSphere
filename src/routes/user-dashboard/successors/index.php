@@ -124,7 +124,7 @@ if (isset($_POST["sign_out"])) {
                 </li>
                 <hr>
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
                             <img src="../../../resource/icons/dashboard/account.svg" alt="">
                         </span>
