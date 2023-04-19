@@ -149,6 +149,41 @@ HTML;
 
 </nav>
 
+<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+    <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
+    justify-center group-hover:shadow-lg transition-all duration-300"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1">
+            <li class="inline-flex items-center">
+                <a href="../../../index.php"
+                   class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#"
+                       class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
+                        Your Bookings
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+</div>
+
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
     <div>Your land that booked people</div>

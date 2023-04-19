@@ -5,10 +5,12 @@ const USER = 'root';
 const PASSWORD = '';
 const DATABASE = 'dbms_project';
 
-function connection(): bool|mysqli{
+function connection(): bool|mysqli
+{
     try {
-        return mysqli_connect(HOST, USER, PASSWORD, DATABASE);
+        $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
     } catch (Exception $e) {
-        return false;
+        $connection = mysqli_connect("192.168.0.108", "connectme", "connectme", DATABASE);
     }
+    return $connection;
 }

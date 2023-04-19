@@ -156,7 +156,7 @@ HTML;
          aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1">
             <li class="inline-flex items-center">
-                <a href="../../index.php"
+                <a href="../../../index.php"
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +176,7 @@ HTML;
                     </svg>
                     <a href="#"
                        class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
-                        News
+                        Your Owned Lands
                     </a>
                 </div>
             </li>
@@ -184,6 +184,7 @@ HTML;
     </div>
 
 </div>
+
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 

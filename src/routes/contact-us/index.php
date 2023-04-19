@@ -14,11 +14,30 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../");
 }
 
+$session_full_name = "";
+$session_email = "";
+$session_phone_number = "";
+
+if (isset($_SESSION['id'])) {
+    $sql = "SELECT full_name, email, phone_number FROM user WHERE nid = {$_SESSION['id']}";
+    $result = mysqli_query($connection, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $session_full_name = $row['full_name'];
+    $session_email = $row['email'];
+    $session_phone_number = $row['phone_number'];
+}
+
 if (isset($_POST['submit'])) {
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $phone_number = $_POST['telephone'];
     $post = $_POST['message'];
+
+    if(isset($_SESSION['id'])) {
+        $full_name = $session_full_name;
+        $email = $session_email;
+        $phone_number = $session_phone_number;
+    }
 
     $sql = "INSERT INTO contact_anonymous (full_name, email, phone_number, post) 
             VALUES ('$full_name', '$email', '$phone_number', '$post')";
@@ -235,6 +254,9 @@ HTML;
         <div class="mb-5 col-span-2">
             <input type="text" name="full_name" id="full_name"
                    placeholder="Full Name"
+                   <?php if (isset($_SESSION['id'])) {
+                       echo 'value="' . $session_full_name . '" disabled';
+                   } ?>
                    class="w-full rounded-2xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono"
@@ -247,6 +269,9 @@ HTML;
                    name="email"
                    id="email"
                    placeholder="Email address"
+                   <?php if (isset($_SESSION['id'])) {
+                       echo 'value="' . $session_email . '" disabled';
+                   } ?>
                    class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -259,6 +284,9 @@ HTML;
                    name="telephone"
                    id="telephone"
                    placeholder="Telephone number"
+                   <?php if (isset($_SESSION['id'])) {
+                       echo 'value="' . $session_phone_number . '" disabled';
+                   } ?>
                    class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
