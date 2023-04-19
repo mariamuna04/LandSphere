@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
     animate-fadeIn overflow-y-auto">
 
         <h2 class="align-middle pb-8 text-center font-black text-2xl select-none">
-            Sign in to your account
+            Let's get you signed in
         </h2>
 
         <form action="" method="POST">
