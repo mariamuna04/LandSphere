@@ -236,7 +236,7 @@ HTML;
             info about spouse
         </div>
 
-        <hr class="drop-shadow-lg col-span-3 w-[80%] h-1 mt-8 mb-4 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300">
+        <hr class="drop-shadow-xl col-span-3 w-[80%] h-1 mt-8 mb-4 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300">
 
         <div id="children" class="col-span-3 w-[80%]">
             <div class="flex gap-4 justify-around">
@@ -259,10 +259,7 @@ HTML;
                 }
 
                 ?>
-
-
             </div>
-
         </div>
     </section>
 
