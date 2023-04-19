@@ -13,6 +13,7 @@ if (!$connection) {
     die();
 }
 
+
 $sql = "SELECT * FROM user WHERE nid =" . $_SESSION['id'] . ";";
 $result = mysqli_query($connection, $sql);
 $row = mysqli_fetch_assoc($result);
@@ -33,13 +34,29 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../../");
 }
 
+$password_modify = false;
+$new_password_match = false;
+$auth_error = false;
 
 if (isset($_POST["submit"])) {
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
+        $password_modify = true;
+    }
+
+
     $current_password = $_POST['current_password'];
     $auth_sql = "SELECT * FROM user JOIN login l on user.nid = l.user_nid WHERE user_nid = '$nid';";
     $auth_result = mysqli_query($connection, $auth_sql);
     $auth_row = mysqli_fetch_assoc($auth_result);
     $auth = $current_password == $auth_row['password'];
+
+    if ($password_modify) {
+        $new_password_match = $new_password == $confirm_password;
+        $auth = $auth && $new_password_match;
+    }
 
     if ($auth) {
         $full_name = $_POST['full_name'];
@@ -55,6 +72,11 @@ if (isset($_POST["submit"])) {
         $sql = "UPDATE user SET full_name = '$full_name', email = '$email', phone_number = '$phone_number', address = '$address', occupation = '$occupation', yearly_income = '$yearly_income' WHERE nid = '$nid';";
         $result = mysqli_query($connection, $sql);
 
+        if ($password_modify) {
+            $sql = "UPDATE login SET password = '$new_password' WHERE user_nid = '$nid';";
+            $result = mysqli_query($connection, $sql);
+        }
+
         if ($result) {
             $_SESSION["name"] = $full_name;
             $_SESSION["email"] = $email;
@@ -63,7 +85,8 @@ if (isset($_POST["submit"])) {
             header("Location: ../../../../static/error/HTTP521.html");
         }
     } else {
-        echo "Wrong Password";
+        $auth_error = true;
+
     }
 
 }
@@ -282,7 +305,7 @@ if (isset($_POST["submit"])) {
             </div>
         </div>
 
-        <hr class="col-span-2 w-full h-2.5 mx-auto my-8 bg-gray-400 border-0 rounded-full">
+        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
 
         <div class="flex flex-col place-items-center w-full">
             <img class="mb-4" src="../../../resource/icons/dashboard/lock.svg" alt="">
@@ -305,7 +328,12 @@ if (isset($_POST["submit"])) {
                        id="new_password"
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center"
+                               outline-none focus:shadow-md font-mono text-center
+                    <?php
+                       if ($new_password_match) {
+                           echo 'bg-red-100 border-2 border-red-500';
+                       }
+                       ?>"
                 />
             </div>
 
@@ -316,12 +344,17 @@ if (isset($_POST["submit"])) {
                        id="confirm_password"
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center"
+                               outline-none focus:shadow-md font-mono text-center
+                    <?php
+                       if ($new_password_match) {
+                           echo 'bg-red-100 border-2 border-red-500';
+                       }
+                       ?>"
                 />
             </div>
         </div>
 
-        <hr class="col-span-2 w-full h-2.5 mx-auto my-8 bg-gray-400 border-0 rounded-full">
+        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
         <div class="col-span-2 flex w-full justify-center gap-12">
             <input type="password"
                    name="current_password"
@@ -329,7 +362,12 @@ if (isset($_POST["submit"])) {
                    placeholder="Enter Password to Save Changes"
                    class="mt-1 rounded-xl
                                w-96 py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center"
+                               outline-none focus:shadow-md font-mono text-center
+                   <?php
+                   if ($auth_error) {
+                       echo 'bg-red-100 border-2 border-red-500';
+                   }
+                   ?>"
             />
             <label for="current_password"></label>
 

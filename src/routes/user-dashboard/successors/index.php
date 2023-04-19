@@ -29,8 +29,6 @@ if (isset($_POST["sign_out"])) {
     <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
     <link rel="icon" href="../../../resource/ico.svg">
-
-
 </head>
 
 <body class="bg-beige-default">
@@ -90,7 +88,7 @@ if (isset($_POST["sign_out"])) {
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -188,84 +186,85 @@ HTML;
 </div>
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <main class="w-full bg-white rounded-3xl p-4 flex justify-between">
-        <div class=" flex flex-col">
+    <section class="grid grid-cols-3 gap-x-6 place-self-center align-middle justify-items-center">
+        <div class="flex items-center space-x-4">
             <?php
-            $sql = "SELECT * FROM CHILDREN WHERE parent_nid = " . $_SESSION["id"] . ";";
-            $result = mysqli_query($connection, $sql);
-            $sql2 = "SELECT sum(area) FROM owns join land on owns.land_id = land.land_id WHERE owner_id = " . $_SESSION["id"] . ";";
-            $result2 = mysqli_query($connection, $sql2);
-            //get value of total land
-            $total_land = 0;
-            while ($row2 = mysqli_fetch_assoc($result2)) {
-                $total_land = $row2["sum(area)"];
-            }
-            //count the number of chidren of a single owner
-            $sql3 = "SELECT count(*) FROM CHILDREN WHERE parent_nid = " . $_SESSION["id"] . ";";
-            $result3 = mysqli_query($connection, $sql3);
-            //get the value of total children
-            $total_children = 0;
-            while ($row3 = mysqli_fetch_assoc($result3)) {
-                $total_children = $row3["count(*)"];
-            }
-            echo "Children details and inherited land amount:";
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>NID: " . $row["nid"] . "</p>";
-                echo "<p class='font-bold'>Full Name: " . $row["full_name"] . "</p>";
-                echo "<p class='font-bold'>Parent NID: " . $row["parent_nid"] . "</p>";
-                echo "</div>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Phone Number: " . $row["phone_number"] . "</p>";
-                echo "<p class='font-bold'>Birth Certificate: " . $row["birth_certificate_number"] . "</p>";
-                echo "<p class='font-bold'>Inherited land from parents: " . $total_land / (3 * $total_children) . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            }
+            $rnd = rand(1, 10000);
+            echo '<img class="w-10 h-10 rounded-full"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 alt="user photo" height="32px" width="32px">';
             ?>
+            <div class="font-medium">
+                <div><?php echo $_SESSION['name'] ?></div>
+                <div class="text-sm text-gray-500">Land Owner</div>
+            </div>
         </div>
-    </main>
-    <main class="w-full bg-white h-12 rounded-3xl p-4 flex justify-between"></main>
-    <main class="w-full bg-white h-72 rounded-3xl p-4 flex justify-between">
-        <div class=" flex flex-col">
+        <div class="w-full flex gap-4 justify-center items-center align-middle">
+            <hr class="w-48 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 hover:shadow-primary transition-all duration-300 drop-shadow-xl">
+            <img src="../../../resource/icons/dashboard/wedding.svg" alt="">
+            <hr class="w-48 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300 drop-shadow-xl">
+        </div>
+        <div class="flex items-center space-x-4">
             <?php
-            $sql = "SELECT * FROM MARITAL_STATUS WHERE partner_nid = " . $_SESSION["id"] . ";";
-            $result = mysqli_query($connection, $sql);
-
-            echo "Spouse details and inherited land amount:";
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>NID: " . $row["nid"] . "</p>";
-                echo "<p class='font-bold'>Full Name: " . $row["full_name"] . "</p>";
-                echo "<p class='font-bold'>Partner NID: " . $row["partner_nid"] . "</p>";
-                echo "</div>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Birth Certificate: " . $row["birth_certificate_number"] . "</p>";
-                echo "<p class='font-bold'>Inherited land from partner: " . ($total_land / 3) . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            }
+            $rnd = rand(1, 10000);
+            echo '<img class="w-10 h-10 rounded-full "
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 alt="user photo" height="32px" width="32px">';
             ?>
+            <div class="font-medium">
+                <div>
+                    <?php
+                    $sql = "SELECT * FROM marital_status WHERE partner_nid =" . $_SESSION['id'] . ";";
+                    $result = mysqli_query($connection, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    echo $row['full_name'];
+                    ?></div>
+                <div class="text-sm text-gray-500">Spouse</div>
+            </div>
         </div>
-    </main>
 
-    <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 ">
+        <div class="h-36">
+            info about lands
+        </div>
 
-    </main>
+        <div>
+            <div
+                class=" drop-shadow-xl rounded-full left-1/2 -ml-0.5 w-1 h-full bg-gray-300 mb-4 hover:bg-green-700 transition-all duration-300"></div>
+        </div>
+
+        <div>
+            info about spouse
+        </div>
+
+        <hr class="drop-shadow-lg col-span-3 w-[80%] h-1 mt-8 mb-4 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300">
+
+        <div id="children" class="col-span-3 w-[80%]">
+            <div class="flex gap-4 justify-around">
+                <?php
+                $sql = "SELECT * FROM children WHERE parent_nid =" . $_SESSION['id'] . ";";
+                $result = mysqli_query($connection, $sql);
+                $row = mysqli_fetch_assoc($result);
+                while ($row) {
+                    $rnd = rand(1, 10000);
+                    echo '<div class="flex flex-col items-center ">
+                        <img class="w-10 h-10 rounded-full"
+                             src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                             alt="user photo" height="32px" width="32px">
+                        <div class="font-medium">
+                            <div>' . $row['full_name'] . '</div>
+                             <div class="text-sm text-gray-500 text-center">Child Details</div>
+                        </div>
+                    </div>';
+                    $row = mysqli_fetch_assoc($result);
+                }
+
+                ?>
+
+
+            </div>
+
+        </div>
+    </section>
 
 </section>
 

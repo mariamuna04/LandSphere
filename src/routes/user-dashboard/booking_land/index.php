@@ -87,7 +87,7 @@ if (isset($_POST["sign_out"])) {
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -98,7 +98,6 @@ if (isset($_POST["sign_out"])) {
             </svg>
         </button>
 
-        <!-- Dropdown menu -->
 <div id="dropdownAvatarName"
              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow w-64">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
