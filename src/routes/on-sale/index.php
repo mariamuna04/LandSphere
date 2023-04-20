@@ -27,7 +27,8 @@ if (isset($_POST["sign_out"])) {
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
@@ -90,7 +91,8 @@ if (isset($_POST["sign_out"])) {
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 alt="user photo" height="32px" width="32px">
+                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 
+                    alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">

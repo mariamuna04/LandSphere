@@ -194,7 +194,27 @@ HTML;
 
 <section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
+    <main id="gallery"
+          class="w-full rounded-3xl p-4 flex justify-between">
+        <div class="mt-4 flex w-full snap-x gap-4 overflow-x-auto pb-5 no-scroll">
+            <?php
+            for ($i = 0;
+                 $i < 6;
+                 $i++) {
+                $random_number = rand(1, 10000);
+                $image = <<< HTML
+                <div class="min-w-[80%]">
+                    <div style="background-image: url('https://api.dicebear.com/6.x/shapes/svg?seed=$random_number%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9')" 
+                         class="h-80 w-full snap-center rounded-xl bg-cover bg-center shadow-md"></div>
+                </div>
+                HTML;
+                echo $image;
+            }
+            ?>
 
+
+        </div>
+    </main>
 </section>
 
 <footer id="index_footer"

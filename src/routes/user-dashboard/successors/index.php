@@ -288,9 +288,7 @@ HTML;
              }
              ?>
              ">
-            <div class="bg-beige-darkest text-center p-2 font-bold">
-                Division of Spouse
-            </div>
+
             <div class="w-full">
                 <?php
                 if ($get_spouse_row != null) {
@@ -303,6 +301,10 @@ HTML;
                     $spouse_division_multiplier = mysqli_fetch_assoc($get_spouse_division_multiplier_result);
                     $spouse_division_multiplier = $spouse_division_multiplier['spouse_percentage'];
 
+                    echo
+                        '<div class="bg-beige-darkest text-center p-2 font-bold">
+                        Division of Spouse <span class="font-mono text-zinc-600"> (' . $spouse_division_multiplier * 100 . '%)</span>
+                    </div>';
 
                     while ($lands) {
                         $spouse_divided_area = $lands['area'] * $spouse_division_multiplier;
@@ -380,7 +382,7 @@ HTML;
                             $land_information .= $lf;
                             $lands = mysqli_fetch_assoc($get_lands_result);
                         }
-
+                        $children_division_in_percent = $children_division * 100;
                         $section = <<< HTML
                         <div class="flex flex-col items-center ">
                             <img class="w-10 h-10 rounded-full"
@@ -391,7 +393,10 @@ HTML;
                             <div id="land_owner_information_container"
                                  class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
                             <div class="bg-beige-darkest text-center p-2 font-bold">
-                                Division of $full_name
+                                Division of $full_name 
+                                <span class="font-mono text-zinc-600">
+                                    ($children_division_in_percent)%
+                                </span>
                             </div>
                             $land_information
                             </div>

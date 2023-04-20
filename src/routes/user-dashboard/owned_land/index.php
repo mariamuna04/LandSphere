@@ -16,8 +16,8 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../../");
 }
 
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,12 +27,11 @@ if (isset($_POST["sign_out"])) {
     <link href="../../../../dist/output.css" rel="stylesheet">
     <link rel="icon" href="../../../resource/ico.svg">
     <title>LandSphere | Your Personal Land Manager</title>
-
-
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
@@ -150,7 +149,8 @@ HTML;
 
 </nav>
 
-<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+<div id="breadcrumb"
+     class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
     justify-center group-hover:shadow-lg transition-all duration-300"
          aria-label="Breadcrumb">
@@ -185,53 +185,233 @@ HTML;
 
 </div>
 
+<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+    <p class="text-3xl pb-12 font-medium">
+        Manage your <span class="text-primary">lands.</span>
+        <span class="text-gray-500">
+            Everything's at your fingertips.
+        </span>
+    </p>
 
-    <!--    USER DASHBOARD -->
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
-        <div class=" flex flex-col">
+    <main class="w-full rounded-3xl p-4 flex justify-between">
+        <section class="w-full flex-col p-4 flex gap-6">
+
+
             <?php
-            $sql = "SELECT * FROM OWNS join LAND on OWNS.land_id=LAND.land_id WHERE owner_id = " . $_SESSION["id"];
-            $result = mysqli_query($connection, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Land Name: " . $row["title"] . "</p>";
-                echo "<p class='font-bold'>Land Area: " . $row["area"] . "</p>";
-                echo "<p class='font-bold'>Land Location: " . $row["address"] . "</p>";
-                echo "</div>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Land Type: " . $row["land_type"] . "</p>";
-                echo "<p class='font-bold'>Land Description: " . $row["place_details"] . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
+            $lands_exist = true;
+            $get_lands_sql = "SELECT * FROM owns 
+                  JOIN land l on l.land_id = owns.land_id 
+                  JOIN land_cost_info lci on l.land_id = lci.land_id 
+                  JOIN land_docs ld on l.land_id = ld.land_id 
+                  WHERE owns.owner_id = " . $_SESSION["id"] . " ORDER BY demand DESC;";
+            $get_lands_result = mysqli_query($connection, $get_lands_sql);
+            if (!$get_lands_result) {
+                $lands_exist = false;
+            }
+            $lands = mysqli_fetch_assoc($get_lands_result);
+
+            while ($lands) {
+                // Primary Land Information
+                $land_id = $lands["land_id"];
+                $land_title = $lands["title"];
+                $land_area = $lands["area"];
+                $land_address = $lands["address"];
+                $land_environment_points = $lands["environment_point"];
+                $land_demand_points = $lands["demand"];
+                $land_previous_owner = $lands["previous_owner"];
+                $land_details = $lands["place_details"];
+                $_land_type = $lands["land_type"];
+
+                $land_type = null;
+
+                if ($_land_type == 0) {
+                    $land_type = "Residential";
+                    $style = " bg-green-100 text-green-600 ";
+                } else if ($_land_type == 1) {
+                    $land_type = "Commercial";
+                    $style = " bg-blue-100 text-blue-600 ";
+                } else {
+                    $land_type = "Industrial";
+                    $style = " bg-yellow-100 text-yellow-600 ";
+                }
+
+                // Land Cost Information
+                $land_cp_sqft = $lands["cost_per_sqft"];
+                $land_rcv = $lands["relative_cost_value"];
+                $land_acquire_date = $lands["acquire_date"];
+                // Convert to date format full date (e.g. 07th January, 2021)
+                $land_acquire_date = date("jS F, Y", strtotime($land_acquire_date));
+
+                // Land Document Information
+                $registration_document = $lands["registration_paper"];
+                $government_permit = $lands["government_permit"];
+                $agreement_document = $lands["agreement"];
+                $sale_deed = $lands["sale_deed"];
+                $tax_payment = $lands["tax_pay_receipt"];
+                $map_property = $lands["map_property"];
+
+                $environment_status = "";
+                if ($land_environment_points > 0 && $land_environment_points <= 2) {
+                    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+                } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
+                    $environment_status = ' bg-green-100 text-green-500"> Ecologically Very Good ';
+                } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
+                    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+                } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
+                    $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+                } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
+                    $environment_status = '  bg-red-100 text-red-500"> Ecologically Poor ';
+                }
+
+                echo <<< HTML
+                    <a href="#" class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                                transition-all duration-300 transform motion-safe:hover:scale-[1.02]">
+                        <div class="flex justify-between">
+                            <div class="flex gap-4">  
+                                <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
+                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                            </div>
+                            <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
+                        </div>
+                        
+                        <div class="mt-3 flex justify-between items-center align-middle">
+                            <p class="p-1 rounded-xl bg-beige-light px-3">$land_address</p> 
+                            <p class="font-bold text-xl">$land_area sqft</p> 
+                        </div>
+                        
+                        <div class="mt-2 flex justify-between items-center">
+                            <p class="py-1">$land_details</p> 
+                            <p class="w-fit text-md font-medium px-2.5 rounded-2xl" $environment_status </p>
+                        </div>
+                        
+                        <div class="mt-2 w-full  flex justify-around">       
+                            <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-beige-light flex-col flex">
+                                <h1 class="font-bold text-green-800">Cost Per SQFT</h1>
+                                <h1 class="font-mono">$$land_cp_sqft </h1>
+                            </div>
+                            <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-beige-light flex-col flex">
+                                <h1 class="font-bold text-green-800">Relative Cost</h1>
+                                <h1 class="font-mono">$$land_rcv </h1>
+                            </div>   
+                             <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-beige-light flex-col flex">
+                                <h1 class="font-bold text-green-800">Acquire Date</h1>
+                                <h1 class="font-mono text-sm text-zinc-500">$land_acquire_date </h1>
+                            </div>                          
+                        </div>
+                       
+                       <div class="mt-4 w-full flex justify-around gap-4">
+                HTML;
+                if ($registration_document != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800">Registration Document</h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm">Registration Document</h1>
+                        </div>
+                    HTML;
+                }
+
+                if ($government_permit != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800">Government <br> Permit</h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm">Government <br> Permit</h1>
+                        </div>
+                    HTML;
+                }
+
+                if ($agreement_document != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800">Agreement <br> Document </h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm">Agreement <br> Document</h1>
+                        </div>
+                    HTML;
+                }
+
+                if ($sale_deed != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800"> Sale <br> Deed </h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm">Sale <br> Deed </h1>
+                        </div>
+                    HTML;
+                }
+                if ($tax_payment != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800"> Tax <br> Payment </h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm"> Tax <br> Payment </h1>
+                        </div>
+                    HTML;
+                }
+
+                if ($map_property != null) {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-green-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_available.svg" alt="" class="w-6 h-6 mx-auto">
+                            <h1 class="font-bold text-green-800"> Map <br> Property </h1>
+                        </div>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="w-[20%] p-2 text-center text-md font-medium px-2.5 rounded-2xl bg-red-200 flex-col flex justify-around">
+                            <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="" class="w-8 h-8 mx-auto">
+                            <h1 class="mt-2 font-bold text-red-800 text-sm">  Map <br> Property </h1>
+                        </div>
+                    HTML;
+                }
+
+
+                echo "</div></a>";
+                $lands = mysqli_fetch_assoc($get_lands_result);
             }
             ?>
-        </div>
-        <div>
-            pictures
-        </div>
-    </main>
-
-    <main class="bg-white h-72 rounded-3xl">
+        </section>
 
     </main>
 
-    <main class="grid grid-cols-5 gap-3 pb-12 h-36 mb-10 ">
-
-    </main>
 
 </section>
 
 
-<footer id="index_footer" class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
+<footer id="index_footer"
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
                                  pb-12 drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
@@ -320,7 +500,7 @@ HTML;
     </div>
 
 </footer>
-<!-- Search modal -->
+
 <div id="defaultModal"
      tabindex="-1"
      aria-hidden="true"
@@ -364,7 +544,6 @@ HTML;
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-
 <script>
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
