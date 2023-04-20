@@ -32,9 +32,10 @@ if (isset($_POST["sign_out"])) {
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
-    pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-lg items-center top-0 mb-12 z-50">
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
+     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
+     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
         <a href="../../../index.php" class="flex select-none">
@@ -150,7 +151,8 @@ HTML;
 
 </nav>
 
-<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+<div id="breadcrumb"
+     class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
     justify-center group-hover:shadow-lg transition-all duration-300"
          aria-label="Breadcrumb">
@@ -185,32 +187,43 @@ HTML;
 
 </div>
 
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <section class="grid grid-cols-3 gap-x-6 place-self-center align-middle justify-items-center">
-        <div class="flex items-center space-x-4">
+<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+
+    <section id="family_tree_container"
+             class="grid grid-cols-3 gap-x-6 place-self-center align-middle justify-items-center">
+
+        <div id="land_owner_container"
+             class="flex items-center space-x-4">
+
             <?php
             $rnd = rand(1, 10000);
             echo '<img class="w-10 h-10 rounded-full"
                  src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">';
             ?>
+
             <div class="font-medium">
                 <div><?php echo $_SESSION['name'] ?></div>
                 <div class="text-sm text-gray-500">Land Owner</div>
             </div>
+
         </div>
-        <div class="w-full flex gap-4 justify-center items-center align-middle">
-            <hr class="w-48 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 hover:shadow-primary transition-all duration-300 drop-shadow-xl">
+        <div id="center_line_container"
+             class="w-full flex gap-4 justify-center items-center align-middle">
+            <hr class="w-96 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 hover:shadow-primary transition-all duration-300 drop-shadow-xl">
             <img src="../../../resource/icons/dashboard/wedding.svg" alt="">
-            <hr class="w-48 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300 drop-shadow-xl">
+            <hr class="w-96 h-1 my-8 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300 drop-shadow-xl">
         </div>
-        <div class="flex items-center space-x-4">
+        <div id="spouse_container"
+             class="flex items-center space-x-4">
+
             <?php
             $rnd = rand(1, 10000);
             echo '<img class="w-10 h-10 rounded-full "
                  src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">';
             ?>
+
             <div class="font-medium">
                 <div>
                     <?php
@@ -218,13 +231,29 @@ HTML;
                     $result = mysqli_query($connection, $sql);
                     $row = mysqli_fetch_assoc($result);
                     echo $row['full_name'];
-                    ?></div>
+                    ?>
+                </div>
                 <div class="text-sm text-gray-500">Spouse</div>
             </div>
         </div>
 
-        <div class="h-36">
-            info about lands
+        <div id="land_owner_information_container" 
+             class="min-w-[8rem] w-80 flex flex-col rounded-t-xl overflow-x-auto mt-4">
+            <div class="bg-beige-darkest text-center p-2">
+                Owned Land
+            </div>
+            <div>
+                <?php
+                $sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . ";";
+                $result = mysqli_query($connection, $sql);
+                $row = mysqli_fetch_assoc($result);
+                while ($row) {
+                    
+                    $row = mysqli_fetch_assoc($result);
+                }
+                ?>
+            </div>
+            
         </div>
 
         <div>
