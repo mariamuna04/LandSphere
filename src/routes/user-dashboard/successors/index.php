@@ -22,6 +22,9 @@ $get_spouse_sql = "SELECT * FROM marital_status WHERE partner_nid =" . $_SESSION
 $get_spouse_result = mysqli_query($connection, $get_spouse_sql);
 $get_spouse_row = mysqli_fetch_assoc($get_spouse_result);
 
+$get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
+$get_lands_result = mysqli_query($connection, $get_lands_sql);
+$lands_exists = mysqli_num_rows($get_lands_result) > 0;
 ?>
 
 
@@ -244,16 +247,22 @@ HTML;
 
         <div id="land_owner_information_container"
              class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
-            <div class="bg-beige-darkest text-center p-2 font-bold">
+            <div class="bg-beige-darkest text-center p-2 font-bold
+            <?php
+            if (!$lands_exists) echo " hidden ";
+            ?>
+            ">
                 Owned Land
             </div>
             <div class="w-full">
                 <?php
-                $get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
-                $get_lands_result = mysqli_query($connection, $get_lands_sql);
-                $lands = mysqli_fetch_assoc($get_lands_result);
-                while ($lands) {
-                    $information = <<< HTML
+                if ($lands_exists) {
+
+                    $get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
+                    $get_lands_result = mysqli_query($connection, $get_lands_sql);
+                    $lands = mysqli_fetch_assoc($get_lands_result);
+                    while ($lands) {
+                        $information = <<< HTML
                         <div class="group rounded-xl bg-beige-darker m-2 p-2 flex flex-col"> 
                            <div class="text-sm text-zinc-500"> {$lands['address']}</div>
                            <div class="flex justify-between">
@@ -269,8 +278,11 @@ HTML;
                     
                     
                     HTML;
-                    echo $information;
-                    $lands = mysqli_fetch_assoc($get_lands_result);
+                        echo $information;
+                        $lands = mysqli_fetch_assoc($get_lands_result);
+                    }
+                } else {
+                    echo "<div class='text-center text-2xl font-bold text-zinc-400 select-none'> No Lands Exist </div>";
                 }
                 ?>
             </div>
@@ -301,10 +313,14 @@ HTML;
                     $spouse_division_multiplier = mysqli_fetch_assoc($get_spouse_division_multiplier_result);
                     $spouse_division_multiplier = $spouse_division_multiplier['spouse_percentage'];
 
-                    echo
-                        '<div class="bg-beige-darkest text-center p-2 font-bold">
-                        Division of Spouse <span class="font-mono text-zinc-600"> (' . $spouse_division_multiplier * 100 . '%)</span>
-                    </div>';
+                    if ($lands_exists) {
+                        echo
+                            '<div class="bg-beige-darkest text-center p-2 font-bold">
+                                Division of Spouse <span class="font-mono text-zinc-600"> (' . $spouse_division_multiplier * 100 . '%)</span>
+                            </div>';
+                    } else {
+                        echo "<div class='text-center text-2xl font-bold text-zinc-400 select-none'> No Lands Exist </div>";
+                    }
 
                     while ($lands) {
                         $spouse_divided_area = $lands['area'] * $spouse_division_multiplier;
@@ -383,7 +399,7 @@ HTML;
                             $lands = mysqli_fetch_assoc($get_lands_result);
                         }
                         $children_division_in_percent = $children_division * 100;
-                        $section = <<< HTML
+                        echo <<< HTML
                         <div class="flex flex-col items-center ">
                             <img class="w-10 h-10 rounded-full"
                                  src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
@@ -392,19 +408,27 @@ HTML;
                             
                             <div id="land_owner_information_container"
                                  class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
-                            <div class="bg-beige-darkest text-center p-2 font-bold">
+                        HTML;
+                        if ($lands_exists) {
+                            echo <<< HTML
+                                <div class="bg-beige-darkest text-center p-2 font-bold">
                                 Division of $full_name 
-                                <span class="font-mono text-zinc-600">
-                                    ($children_division_in_percent)%
-                                </span>
-                            </div>
-                            $land_information
-                            </div>
-                            
-                        </div>
-                    HTML;
+                                    <span class="font-mono text-zinc-600">
+                                        ($children_division_in_percent)%
+                                    </span>
+                                </div>
+                            HTML;
+                        } else {
+                            echo "<div class='text-center text-2xl font-bold text-zinc-400 select-none'> No Lands Exist </div>";
 
-                        echo $section;
+                        }
+                        echo <<< HTML
+                            $land_information
+                            </div >
+                                
+                            </div >
+                        HTML;
+
                         $land_information = "";
                         $children = mysqli_fetch_assoc($get_children_result);
                     }
