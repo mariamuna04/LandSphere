@@ -327,7 +327,14 @@ HTML;
                                 if ($total_area == 0 || empty($total_area)) {
                                     echo "-";
                                 } else {
-                                    echo "$" . $total_area * 0.7;
+                                    $net_worth_sql = "SELECT SUM(area*cost_per_sqft) 
+                                                      FROM owns JOIN land l ON l.land_id = owns.land_id 
+                                                      JOIN land_cost_info lci on l.land_id = lci.land_id 
+                                                      WHERE owner_id =" . $_SESSION['id'] . ";";
+                                    $net_worth_result = mysqli_query($connection, $net_worth_sql);
+                                    $net_worth = mysqli_fetch_assoc($net_worth_result);
+                                    $net_worth['SUM(area*cost_per_sqft)'] = number_format($net_worth['SUM(area*cost_per_sqft)']);
+                                    echo "$" . $net_worth['SUM(area*cost_per_sqft)'];
                                 }
                                 ?></p>
                         </div>

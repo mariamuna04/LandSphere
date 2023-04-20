@@ -32,6 +32,7 @@ if (isset($_POST["sign_out"])) {
 </head>
 
 <body class="bg-beige-default">
+
 <nav id="index_navbar"
      class="bg-beige-dark flex gap-6 justify-between pl-24
      pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
@@ -150,7 +151,6 @@ HTML;
 
 
 </nav>
-
 <div id="breadcrumb"
      class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
@@ -237,59 +237,157 @@ HTML;
             </div>
         </div>
 
-        <div id="land_owner_information_container" 
-             class="min-w-[8rem] w-80 flex flex-col rounded-t-xl overflow-x-auto mt-4">
-            <div class="bg-beige-darkest text-center p-2">
+        <div id="land_owner_information_container"
+             class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
+            <div class="bg-beige-darkest text-center p-2 font-bold">
                 Owned Land
             </div>
-            <div>
+            <div class="w-full">
                 <?php
-                $sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . ";";
-                $result = mysqli_query($connection, $sql);
-                $row = mysqli_fetch_assoc($result);
-                while ($row) {
+                $get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
+                $get_lands_result = mysqli_query($connection, $get_lands_sql);
+                $lands = mysqli_fetch_assoc($get_lands_result);
+                while ($lands) {
+                    $information = <<< HTML
+                        <div class="group rounded-xl bg-beige-darker m-2 p-2 flex flex-col"> 
+                           <div class="text-sm text-zinc-500"> {$lands['address']}</div>
+                           <div class="flex justify-between">
+                                <p class="font-mono font-bold"> {$lands['land_id']}   </p>
+                                <p class="font-bold group-hover:text-primary transition-all duration-300"> {$lands['title']}   </p>
+                           </div>
+                           <div class="w-full bg-beige-light text-center flex justify-center gap-4 rounded-lg mt-2 font-mono"> 
+                                <img src="../../../resource/icons/dashboard/area_count.svg" alt="">
+                                <div> {$lands['area']} sqft </div>  
+                           </div>
+                        </div>
                     
-                    $row = mysqli_fetch_assoc($result);
+                    
+                    
+                    HTML;
+                    echo $information;
+                    $lands = mysqli_fetch_assoc($get_lands_result);
                 }
                 ?>
             </div>
-            
+
+        </div>
+        <hr id="vertical_line"
+            class=" drop-shadow-xl rounded-full left-1/2 -ml-0.5 w-1 h-full bg-gray-300 mb-4 hover:bg-green-700 transition-all duration-300"></hr>
+        <div id="spouse_information_container"
+             class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
+            <div class="bg-beige-darkest text-center p-2 font-bold">
+                Division of Spouse
+            </div>
+            <div class="w-full">
+                <?php
+                $get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
+                $get_lands_result = mysqli_query($connection, $get_lands_sql);
+                $lands = mysqli_fetch_assoc($get_lands_result);
+
+                $get_spouse_division_multiplier_sql = "SELECT spouse_percentage FROM successor_division WHERE nid =" . $_SESSION['id'] . ";";
+                $get_spouse_division_multiplier_result = mysqli_query($connection, $get_spouse_division_multiplier_sql);
+                $spouse_division_multiplier = mysqli_fetch_assoc($get_spouse_division_multiplier_result);
+                $spouse_division_multiplier = $spouse_division_multiplier['spouse_percentage'];
+
+
+                while ($lands) {
+                    $spouse_divided_area = $lands['area'] * $spouse_division_multiplier;
+                    $information = <<< HTML
+                        <div class="group rounded-xl bg-beige-darker m-2 p-2 flex flex-col"> 
+                           <div class="text-sm text-zinc-500"> {$lands['address']}</div>
+                           <div class="flex justify-between">
+                                <p class="font-mono font-bold"> {$lands['land_id']}   </p>
+                                <p class="font-bold group-hover:text-primary transition-all duration-300"> {$lands['title']}   </p>
+                           </div>
+                           <div class="w-full bg-beige-light text-center flex justify-center gap-4 rounded-lg mt-2 font-mono"> 
+                                <img src="../../../resource/icons/dashboard/area_count.svg" alt="">
+                                <div> $spouse_divided_area sqft </div>  
+                           </div>
+                        </div>
+                    HTML;
+                    echo $information;
+                    $lands = mysqli_fetch_assoc($get_lands_result);
+                }
+                ?>
+            </div>
+
         </div>
 
-        <div>
-            <div
-                class=" drop-shadow-xl rounded-full left-1/2 -ml-0.5 w-1 h-full bg-gray-300 mb-4 hover:bg-green-700 transition-all duration-300"></div>
-        </div>
+        <hr class="drop-shadow-xl col-span-3 w-full h-1 mt-8 mb-4 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300">
 
-        <div>
-            info about spouse
-        </div>
-
-        <hr class="drop-shadow-xl col-span-3 w-[80%] h-1 mt-8 mb-4 bg-gray-300 border-0 rounded-full hover:bg-green-700 transition-all duration-300">
-
-        <div id="children" class="col-span-3 w-[80%]">
+        <div id="children_container"
+             class="col-span-3 w-full">
             <div class="flex gap-4 justify-around">
                 <?php
-                $sql = "SELECT * FROM children WHERE parent_nid =" . $_SESSION['id'] . ";";
-                $result = mysqli_query($connection, $sql);
-                $row = mysqli_fetch_assoc($result);
-                while ($row) {
-                    $rnd = rand(1, 10000);
-                    echo '<div class="flex flex-col items-center ">
-                        <img class="w-10 h-10 rounded-full"
-                             src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
-                             alt="user photo" height="32px" width="32px">
-                        <div class="font-medium">
-                            <div>' . $row['full_name'] . '</div>
-                             <div class="text-sm text-gray-500 text-center">Child Details</div>
-                        </div>
-                    </div>';
-                    $row = mysqli_fetch_assoc($result);
-                }
+                $get_children_sql = "SELECT * FROM children WHERE parent_nid =" . $_SESSION['id'] . ";";
+                $get_children_result = mysqli_query($connection, $get_children_sql);
+                $children = mysqli_fetch_assoc($get_children_result);
+                $children_count = mysqli_num_rows($get_children_result);
+                $land_information = "";
 
+                $get_division_sql = "SELECT * FROM successor_division WHERE nid =" . $_SESSION['id'] . ";";
+                $get_division_result = mysqli_query($connection, $get_division_sql);
+                $division = mysqli_fetch_assoc($get_division_result);
+                $spouse_division_multiplier = $division['spouse_percentage'];
+                $children_division_string = $division['children_percentage'];
+                $children_division_array = explode(",", $children_division_string);
+
+
+                for ($i = 0; $i < $children_count; $i++) {
+                    $rnd = rand(1, 10000);
+                    $full_name = $children['full_name'];
+
+                    $children_division = $children_division_array[$i];
+
+                    $get_lands_sql = "SELECT * FROM owns JOIN land l on l.land_id = owns.land_id WHERE owner_id =" . $_SESSION['id'] . " ORDER BY title;";
+                    $get_lands_result = mysqli_query($connection, $get_lands_sql);
+                    $lands = mysqli_fetch_assoc($get_lands_result);
+                    while ($lands) {
+                        $area = $lands['area'];
+                        $children_divided_area = ($area - ($area * $spouse_division_multiplier)) * $children_division;
+                        $lf = <<< HTML
+                        <div class="group rounded-xl bg-beige-darker m-2 p-2 flex flex-col"> 
+                           <div class="text-sm text-zinc-500"> {$lands['address']}</div>
+                           <div class="flex justify-between">
+                                <p class="font-mono font-bold"> {$lands['land_id']}   </p>
+                                <p class="font-bold group-hover:text-primary transition-all duration-300"> {$lands['title']}   </p>
+                           </div>
+                           <div class="w-full bg-beige-light text-center flex justify-center gap-4 rounded-lg mt-2 font-mono"> 
+                                <img src="../../../resource/icons/dashboard/area_count.svg" alt="">
+                                <div> $children_divided_area sqft </div>  
+                           </div>
+                        </div>
+                    HTML;
+                        $land_information .= $lf;
+                        $lands = mysqli_fetch_assoc($get_lands_result);
+                    }
+
+                    $section = <<< HTML
+                        <div class="flex flex-col items-center ">
+                            <img class="w-10 h-10 rounded-full"
+                                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=' . $rnd . '%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                                 alt="user photo" height="32px" width="32px">
+                            <div class="font-medium mt-1">$full_name</div>
+                            
+                            <div id="land_owner_information_container"
+                                 class="min-w-[8rem] w-96 flex flex-col rounded-xl overflow-x-auto mt-4 hover:shadow-xl transition-all duration-300">
+                            <div class="bg-beige-darkest text-center p-2 font-bold">
+                                Division of $full_name
+                            </div>
+                            $land_information
+                            </div>
+                            
+                        </div>
+                    HTML;
+
+                    echo $section;
+                    $land_information = "";
+                    $children = mysqli_fetch_assoc($get_children_result);
+                }
                 ?>
             </div>
         </div>
+
     </section>
 
 </section>

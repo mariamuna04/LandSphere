@@ -225,12 +225,12 @@ HTML;
                 </div>
                 <input type="search" id="default-search"
                        class="block w-full p-4 pl-10 text-md text-gray-600 font-medium
-                       rounded-lg bg-white hover:text-black focus:outline-none"
+                       rounded-xl bg-white hover:text-black focus:outline-none"
                        placeholder="Type keyword to search">
                 <button type="submit"
                         class="text-white absolute right-2.5
                         bottom-2.5 bg-primary hover:bg-green-700 hover:shadow-lg
-                        font-medium rounded-lg text-sm px-4 py-2">
+                        font-medium rounded-xl text-sm px-4 py-2">
                     Search
                 </button>
             </div>
@@ -243,7 +243,7 @@ HTML;
                     <input type="checkbox" id="residential" class="hidden peer" value="0">
                     <label for="residential" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
-                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
@@ -261,7 +261,7 @@ HTML;
                     <input type="checkbox" id="commercial" value="" class="hidden peer">
                     <label for="commercial" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
-                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
@@ -280,7 +280,7 @@ HTML;
                     <input type="checkbox" id="industrial" value="" class="hidden peer">
                     <label for="industrial" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
-                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50
@@ -304,13 +304,13 @@ HTML;
                            required>
                     <label for="hosting-small" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
-                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
                         <span class="flex flex-col">
                             <span class="w-full text-lg font-semibold">For Sale</span>
-                            <span class="w-full text-zinc-400">Get your dream land with stunning prices</span>
+                            <span class="w-full text-xs">Get your dream land with stunning prices</span>
                         </span>
                     </label>
                 </li>
@@ -318,13 +318,13 @@ HTML;
                     <input type="radio" id="hosting-big" name="hosting" value="hosting-big" class="hidden peer">
                     <label for="hosting-big" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
-                    bg-white border-2 border-gray-200 rounded-lg cursor-pointer shadow-sm
+                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
                     peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
                     hover:text-gray-600
                     peer-checked:text-gray-600 hover:bg-gray-50">
                         <span class="flex flex-col">
-                            <span class="w-full text-lg font-semibold">For Auction</span>
-                            <span class="w-full text-zinc-400">Bid high, win big, and secure your slice of paradise</span>
+                            <span class="w-full text-lg font-semibold ">For Auction</span>
+                            <span class="w-full text-xs">Bid high, win big, and secure your slice of paradise</span>
                         </span>
                     </label>
                 </li>
@@ -343,7 +343,7 @@ HTML;
                            class="block mb-2 text-md font-medium text-gray-900 text-center">Area
                         Range</label>
                     <input id="default-range" type="range" min="0" max="1000000" value="1000000"
-                           class="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer">
+                           class="w-full h-2 bg-gray-200 rounded-xl  cursor-pointer">
                 </div>
 
                 <div class="w-full pl-4 pr-4">
@@ -351,7 +351,7 @@ HTML;
                            class="block mb-2 text-md font-medium text-gray-900 text-center">Price
                         Range</label>
                     <input id="default-range" min="0" max="1000000" type="range" value="1000000"
-                           class="w-full h-2 rounded-lg bg-primary cursor-pointer">
+                           class="w-full h-2 rounded-xl bg-primary cursor-pointer">
 
                 </div>
 
@@ -390,6 +390,9 @@ HTML;
                 $get_price_per_sqft_result = $connection->query($get_price_per_sqft_sql);
                 $get_price_per_sqft_row = $get_price_per_sqft_result->fetch_assoc();
                 $price_per_sqft = $get_price_per_sqft_row['cost_per_sqft'];
+
+                $net_price = $price_per_sqft * $row['area'];
+                $net_price = number_format($net_price, 2, '.', ',');
 
                 echo
 
@@ -444,7 +447,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
        </p>
         
         <p class='text-2xl font-black group-hover:text-green-600'>
-            $" . $row['area'] * $price_per_sqft . "
+            $$net_price
         </p> 
        
     </div>
@@ -565,7 +568,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
 
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
+        <div class="relative bg-white rounded-xl shadow">
             <!-- Modal header -->
             <div class="justify-between p-4 border-b rounded-t flex items-center">
                 <img src="../../resource/icons/modal-search-icon.svg" alt="">
@@ -579,10 +582,10 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
                 />
                 <label for="search_text-field"></label>
                 <button type="button"
-                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="text-gray-400 bg-transparent rounded-xl text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-hide="defaultModal">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
-                rounded-lg">Esc</kbd>
+                rounded-xl">Esc</kbd>
                 </button>
             </div>
             <!-- Modal body -->
