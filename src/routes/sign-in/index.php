@@ -52,6 +52,13 @@ if (isset($_POST['submit'])) {
                 $_SESSION["occupation"] = $row['occupation'];
 
 
+                $token = generate_token();
+                $_SESSION["token"] = $token;
+                $insert_token_to_database_sql = "UPDATE LOGIN SET token = '" . $token . "' WHERE user_nid = '" . $_SESSION["id"] . "';";
+                mysqli_query($connection, $insert_token_to_database_sql);
+
+
+
                 header("Location: ../user-dashboard");
             } else {
                 $error_message = 'Invalid Credentials';
@@ -60,6 +67,19 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
+
+function generate_token($length = 32): string
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return md5($randomString);
+}
+
 ?>
 
 <!DOCTYPE html>
