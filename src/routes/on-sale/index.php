@@ -368,6 +368,7 @@ HTML;
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
+                $land_id = $row['land_id'];
                 $title = $row['title'];
                 $_land_type = $row['land_type'];
 
@@ -385,11 +386,16 @@ HTML;
 
                 $rnd = rand(0, 1000000);
 
+                $get_price_per_sqft_sql = "SELECT cost_per_sqft FROM land_cost_info WHERE land_id = $land_id";
+                $get_price_per_sqft_result = $connection->query($get_price_per_sqft_sql);
+                $get_price_per_sqft_row = $get_price_per_sqft_result->fetch_assoc();
+                $price_per_sqft = $get_price_per_sqft_row['cost_per_sqft'];
+
                 echo
 
                     "
 
-<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
+<a href='land.php?land_id=$land_id' class='group bg-white rounded-2xl w-full block shadow-md 
 transform motion-safe:hover:scale-[1.03]
 transition-all hover:shadow-lg text-gray-600 duration-300'>
     <img class='w-full h-48 object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
@@ -438,7 +444,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
        </p>
         
         <p class='text-2xl font-black group-hover:text-green-600'>
-            $" . $row['area'] * 0.3 . "
+            $" . $row['area'] * $price_per_sqft . "
         </p> 
        
     </div>
