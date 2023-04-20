@@ -398,7 +398,7 @@ HTML;
 
                     "
 
-<a href='land.php?land_id=$land_id' class='group bg-white rounded-2xl w-full block shadow-md 
+<a href='./land/?land_id=$land_id' class='group bg-white rounded-2xl w-full block shadow-md 
 transform motion-safe:hover:scale-[1.03]
 transition-all hover:shadow-lg text-gray-600 duration-300'>
     <img class='w-full h-48 object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'

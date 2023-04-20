@@ -1,11 +1,23 @@
 <?php
 session_start();
+if (!isset($_GET['land_id'])) {
+    header('Location: ../../../static/error/HTTP404.html');
+    die();
+}
 $land_id = $_GET['land_id'];
 
-include "../../utility/php/connection.php";
+include "../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../static/error/HTTP521.html');
+    die();
+}
+
+$ensure_land_id_sql = "SELECT * FROM land WHERE land_id = $land_id";
+$ensure_land_id_sql_result = mysqli_query($connection, $ensure_land_id_sql);
+$ensure_land_id_sql_result_rows = mysqli_num_rows($ensure_land_id_sql_result);
+if ($ensure_land_id_sql_result_rows == 0) {
+    header('Location: ../../../static/error/HTTP404.html');
     die();
 }
 
@@ -29,38 +41,39 @@ $land_type = $land_table['land_type'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../dist/output.css" rel="stylesheet">
+    <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
-    <link rel="icon" href="../../resource/ico.svg">
+    <link rel="icon" href="../../../resource/ico.svg">
 
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
-    pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
-    backdrop-blur-lg items-center top-0 mb-12 z-50">
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
+     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
+     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
-        <a href="../../index.php" class="flex select-none">
-            <img alt="" src="../../resource/icons/landSphere.svg">
+        <a href="../../../index.php" class="flex select-none">
+            <img alt="" src="../../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="../about-us"
+            <a href="../../about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="../projects"
+            <a href="../../projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
-            <a href="#"
+            <a href="../"
                class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
                     text-green-700 font-medium">
                 On Sale
             </a>
-            <a href="../news"
+            <a href="../../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="../contact-us"
+            <a href="../../contact-us"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Contact</a>
         </div>
@@ -70,7 +83,7 @@ $land_type = $land_table['land_type'];
             class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
                     flex gap-12 items-center">
         <span class="flex items-center gap-2">
-            <img src="../../resource/icons/search-navbar.svg" alt=" ">
+            <img src="../../../resource/icons/search-navbar.svg" alt=" ">
             <span class="text-xs font-medium text-gray-800">Search</span>
         </span>
         <span class="flex gap-1 select-none">
@@ -86,9 +99,9 @@ $land_type = $land_table['land_type'];
         $last_name = explode(" ", $_SESSION["name"])[1];
         $email = $_SESSION["email"];
 
-        if (isset($_POST["sign_out_action"])) {
+        if (isset($_POST["sign_out"])) {
             session_destroy();
-            header("Location: ../../");
+            header("Location: ../../../");
         }
         $rnd = rand(0, 1000000);
 
@@ -125,16 +138,16 @@ $land_type = $land_table['land_type'];
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
                         <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
                     </a>
                 </li>
                 <hr>
                 <li>
-                    <a href="../user-dashboard/account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../user-dashboard/account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../resource/icons/dashboard/account.svg" alt="">
+                            <img src="../../../resource/icons/dashboard/account.svg" alt="">
                         </span>
                         <span>Manage your Account</span>
                     </a>
@@ -142,9 +155,9 @@ $land_type = $land_table['land_type'];
                 <hr>
                 <li>
                     <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
-                        <button name="sign_out_action" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
+                        <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
-                                <img src="../../resource/icons/dashboard/cancel.svg" alt="">
+                                <img src="../../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>
                             Sign out
                         </button>
@@ -160,12 +173,12 @@ HTML;
         $loggedOut =
             <<<HTML
         <div class="flex gap-6 items-center">
-        <button onclick="window.location.href = '../sign-in';"
+        <button onclick="window.location.href = '../../sign-in';"
                 class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
                 pl-6 pr-6 rounded-3xl align-middle">
             Sign In
         </button>
-        <button onclick="window.location.href = '../sign-up';"
+        <button onclick="window.location.href = '../../sign-up';"
                 class="bg-primary border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
                 pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
             Sign Up
@@ -179,20 +192,13 @@ HTML;
 
 </nav>
 
-
-<section class="container mx-auto my-auto mt-48 mb-16
-                pl-36 pr-36">
-    <?php
-
-
-    ?>
+<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
 
 </section>
 
-
-<footer id="index_footer" class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
-                                 pb-12 drop-shadow-xl">
+<footer id="index_footer"
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12 drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">
@@ -200,11 +206,11 @@ HTML;
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Community </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Rules and Regulations </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Volunteers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Opt Out </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Community </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Rules and Regulations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Volunteers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Option </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Opt Out </a>
 
 
             </div>
@@ -216,10 +222,10 @@ HTML;
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
             </div>
         </div>
 
@@ -228,10 +234,10 @@ HTML;
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -240,27 +246,27 @@ HTML;
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
 
@@ -269,10 +275,10 @@ HTML;
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
@@ -280,7 +286,7 @@ HTML;
     </div>
 
 </footer>
-<!-- Search modal -->
+
 <div id="defaultModal"
      tabindex="-1"
      aria-hidden="true"
@@ -294,7 +300,7 @@ HTML;
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <div class="justify-between p-4 border-b rounded-t flex items-center">
-                <img src="../../resource/icons/modal-search-icon.svg" alt="">
+                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
                        id="search_text-field"
