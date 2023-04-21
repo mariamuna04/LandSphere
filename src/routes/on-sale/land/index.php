@@ -34,6 +34,7 @@ $previous_owner = $land_table['previous_owner'];
 $place_details = $land_table['place_details'];
 $land_type = $land_table['land_type'];
 
+
 ?>
 
 <!DOCTYPE html>

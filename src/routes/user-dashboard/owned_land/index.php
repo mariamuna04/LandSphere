@@ -209,7 +209,7 @@ HTML;
                             <a href='../../on-sale' class='text-primary transition-all duration-300 bg-green-200 p-1 hover:bg-green-400 hover:text-green-800 rounded-xl'>On Sale</a> 
                         section to learn more...</span>
                     <br>
-                    <div class="text-center px-6 py-8 text-green-500 text-3xl pb-12 font-medium">
+                    <div class="py-8 text-green-500 text-3xl pb-12 font-medium">
                     We are looking forward to get you joined into our world of 
                     <span class="text-green-700"> Green</span>
                     </div>
@@ -292,7 +292,7 @@ HTML;
                     }
 
                     echo <<< HTML
-                    <a href="#" class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                    <a href="./my_land/?land_id=$land_id" class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300 transform motion-safe:hover:scale-[1.02]">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
