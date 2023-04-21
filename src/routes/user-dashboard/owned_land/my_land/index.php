@@ -1,6 +1,10 @@
 <?php
 session_start();
 if (!isset($_GET['land_id'])) {
+    $_SESSION['redirect_url'] = "http" .
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
+        "://" . $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
     header('Location: ../../../../static/error/HTTP404.html');
     die();
 }

@@ -2,6 +2,10 @@
 session_start();
 
 if (!isset($_SESSION["id"])) {
+    $_SESSION['redirect_url'] = "http" .
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
+        "://" . $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
     header("Location: ../../sign-in");
 }
 

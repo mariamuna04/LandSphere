@@ -8,7 +8,7 @@ if (!$connection) {
     die();
 }
 
-if (isset($_SESSION['nid'])) {
+if (isset($_SESSION['id'])) {
     header('Location: ../reset-password');
 }
 

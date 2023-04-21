@@ -1,6 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION["id"])) {
+    $_SESSION['redirect_url'] = "http" .
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
+        "://" . $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
     header("Location: ../../sign-in");
 }
 
@@ -197,8 +201,8 @@ HTML;
             Everything's at your fingertips.
         </span>
         <?php
-            if(!$owner_has_land) {
-                echo <<< HTML
+        if (!$owner_has_land) {
+            echo <<< HTML
                     <span class='text-gray-900'> But, You don't own any land yet.</span>
                  
                     <span class='text-gray-500'> 
@@ -216,7 +220,7 @@ HTML;
                 HTML;
 
 
-            }
+        }
 
 
         ?>

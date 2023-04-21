@@ -3,13 +3,17 @@ ini_set('display_errors', 0);
 session_start();
 
 if (!isset($_SESSION['id'])) {
+    $_SESSION['redirect_url'] = "http" .
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
+        "://" . $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
     header("Location: ../../sign-in");
 }
 
 include "../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../../static/error/HTTP521.html');
+    header('Location: ../../../static/error/HTTP521.html');
     die();
 }
 

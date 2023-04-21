@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['nid'])) {
+if (!isset($_SESSION['id'])) {
     header('Location: ../forgot-password');
 }
 
@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     if ($password != $confirm_password) {
         $error = 'Passwords do not match!';
     } else {
-        $query = "UPDATE login SET password = '$password' WHERE user_nid = '" . $_SESSION['nid'] . "'";
+        $query = "UPDATE login SET password = '$password' WHERE user_nid = '" . $_SESSION['id'] . "'";
         $result = mysqli_query($connection, $query);
         if ($result) {
             $_SESSION['success'] = true;

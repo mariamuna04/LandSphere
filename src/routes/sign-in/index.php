@@ -57,9 +57,13 @@ if (isset($_POST['submit'])) {
                 $insert_token_to_database_sql = "UPDATE LOGIN SET token = '" . $token . "' WHERE user_nid = '" . $_SESSION["id"] . "';";
                 mysqli_query($connection, $insert_token_to_database_sql);
 
-
-
-                header("Location: ../user-dashboard");
+                if (isset($_SESSION['redirect_url'])) {
+                    $redirect_url = $_SESSION['redirect_url'];
+                    unset($_SESSION['redirect_url']);
+                    header('Location: ' . $redirect_url);
+                } else {
+                    header('Location: ../user-dashboard');
+                }
             } else {
                 $error_message = 'Invalid Credentials';
                 $authentication_error = true;
