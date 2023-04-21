@@ -8,27 +8,6 @@ if (!$connection) {
     die();
 }
 
-if (isset($_POST['submit'])) {
-    $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $nid_number = mysqli_real_escape_string($connection, $_POST['nid_number']);
-    $password = mysqli_real_escape_string($connection, $_POST['password']);
-    $confirm_password = mysqli_real_escape_string($connection, $_POST['confirm_password']);
-    $full_name = mysqli_real_escape_string($connection, $_POST['full_name']);
-    $dob = mysqli_real_escape_string($connection, $_POST['dob']);
-    $permanent_address = mysqli_real_escape_string($connection, $_POST['permanent_address']);
-    $occupation = mysqli_real_escape_string($connection, $_POST['occupation']);
-    $yearly_income = mysqli_real_escape_string($connection, $_POST['yearly_income']);
-    $passport = mysqli_real_escape_string($connection, $_POST['passport']);
-    $birth_certificate = mysqli_real_escape_string($connection, $_POST['birth_certificate']);
-    $sql = "INSERT INTO USER(nid,full_name,email,phone_number,date_of_birth,birth_certificate_number,passport_number,address,yearly_income,occupation) VALUES('$nid_number','$full_name','$email','','$dob','$birth_certificate','$passport','$permanent_address','$yearly_income','$occupation')";
-    $sql2 = "INSERT INTO LOGIN(user_nid,password) VALUES('$nid_number','$password')";
-    if (mysqli_query($connection, $sql) && mysqli_query($connection, $sql2)) {
-        echo "New record created successfully";
-        header("Location: ../sign-in");
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($connection);
-    }
-}
 
 ?>
 
@@ -44,333 +23,174 @@ if (isset($_POST['submit'])) {
 </head>
 <body class="bg-sign-up-background-light bg-cover">
 <div class="flex items-center justify-center h-screen">
-
-    <div class="mx-auto w-[550px] h-[700px] p-12 flex flex-col justify-between
+    <div class="mx-auto w-[1000px] h-[600px] p-12
                 rounded-xl bg-opacity-60 backdrop-blur-md bg-beige-light
                 shadow-2xl animate-fadeIn">
 
-        <div class="max-w-xl mx-auto my-3 border-b-2 pb-4 select-none">
+        <h2 class="align-middle pb-2 text-center font-black text-2xl select-none">
+            Let's Create Your Account
+        </h2>
 
-            <div id="step-box" class="flex pb-3">
-                <div class="flex-1">
-                    <div id="step-one-circle"
-                         class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center border-4 border-green-600 text-black
-                         animate-pulse">
-                        <span class="text-center w-full">1</span>
-                    </div>
-                </div>
+        <h2 class="align-middle pb-6 text-center font-semibold text-gray-400 text-md select-none">
+            Fill up this form, and we'll create an account for you
+        </h2>
 
-
-                <div class="flex-1">
-                    <div id="step-two-circle"
-                         class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center">
-                        <span class="text-center w-full">2</span>
-                    </div>
-                </div>
-
-                <div class="flex-1">
-                    <div id="step-three-circle"
-                         class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center">
-                        <span class="text-center w-full">3</span>
-                    </div>
-                </div>
-
-                <div class="flex-1">
-                    <div id="step-four-circle"
-                         class="w-10 h-10 mx-auto rounded-full text-lg flex
-                         items-center">
-                        <span class="text-center w-full">4</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex text-xs content-center text-center">
-                <div id="step-one" class="w-1/4">
-                    Account Registration
-                </div>
-
-                <div id="step-two" class="w-1/4">
-                    Personal details
-                </div>
-
-                <div id="step-three" class="w-1/4">
-                    Social Background
-                </div>
-
-                <div id="step-4" class="w-1/4">
-                    Confirmation
-                </div>
-            </div>
-
-        </div>
-
-        <div id="card-title">
-            <h2 id="header-page-one"
-                class="align-middle pt-4 pb-4 text-center font-black text-2xl select-none">
-                Create an Account
-            </h2>
-            <h2 id="header-page-two"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
-                A Few More Information...
-            </h2>
-            <h2 id="header-page-three"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
-                Almost There!
-            </h2>
-            <h2 id="header-page-four"
-                class="hidden align-middle pt-4 pb-4 text-center font-black text-2xl select-none animate-fadeIn">
-                Finishing...
-            </h2>
-        </div>
-
-
-        <form action="" method="POST">
-
-            <div class="overflow-y-scroll scroll-smooth no-scroll">
-                <section class="h-[300px]">
-                    <div id="page1" class="animate-fadeIn">
-                        <div id="email" class="mb-5">
-                            <div class="mb-5">
-                                <input type="text"
-                                       name="email"
-                                       id="email"
-                                       placeholder="Email address or Phone number"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+        <form action="" method="POST" class="pb-[4rem] h-full flex flex-col justify-between">
+            <div class="grid grid-cols-9 gap-x-4">
+                <section class="col-start-1 col-span-4 flex-col w-full flex gap-2">
+                    <input type="text"
+                           name="full_name"
+                           id="full_name"
+                           placeholder="Full Name"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="email" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="full_name" class="text-sm"></label>
 
-                        <div id="nid_number" class="mb-5">
-                            <div class="mb-5">
-                                <input type="text"
-                                       name="nid_number"
-                                       id="nid_number"
-                                       placeholder="10 digit NID Number"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <input type="email"
+                           name="email"
+                           id="email"
+                           placeholder="Email Address"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="nid_number" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="email" class="text-sm"></label>
 
-
-                        <div id="password" class="mb-5">
-                            <div class="mb-5">
-                                <input type="password"
-                                       name="password"
-                                       id="password"
-                                       placeholder="Password"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <input type="tel"
+                           name="phone_number"
+                           id="phone_number"
+                           placeholder="Phone Number"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="password" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="phone_number" class="text-sm"></label>
 
-                        <div id="confirm_password" class="mb-5">
-                            <div class="mb-5">
-                                <input type="password"
-                                       name="password"
-                                       id="password"
-                                       placeholder="Confirm Password"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <label for="date_of_birth" class="text-sm pl-4 text-gray-500">Date of Birth</label>
+                    <input type="date"
+                           name="date_of_birth"
+                           id="date_of_birth"
+                           placeholder="Date of Birth"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="confirm_password" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
 
-                    </div>
-                    <div class="hidden animate-fadeIn" id="page2">
-                        <div id="email" class="mb-5">
-                            <div class="mb-5">
-                                <input type="text"
-                                       name="name"
-                                       id="name"
-                                       placeholder="Full name"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <input type="text"
+                           name="address"
+                           id="address"
+                           placeholder="Permanent Address"
+                           class="w-full rounded-xl mt-2
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="name" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="address" class="text-sm"></label>
+                </section>
 
-                        <div id="nid_number" class="mb-5">
-                            <div class="mb-5">
-                                <input type="date"
-                                       name="dob"
-                                       id="dob"
-                                       placeholder="10 digit NID Number"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                <hr class="relative left-1/2 -ml-0.5 w-0.5 h-full bg-gray-300 rounded-full">
+
+                <section class="col-start-6 col-span-4 flex-col w-full flex gap-2">
+                    <input type="text"
+                           name="nid"
+                           id="nid"
+                           placeholder="National ID"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="dob" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="nid"></label>
 
-                        <div id="nid_number" class="mb-5">
-                            <div class="mb-5">
-                                <label for="permanent_address"></label>
-                                <input type="text"
-                                       name="permanent_address"
-                                       id="permanent_address"
-                                       placeholder="Permanent address"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+
+                    <input type="text"
+                           name="birth_certificate_number"
+                           id="birth_certificate_number"
+                           placeholder="Birth Certificate Number (optional)"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="dob" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="birth_certificate_number"></label>
 
-                        <div id="nid_number" class="mb-5">
-                            <div class="mb-5">
-                                <label for="occupation"></label>
-                                <input type="text"
-                                       name="occupation"
-                                       id="occupation"
-                                       placeholder="Occupation"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <input type="text"
+                           name="passport_number"
+                           id="passport_number"
+                           placeholder="Passport Number (optional)"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="dob" class="text-xs"></label>
-                            </div>
-                        </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="passport_number" class="text-xs text-red-800 text-center opacity-75">
+                        You cannot change NID, Birth Certificate Number, and Passport Number after registration
+                    </label>
 
-                        <div id="nid_number" class="mb-5">
-                            <div class="mb-5">
-                                <label for="yearly_income"></label>
-                                <input type="text"
-                                       name="yearly_income"
-                                       id="yearly_income"
-                                       placeholder="Yearly income"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                    <input type="text"
+                           name="occupation"
+                           id="occupation"
+                           placeholder="Occupation (optional)"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="dob" class="text-xs"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden animate-fadeIn" id="page3">
-                        <div id="email" class="mb-5">
-                            <div class="mb-5">
-                                <label for="passport_number"></label>
-                                <input type="text"
-                                       name="passport_number"
-                                       id="passport_number"
-                                       placeholder="Passport Number (Optional)"
-                                       class="w-full rounded-md border border-[#e0e0e0]
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="occupation"></label>
+
+                    <input type="text"
+                           name="yearly_income"
+                           id="yearly_income"
+                           placeholder="Yearly Income (optional)"
+                           class="w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="job" class="text-xs"></label>
-                            </div>
-                        </div>
-
-
-                        <div id="email" class="mb-5">
-                            <div class="mb-5">
-                                <label for="birth_certificate_number"></label>
-                                <input type="text"
-                                       name="birth_certificate_number"
-                                       id="birth_certificate_number"
-                                       placeholder="Birth Certificate Number (Optional)"
-                                       class="w-full rounded-md border border-[#e0e0e0]
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:border-[#6A64F1] focus:shadow-md
-                               "
-                                />
-                                <label for="job" class="text-xs"></label>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="hidden animate-fadeIn" id="page4">
-                        <div id="email" class="mb-5">
-                            <div class="mb-5">
-                                <input type="checkbox"
-                                       name="agreement"
-                                       id="agreement"
-                                />
-                                <label for="agreement">Do you agree</label>
-                            </div>
-                            <div class="mb-5">
-                                <input type="checkbox"
-                                       name="agreement"
-                                       id="agreement"
-                                />
-                                <label for="agreement">Permission to sell your data</label>
-                            </div>
-                        </div>
-                    </div>
+                               outline-none focus:shadow-md font-mono"
+                    />
+                    <label for="yearly_income"></label>
 
 
                 </section>
-
-
             </div>
 
-            <div class="flex flex-col items-center justify-center gap-2 max-w-xl mx-auto my-3">
-                <div class="flex gap-24 justify-end flex-auto pb-2">
-                    <a id="previousButton" onclick="onPreviousClick()"
-                       class="cursor-hand rounded-md py-3 px-8 text-center text-base font-semibold
-                   outline-none items-center select-none hidden text-primary">
-                        Previous
+            <div id="end_section" class="flex flex-col items-center align-middle border-t pt-4">
+                <div class="flex justify-evenly gap-2 items-center w-full">
+                    <a href="../sign-in"
+                       class="hover:border-primary text-gray-500 border border-beige-darker transition-all pt-[0.60rem] pb-[0.60rem]
+                pl-6 pr-6 rounded-3xl align-middle hover:text-green-800">
+                        Sign In Instead
                     </a>
 
-                    <a id="nextButton" onclick="onNextClick()"
-                       class="hover:shadow-form bg-green-700
-                        py-3 px-8 text-center text-base
-                        font-bold text-white outline-none items-center
-                        col-span-2 rounded-xl hover:bg-green-800
-                        hover:shadow-lg">
-                        Next
-                    </a>
+                    <div class="flex items-center gap-2 justify-center">
+                        <input type="password"
+                               name="new_password"
+                               id="new_password"
+                               placeholder="Enter New Password"
+                               class="rounded-xl text-center border
+                               bg-white py-2 px-3 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-lg font-mono"
+                        />
+                        <label for="new_password" class="text-sm"></label>
 
-                    <button name="submit" id="submitButton"
-                            class="hidden hover:shadow-form bg-green-700
+                        <input type="password"
+                               name="confirm_password"
+                               id="confirm_password"
+                               placeholder="Confirm Password"
+                               class="rounded-xl text-center border
+                               bg-white py-2 px-3 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-lg font-mono"
+                        />
+                        <label for="confirm_password" class="text-sm"></label>
+                    </div>
+
+                    <button name="submit" type="submit"
+                            class="hover:shadow-form bg-green-700
                         py-3 px-8 text-center text-base
                         font-bold text-white outline-none items-center
-                        col-span-2 rounded-xl hover:bg-green-800
+                        col-span-2 rounded-full hover:bg-green-800
                         hover:shadow-lg">
                         Submit
                     </button>
-
                 </div>
 
-                <div class="flex">
-                    <a href="../sign-in"
-                       class="cursor-hand rounded-md text-center text-base font-semibold
-                outline-none items-center hover:underline select-none text-gray-500 flex flex-row gap-2">
-                        Already Have an Account? <span class="font-bold text-green-600"> Sign In </span>
-                    </a>
-                </div>
             </div>
+
         </form>
 
     </div>
