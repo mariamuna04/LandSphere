@@ -11,9 +11,8 @@ if (!$conn) {
 // Get the ID of the PDF file to retrieve
 $id = $_GET['id'];
 $token = $_GET['token'];
-
 if (!isset($id) || !isset($token)) {
-    echo "fuck off.";
+
     exit();
 }
 
