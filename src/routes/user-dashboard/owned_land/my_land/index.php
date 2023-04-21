@@ -160,7 +160,7 @@ if ($land_environment_points > 0 && $land_environment_points <= 2) {
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -272,12 +272,378 @@ HTML;
 
 </div>
 
-<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
 
     <main class="w-full rounded-3xl p-4 flex justify-between">
         <section class="w-full flex-col p-4 flex gap-6">
+            <div class="w-full flex justify-between items-center">
+                <div class="flex flex-col gap-4 ">
+                    <div
+                        class="bg-beige-darkest text-zinc-600 font-mono w-fit align-middle p-1 rounded-xl font-sm px-3">
+                        <?php echo $land_id ?>
+                    </div>
+                    <h1 class="text-5xl font-bold text-green-600">
+                        <?php echo $land_title ?>
+                    </h1>
+                    <h1 class="text-xl font-mono font-bold text-gray-600">
+                        <?php echo $land_address ?>
+                    </h1>
+                    <p class="text-lg text-gray-500 font-light ">
+                        <?php echo $land_details ?>
+                    </p>
+                </div>
 
+                <div class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300">
+                    <iframe class="h-52 w-[21rem] rounded-2xl border"
+                            src="https://maps.google.com/maps?hl=en&amp;q=2880 Broadway, New York&amp;z=15&amp;output=embed">
+                    </iframe>
+                    <h1 class="text-center mt-2 font-bold select-none text-gray-500">
+                        View Location
+                    </h1>
+                </div>
+
+            </div>
         </section>
+    </main>
+
+    <main id="gallery">
+        <div class="mt-4 flex w-full items-center snap-x gap-4 overflow-x-auto pb-5 pt-5 pl-2 pr-2 no-scroll">
+            <?php
+            for ($i = 0; $i < 5; $i++) {
+                $random = rand(1, 1000);
+                echo <<< HTML
+                <div class="min-w-[80%] transform motion-safe:hover:scale-[1.01] transition-all duration-300">
+                    <div class="h-72 w-full snap-center rounded-xl bg-center bg-cover shadow-md"
+                         style="background-image: url('https://api.dicebear.com/6.x/shapes/svg?seed=$random">
+                    </div>
+                </div>
+                HTML;
+            }
+            ?>
+        </div>
+        <h1 class="text-center font-light text-gray-500 text-md">Swipe left to see more images</h1>
+    </main>
+
+
+    <main id="information" class="mt-12">
+        <h1 class="pb-12 text-3xl font-medium">
+            Land Cost Information. <span class="text-gray-500">Manage your costs responsibly.</span>
+        </h1>
+        <div class="flex justify-around items-center align-middle">
+            <h1>Hello</h1>
+            <h1>Hello</h1>
+            <h1>Hello</h1>
+            <h1>Hello</h1>
+            <h1>Hello</h1>
+        </div>
+    </main>
+
+    <main id="information" class="mt-16 flex flex-col gap-4">
+        <h1 class="pb-6 text-3xl font-medium">
+            Legal Documents. <span class="text-gray-500">Keep them updated and organized.</span>
+        </h1>
+
+        <?php
+        if ($registration_document != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Registration Paper
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Registration Paper
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+
+
+        if ($government_permit != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Government Permit
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Government Permit
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+
+
+        if ($agreement_document != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Agreement Document
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Agreement Document
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+
+
+        if ($sale_deed != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Sale Deed
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200  transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Sale Deed
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+
+
+        if ($tax_payment != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Tax Payment
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Tax Payment
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+
+        if ($map_property != null) {
+            echo <<< HTML
+                <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Map Property
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
+                            hover:bg-blue-300">
+                            View
+                        </button>
+                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
+                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
+                            Modify
+                        </button>
+                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        } else {
+            echo <<< HTML
+                <div class="w-full bg-red-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Map Property
+                        </h1>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
+                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
+                            hover:bg-gray-50">
+                            Add Document
+                        </button>
+                    </div>
+                </div>
+            HTML;
+        }
+        ?>
+
+
     </main>
 
 </section>
