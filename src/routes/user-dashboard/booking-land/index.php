@@ -21,7 +21,7 @@ if (isset($_POST["sign_out"])) {
 }
 
 $get_lands_that_is_booked_sql = "SELECT * FROM booked_land_purchase JOIN land l on booked_land_purchase.land_id = l.land_id
-         JOIN land_cost_info lci on l.land_id = lci.land_id WHERE potential_buyer_id = " . $_SESSION["id"] . ";";
+         JOIN land_cost_info lci on l.land_id = lci.land_id WHERE potential_buyer_id = " . $_SESSION["id"] . " ORDER BY title;";
 $get_lands_that_is_booked_table = mysqli_query($connection, $get_lands_that_is_booked_sql);
 $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
 
