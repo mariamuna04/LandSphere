@@ -36,8 +36,17 @@ $average_env_pts = mysqli_fetch_assoc($average_env_pts_result)["avg_env_pts"];
 $total_area_result = mysqli_query($connection, $get_total_area_query);
 $total_area = mysqli_fetch_assoc($total_area_result)["total_area"];
 
-$first_name = explode(" ", $_SESSION["name"])[0];
-$last_name = explode(" ", $_SESSION["name"])[1];
+$full_name = $_SESSION["name"];
+// count how many words in the name
+$name_count = str_word_count($full_name);
+// if the name has more than one word
+if ($name_count > 1) {
+    $first_name = explode(" ", $_SESSION["name"])[0];
+    $last_name = explode(" ", $_SESSION["name"])[1];
+} else {
+    $first_name = $_SESSION["name"];
+    $last_name = "";
+}
 
 // Get IP address
 $json_ip = file_get_contents('http://ip-api.com/json');

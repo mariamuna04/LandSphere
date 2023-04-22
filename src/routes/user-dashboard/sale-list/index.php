@@ -20,6 +20,11 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../../");
 }
 
+$owner_has_land_sql = "SELECT * FROM sell_list WHERE user_id = {$_SESSION["id"]}";
+$owner_has_land_result = mysqli_query($connection, $owner_has_land_sql);
+$owner_has_land = mysqli_num_rows($owner_has_land_result) > 0;
+
+
 ?>
 
 
@@ -36,7 +41,8 @@ if (isset($_POST["sign_out"])) {
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
@@ -80,8 +86,17 @@ if (isset($_POST["sign_out"])) {
     </button>
 
     <?php
-    $first_name = explode(" ", $_SESSION["name"])[0];
-    $last_name = explode(" ", $_SESSION["name"])[1];
+    $full_name = $_SESSION["name"];
+    // count how many words in the name
+    $name_count = str_word_count($full_name);
+    // if the name has more than one word
+    if ($name_count > 1) {
+        $first_name = explode(" ", $_SESSION["name"])[0];
+        $last_name = explode(" ", $_SESSION["name"])[1];
+    } else {
+        $first_name = $_SESSION["name"];
+        $last_name = "";
+    }
     $email = $_SESSION["email"];
     $rnd = rand(0, 1000000);
     $loggedIn = <<<HTML
@@ -91,7 +106,7 @@ if (isset($_POST["sign_out"])) {
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={$rnd}%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
                  alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -189,40 +204,160 @@ HTML;
 </div>
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
-        <div class=" flex flex-col">
+    <main class="w-full rounded-3xl p-4 flex justify-between">
+        <section class="w-full flex-col p-4 flex gap-6">
             <?php
-            $sql = "SELECT * FROM SELL_LIST join LAND on SELL_LIST.land_id=LAND.land_id WHERE user_id = " . $_SESSION["id"];
-            $result = mysqli_query($connection, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Land Name: " . $row["title"] . "</p>";
-                echo "<p class='font-bold'>Land Area: " . $row["area"] . "</p>";
-                echo "<p class='font-bold'>Land Location: " . $row["address"] . "</p>";
-                echo "</div>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "<p class='font-bold'>Land Type: " . $row["land_type"] . "</p>";
-                echo "<p class='font-bold'>Land Description: " . $row["place_details"] . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "<div class='flex gap-2'>";
-                echo "<div class='flex flex-col gap-2'>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
+            if ($owner_has_land) {
+                $get_lands_sql = "SELECT * FROM sell_list 
+                                JOIN land l on l.land_id = sell_list.land_id 
+                                JOIN land_cost_info lci on l.land_id = lci.land_id 
+                                JOIN land_docs ld on l.land_id = ld.land_id 
+                                JOIN owns o on l.land_id = o.land_id
+                                WHERE user_id = " . $_SESSION['id'] . " ORDER BY title;";
+
+                $get_lands_result = mysqli_query($connection, $get_lands_sql);
+                $lands = mysqli_fetch_assoc($get_lands_result);
+
+                while ($lands) {
+                    // Primary Land Information
+                    $land_id = $lands["land_id"];
+                    $land_title = $lands["title"];
+                    $land_area = $lands["area"];
+                    $land_address = $lands["address"];
+                    $land_environment_points = $lands["environment_point"];
+                    $land_demand_points = $lands["demand"];
+                    $land_previous_owner = $lands["previous_owner"];
+                    $land_details = $lands["place_details"];
+                    $_land_type = $lands["land_type"];
+
+                    $land_type = null;
+                    if ($_land_type == 0) {
+                        $land_type = "Residential";
+                        $style = " bg-green-100 text-green-600 ";
+                    } else if ($_land_type == 1) {
+                        $land_type = "Commercial";
+                        $style = " bg-blue-100 text-blue-600 ";
+                    } else {
+                        $land_type = "Industrial";
+                        $style = " bg-yellow-100 text-yellow-600 ";
+                    }
+
+                    // Land Cost Information
+                    $land_cp_sqft = $lands["cost_per_sqft"];
+                    $land_rcv = $lands["relative_cost_value"];
+                    $land_acquire_date = $lands["acquire_date"];
+                    // Convert to date format full date (e.g. 07th January, 2021)
+                    $land_acquire_date = date("jS F, Y", strtotime($land_acquire_date));
+
+                    // Land Document Information
+                    $registration_document = $lands["registration_paper"];
+                    $government_permit = $lands["government_permit"];
+                    $agreement_document = $lands["agreement"];
+                    $sale_deed = $lands["sale_deed"];
+                    $tax_payment = $lands["tax_pay_receipt"];
+                    $map_property = $lands["map_property"];
+
+                    $environment_status = "";
+                    if ($land_environment_points > 0 && $land_environment_points <= 2) {
+                        $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+                    } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
+                        $environment_status = ' bg-green-100 text-green-500"> Ecologically Very Good ';
+                    } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
+                        $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+                    } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
+                        $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+                    } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
+                        $environment_status = '  bg-red-100 text-red-500"> Ecologically Poor ';
+                    }
+
+                    echo <<< HTML
+                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                                transition-all duration-300 transform">
+                        <div class="flex justify-between">
+                            <div class="flex gap-4">  
+                                <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
+                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                            </div>
+                            <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
+                        </div>
+                        
+                        <div class="mt-3 flex justify-between items-center align-middle">
+                            <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
+                            <p class="font-bold text-xl">$land_area sqft</p> 
+                        </div>
+                        
+                        <div class="mt-2 flex justify-between items-center gap-8">
+                            <p class="py-1">$land_details</p> 
+                        </div>                  
+                        
+                       
+                       <div class="mt-4 w-full flex justify-between gap-4 items-center">
+
+                HTML;
+                    $is_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = " . $land_id . ";";
+                    $is_booked_result = mysqli_query($connection, $is_booked_sql);
+                    $is_booked = mysqli_num_rows($is_booked_result);
+
+                    if ($is_booked) {
+                        $is_book_row = mysqli_fetch_assoc($is_booked_result);
+                        $potential_buyer_id = $is_book_row["potential_buyer_id"];
+                        $get_potential_buyer_sql = "SELECT * FROM user WHERE nid = " . $potential_buyer_id . ";";
+                        $get_potential_buyer_result = mysqli_query($connection, $get_potential_buyer_sql);
+                        $get_potential_buyer_row = mysqli_fetch_assoc($get_potential_buyer_result);
+                        $potential_buyer_name = $get_potential_buyer_row["full_name"];
+                        $potential_buyer_email = $get_potential_buyer_row["email"];
+
+                        $random = rand(0, 100000);
+
+                        echo <<< HTML
+                            <div class="text-lg text-gray-500 font-black">Booked By -></div>
+                            <div class="p-2 rounded-full flex gap-2 items-center bg-beige-light">
+                                <img class="w-12 h-12 mr-2 rounded-full"
+                                src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9" alt="">
+                                <div>
+                                    <h1 class="text-lg font-bold pr-4">$potential_buyer_name</h1>
+                                    <h1 class="text-sm font-bold font-mono text-gray-500 pr-4">$potential_buyer_email</h1>
+                                    
+                                </div>
+                                  
+                            </div>
+                        HTML;
+                    } else {
+                        echo <<< HTML
+                           <div class="text-lg text-gray-500 font-black">Hang tight, No one booked yet...</div>
+                           <form method="post" action="../../../utility/php/cancel_sell_list.php?land_id=$land_id">
+                            <button type="submit"
+                                class="text-red-700 transition-all duration-300
+                                rounded-full align-middle hover:shadow-lg py-2 px-8
+                                bg-red-100 font-semibold text-sm
+                                ">
+                            Remove
+                            </button>
+                            </form>
+                        HTML;
+                    }
+
+                    echo "</div></div>";
+                    $lands = mysqli_fetch_assoc($get_lands_result);
+                }
+            } else {
+                echo <<< HTML
+                    <p class="text-center text-3xl pb-12 font-medium leading-relaxed text-gray-500">
+                        You are not selling any lands
+                        
+                    </p>
+
+                HTML;
+
             }
             ?>
-        </div>
+        </section>
     </main>
-
 </section>
 
 
-<footer id="index_footer" class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
-                                 pb-12 drop-shadow-xl">
-
+<footer id="index_footer"
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12 drop-shadow-xl">
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">
             <h1 class="font-black pb-3 text-xl">
@@ -353,7 +488,6 @@ HTML;
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-
 <script>
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {

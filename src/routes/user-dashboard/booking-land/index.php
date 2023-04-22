@@ -77,8 +77,17 @@ if (isset($_POST["sign_out"])) {
     </button>
 
     <?php
-    $first_name = explode(" ", $_SESSION["name"])[0];
-    $last_name = explode(" ", $_SESSION["name"])[1];
+    $full_name = $_SESSION["name"];
+    // count how many words in the name
+    $name_count = str_word_count($full_name);
+    // if the name has more than one word
+    if ($name_count > 1) {
+        $first_name = explode(" ", $_SESSION["name"])[0];
+        $last_name = explode(" ", $_SESSION["name"])[1];
+    } else {
+        $first_name = $_SESSION["name"];
+        $last_name = "";
+    }
     $email = $_SESSION["email"];
 
     $rnd = rand(0, 1000000);
