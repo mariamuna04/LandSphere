@@ -337,13 +337,15 @@ HTML;
                     </p>
 
                     <div class="flex gap-4">
-                        <form action="book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>" method="post">
+                        <form
+                            action="../../../utility/php/land_book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>"
+                            method="post">
                             <?php
-                                $check_already_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = '$land_id' AND potential_buyer_id = '$user_id'";
-                                $check_already_booked_result = mysqli_query($connection, $check_already_booked_sql);
+                            $check_already_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = '$land_id' AND potential_buyer_id = '$user_id'";
+                            $check_already_booked_result = mysqli_query($connection, $check_already_booked_sql);
 
-                                if($check_already_booked_result->num_rows > 0) {
-                                    echo <<< HTML
+                            if ($check_already_booked_result->num_rows > 0) {
+                                echo <<< HTML
                                        <div                                       
                                            class="                   
                                            py-3 px-16 text-center text-base    

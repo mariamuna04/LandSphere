@@ -1,6 +1,6 @@
 <?php
 
-include "../../../../utility/php/connection.php";
+include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../../static/error/HTTP521.html');
@@ -27,7 +27,7 @@ if (isset($_FILES["document_file"]) && $_FILES["document_file"]["error"] == UPLO
     $sql = "UPDATE land_docs SET " . $document . " = '$content' WHERE land_id = " . $land_id . ";";
 
     if (mysqli_query($connection, $sql)) {
-        header("Location: ../my_land/?land_id=" . $land_id);
+        header("Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=" . $land_id);
     } else {
         echo "Error uploading file: " . mysqli_error($connection);
     }

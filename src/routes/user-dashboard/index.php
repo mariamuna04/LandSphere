@@ -345,7 +345,7 @@ HTML;
 
 
             <div class="grid grid-cols-2 gap-2">
-                <a href="./owned_land"
+                <a href="./owned-land"
                    class="flex flex-col justify-between bg-beige-light bg-opacity-80 hover:bg-opacity-100 shadow-md p-4 rounded-2xl
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600 backdrop-blur-sm
                   transition-all hover:shadow-lg duration-300 hover:bg-white col-span-2">
@@ -354,7 +354,7 @@ HTML;
 
                 </a>
 
-                <a href="./sale_list"
+                <a href="./sale-list"
                    class=" flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
                   transform motion-safe:hover:scale-[1.02] hover:text-green-700
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
@@ -381,7 +381,7 @@ HTML;
 
                 </a>
 
-                <a href="./booking_land"
+                <a href="./booking-land"
                    class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">

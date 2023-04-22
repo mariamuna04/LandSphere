@@ -1,6 +1,6 @@
 <?php
 
-include "../../../../utility/php/connection.php";
+include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../../static/error/HTTP521.html');
