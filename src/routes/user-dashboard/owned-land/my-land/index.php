@@ -10,6 +10,19 @@ if (!isset($_GET['land_id'])) {
 }
 $land_id = $_GET['land_id'];
 
+$file_uploaded_success = false;
+
+if (isset($_GET["upload_success"])) {
+    $file_uploaded_success = true;
+    unset($_GET["upload_success"]);
+}
+
+$file_deleted_success = false;
+if (isset($_GET["delete_success"])) {
+    $file_deleted_success = true;
+    unset($_GET["delete_success"]);
+}
+
 include "../../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
@@ -203,7 +216,7 @@ if ($land_demand_points > 0 && $land_demand_points <= 2) {
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
                 </div>
-                <div class="truncate text-sm">
+                <div class="truncate text-sm font-mono font-bold text-gray-500">
                     {$_SESSION["email"]}
                 </div>
             </div>
@@ -297,7 +310,62 @@ HTML;
 
 </div>
 
+
 <section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
+
+    <?php
+    if ($file_uploaded_success) {
+        echo <<< HTML
+                <div id="alert-additional-content-3" 
+                     class="p-4 mb-4 text-green-800 flex justify-between items-center border border-green-300 rounded-xl bg-green-50 mx-48"
+                     role="alert">
+                    <div class="flex items-center">
+                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <h3 class="text-lg font-medium">File Uploaded Successfully</h3>
+                    </div>
+                    <div class="flex">
+                        <button type="button"
+                                class="text-green-600 bg-transparent hover:bg-green-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
+                                data-dismiss-target="#alert-additional-content-3" aria-label="Close">
+                            Dismiss
+                        </button>
+                    </div>
+                </div>
+            HTML;
+    }
+
+    if ($file_deleted_success) {
+        echo <<< HTML
+                <div id="alert-additional-content-3" 
+                     class="p-4 mb-4 text-red-800 flex justify-between items-center border border-red-300 rounded-xl bg-red-50 mx-48"
+                     role="alert">
+                    <div class="flex items-center">
+                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <h3 class="text-lg font-medium">File Uploaded Successfully</h3>
+                    </div>
+                    <div class="flex">
+                        <button type="button"
+                                class="text-red-600 bg-transparent hover:bg-red-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
+                                data-dismiss-target="#alert-additional-content-3" aria-label="Close">
+                            Dismiss
+                        </button>
+                    </div>
+                </div>
+            HTML;
+    }
+    ?>
 
     <main class="w-full rounded-3xl p-4 flex justify-between">
         <section class="w-full flex-col p-4 flex gap-6">
@@ -441,7 +509,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                      <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=registration_paper" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -478,7 +546,7 @@ HTML;
                     class="flex gap-2 items-center">
                         <input name="document_file"
                         type="file" class="block text-sm text-slate-500
-                                  hover:shadow-lg
+                                  rounded-full
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -509,7 +577,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=government_permit" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -544,11 +612,11 @@ HTML;
                     enctype="multipart/form-data"
                     class="flex gap-2 items-center">
                         <input name="document_file"
-                        type="file" class="block text-sm text-slate-500
+                        type="file" class="block text-sm text-slate-500 
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
-                                  file:text-sm file:font-semibold
+                                  file:text-sm file:font-semibold rounded-full
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300 
                                 "/>
@@ -575,7 +643,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=agreement" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -611,7 +679,7 @@ HTML;
                     class="flex gap-2 items-center">
                         <input name="document_file"
                         type="file" class="block text-sm text-slate-500
-                                  hover:shadow-lg
+                                   rounded-full
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -642,7 +710,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=sale_deed" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -678,7 +746,7 @@ HTML;
                     class="flex gap-2 items-center">
                         <input name="document_file"
                         type="file" class="block text-sm text-slate-500
-                                  hover:shadow-lg
+                                   rounded-full
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -709,7 +777,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=tax_pay_receipt" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -745,7 +813,7 @@ HTML;
                     class="flex gap-2 items-center">
                         <input name="document_file"
                         type="file" class="block text-sm text-slate-500
-                                  hover:shadow-lg
+                                  rounded-full
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -776,7 +844,7 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-[3.8rem]">
+                    <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=map_property" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
@@ -812,7 +880,7 @@ HTML;
                     class="flex gap-2 items-center">
                         <input name="document_file"
                         type="file" class="block text-sm text-slate-500
-                                  hover:shadow-lg
+                                    rounded-full
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0

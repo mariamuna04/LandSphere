@@ -119,7 +119,7 @@ $result = mysqli_query($connection, $sql);
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
                 </div>
-                <div class="truncate text-sm">
+                <div class="truncate text-sm font-mono font-bold text-gray-500">
                     {$_SESSION["email"]}
                 </div>
             </div>

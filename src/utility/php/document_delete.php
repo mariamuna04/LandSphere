@@ -13,7 +13,7 @@ $document = $_GET["document"];
 $sql = "UPDATE land_docs SET " . $document . " = NULL WHERE land_id = " . $land_id . ";";
 
 if (mysqli_query($connection, $sql)) {
-    header("Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=" . $land_id);
+    header("Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=" . $land_id . "&delete_success=1");
 } else {
     echo "Error deleting file: " . mysqli_error($connection);
 }

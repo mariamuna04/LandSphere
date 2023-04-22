@@ -122,7 +122,7 @@ $owner_has_land = mysqli_num_rows($owner_has_land_result) > 0;
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
                 </div>
-                <div class="truncate text-sm">
+               <div class="truncate text-sm font-mono font-bold text-gray-500">
                     {$_SESSION["email"]}
                 </div>
             </div>

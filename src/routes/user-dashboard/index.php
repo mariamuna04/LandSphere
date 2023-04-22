@@ -150,7 +150,7 @@ HTML;
                     echo $section;
                     ?>
                 </div>
-                <div class="truncate text-sm">
+                <div class="truncate text-sm font-bold font-mono text-gray-500">
                     <?php echo $_SESSION["email"]; ?>
                 </div>
             </div>
