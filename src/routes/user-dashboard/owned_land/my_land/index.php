@@ -80,29 +80,29 @@ $map_property = $lands["map_property"];
 
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Excellent ';
 } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
-    $environment_status = '  bg-green-100 text-green-500"> Ecologically Very Good ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Very Good ';
 } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Good ';
 } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
-    $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+    $environment_status = ' border border-yellow-600  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
 } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
-    $environment_status = ' bg-red-100 text-red-500"> Ecologically Poor ';
+    $environment_status = '  border border-red-600 bg-red-100 text-red-500"> Ecologically Poor ';
 }
 
 $demand_status = "";
 
 if ($land_demand_points > 0 && $land_demand_points <= 2) {
-    $demand_status = ' bg-red-100 text-red-500"> Demand Poor ';
+    $demand_status = ' border border-red-600 bg-red-100 text-red-500"> Demand Poor ';
 } else if ($land_demand_points > 2 && $land_demand_points <= 4) {
-    $demand_status = ' bg-yellow-100 text-yellow-600"> Demand Fair ';
+    $demand_status = ' border border-yellow-600 bg-yellow-100 text-yellow-600"> Demand Fair ';
 } else if ($land_demand_points > 4 && $land_demand_points <= 6) {
-    $demand_status = ' bg-green-100 text-green-500"> Demand Good ';
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Good ';
 } else if ($land_demand_points > 6 && $land_demand_points <= 8) {
-    $demand_status = '  bg-green-100 text-green-500"> Demand Very Good ';
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Very Good ';
 } else if ($land_demand_points > 8 && $land_demand_points <= 10) {
-    $demand_status = '  bg-green-100 text-green-500"> Demand Excellent ';
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Excellent ';
 }
 
 ?>
@@ -312,20 +312,14 @@ HTML;
                     </p>
                 </div>
 
-                <div
-                    class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300 flex flex-col gap-2">
+                <div class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300">
                     <iframe class="h-52 w-[21rem] rounded-2xl border"
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=90.4473602771759%2C23.796357186638033%2C90.45122265815735%2C23.79806774014946&amp;layer=mapnik&amp;marker=23.79721246620885%2C90.44929146766663"
-                    >
-
+                            src="https://maps.google.com/maps?hl=en&amp;q=2880 Broadway, New York&amp;z=15&amp;output=embed">
                     </iframe>
-
-                    <a href="https://www.openstreetmap.org/?mlat=23.79721&amp;mlon=90.44929#map=19/23.79721/90.44929"
-                       class="text-center w-full mt-2 font-bold select-none text-gray-500 hover:underline">
+                    <h1 class="text-center mt-2 font-bold select-none text-gray-500">
                         View Location
-                    </a>
+                    </h1>
                 </div>
-
 
             </div>
         </section>
@@ -350,7 +344,7 @@ HTML;
     </main>
 
 
-    <main class="mt-12">
+    <main id="information" class="mt-12">
         <h1 class="pb-12 text-3xl font-medium">
             Land Information. <span class="text-gray-500"></span>
         </h1>
@@ -367,12 +361,12 @@ HTML;
                 </div>
                 <?php
 
-                $ratio =  $land_cp_sqft / $land_rcv;
+                $ratio = ($land_area * $land_cp_sqft) / ($land_area * $land_rcv);
                 if ($ratio >= 1) {
                     echo <<< HTML
                     <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
                         <h1 class="font-bold text-xl text-green-800">Value Ratio</h1>
-                        <h1 class="font-mono text-lg"> $ratio </h1>
+                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
                     </div>
                     HTML;
 
@@ -380,7 +374,7 @@ HTML;
                     echo <<< HTML
                     <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
                         <h1 class="font-bold text-xl text-red-800">Value Ratio</h1>
-                        <h1 class="font-mono text-lg"> $ratio</h1>
+                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
                     </div>
                     HTML;
                 }
@@ -397,13 +391,13 @@ HTML;
                 <?php
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
-                        <p class="w-fit text-md font-bold p-3 rounded-2xl $environment_status </p>
+                        <p class="w-fit text-md font-medium p-3 rounded-2xl $environment_status </p>
                     </div>
                     HTML;
 
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
-                        <div class="font-bold text-md text-md p-3 rounded-xl  $style "> $land_type </div>
+                        <div class="font-bold font-mono text-md p-3 border border-green-600 rounded-xl  $style "> $land_type </div>
                     </div>
                     HTML;
 
