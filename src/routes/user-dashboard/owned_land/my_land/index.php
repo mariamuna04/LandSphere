@@ -80,29 +80,29 @@ $map_property = $lands["map_property"];
 
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
-    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Excellent ';
+    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
 } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
-    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Very Good ';
+    $environment_status = '  bg-green-100 text-green-500"> Ecologically Very Good ';
 } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
-    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Good ';
+    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
 } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
-    $environment_status = ' border border-yellow-600  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+    $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
 } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
-    $environment_status = '  border border-red-600 bg-red-100 text-red-500"> Ecologically Poor ';
+    $environment_status = ' bg-red-100 text-red-500"> Ecologically Poor ';
 }
 
 $demand_status = "";
 
 if ($land_demand_points > 0 && $land_demand_points <= 2) {
-    $demand_status = ' border border-red-600 bg-red-100 text-red-500"> Demand Poor ';
+    $demand_status = ' bg-red-100 text-red-500"> Demand Poor ';
 } else if ($land_demand_points > 2 && $land_demand_points <= 4) {
-    $demand_status = ' border border-yellow-600 bg-yellow-100 text-yellow-600"> Demand Fair ';
+    $demand_status = ' bg-yellow-100 text-yellow-600"> Demand Fair ';
 } else if ($land_demand_points > 4 && $land_demand_points <= 6) {
-    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Good ';
+    $demand_status = ' bg-green-100 text-green-500"> Demand Good ';
 } else if ($land_demand_points > 6 && $land_demand_points <= 8) {
-    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Very Good ';
+    $demand_status = '  bg-green-100 text-green-500"> Demand Very Good ';
 } else if ($land_demand_points > 8 && $land_demand_points <= 10) {
-    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Excellent ';
+    $demand_status = '  bg-green-100 text-green-500"> Demand Excellent ';
 }
 
 ?>
@@ -312,14 +312,20 @@ HTML;
                     </p>
                 </div>
 
-                <div class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300">
+                <div
+                    class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300 flex flex-col gap-2">
                     <iframe class="h-52 w-[21rem] rounded-2xl border"
-                            src="https://maps.google.com/maps?hl=en&amp;q=2880 Broadway, New York&amp;z=15&amp;output=embed">
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=90.4473602771759%2C23.796357186638033%2C90.45122265815735%2C23.79806774014946&amp;layer=mapnik&amp;marker=23.79721246620885%2C90.44929146766663"
+                    >
+
                     </iframe>
-                    <h1 class="text-center mt-2 font-bold select-none text-gray-500">
+
+                    <a href="https://www.openstreetmap.org/?mlat=23.79721&amp;mlon=90.44929#map=19/23.79721/90.44929"
+                       class="text-center w-full mt-2 font-bold select-none text-gray-500 hover:underline">
                         View Location
-                    </h1>
+                    </a>
                 </div>
+
 
             </div>
         </section>
@@ -343,8 +349,7 @@ HTML;
         <h1 class="text-center font-light text-gray-500 text-md">Swipe left to see more images</h1>
     </main>
 
-
-    <main id="information" class="mt-12">
+    <main class="mt-12">
         <h1 class="pb-12 text-3xl font-medium">
             Land Information. <span class="text-gray-500"></span>
         </h1>
@@ -361,12 +366,12 @@ HTML;
                 </div>
                 <?php
 
-                $ratio = ($land_area * $land_cp_sqft) / ($land_area * $land_rcv);
+                $ratio = $land_cp_sqft / $land_rcv;
                 if ($ratio >= 1) {
                     echo <<< HTML
                     <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
                         <h1 class="font-bold text-xl text-green-800">Value Ratio</h1>
-                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
+                        <h1 class="font-mono text-lg"> $ratio </h1>
                     </div>
                     HTML;
 
@@ -374,7 +379,7 @@ HTML;
                     echo <<< HTML
                     <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
                         <h1 class="font-bold text-xl text-red-800">Value Ratio</h1>
-                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
+                        <h1 class="font-mono text-lg"> $ratio</h1>
                     </div>
                     HTML;
                 }
@@ -391,13 +396,13 @@ HTML;
                 <?php
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
-                        <p class="w-fit text-md font-medium p-3 rounded-2xl $environment_status </p>
+                        <p class="w-fit text-md font-bold p-3 rounded-2xl $environment_status </p>
                     </div>
                     HTML;
 
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
-                        <div class="font-bold font-mono text-md p-3 border border-green-600 rounded-xl  $style "> $land_type </div>
+                        <div class="font-bold text-md text-md p-3 rounded-xl  $style "> $land_type </div>
                     </div>
                     HTML;
 
@@ -428,19 +433,24 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                     <form action="view.php?land_id=$land_id&document=registration_paper" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
+                      </form>
                         
-                        <button class="text-red-700 transition-all duration-300
+                        <form action="delete.php?land_id=$land_id&document=registration_paper" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -454,8 +464,11 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=registration_paper"
+                    method="post" enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
                                   hover:shadow-lg
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
@@ -464,13 +477,14 @@ HTML;
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
                 </div>
             HTML;
         }
@@ -487,18 +501,23 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                        <form action="view.php?land_id=$land_id&document=government_permit" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
-                        <button class="text-red-700 transition-all duration-300
+                      </form>
+                        <form action="delete.php?land_id=$land_id&document=government_permit" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -512,8 +531,11 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=government_permit" method="post"
+                    enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -521,13 +543,14 @@ HTML;
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300 
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
                 </div>
             HTML;
         }
@@ -544,19 +567,23 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                        <form action="view.php?land_id=$land_id&document=agreement" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
-                        
-                        <button class="text-red-700 transition-all duration-300
+                      </form>
+                        <form action="delete.php?land_id=$land_id&document=agreement" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -570,8 +597,12 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=agreement"
+                    method="post" enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
+                                  hover:shadow-lg
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -579,13 +610,14 @@ HTML;
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
                 </div>
             HTML;
         }
@@ -602,19 +634,23 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                        <form action="view.php?land_id=$land_id&document=sale_deed" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
-                        
-                        <button class="text-red-700 transition-all duration-300
+                      </form>
+                        <form action="delete.php?land_id=$land_id&document=sale_deed" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -628,8 +664,12 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=sale_deed"
+                    method="post" enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
+                                  hover:shadow-lg
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -637,13 +677,14 @@ HTML;
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
                 </div>
             HTML;
         }
@@ -660,21 +701,23 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                        <form action="view.php?land_id=$land_id&document=tax_pay_receipt" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
-                        
-                        
-                        
-                        <button class="text-red-700 transition-all duration-300
+                      </form>
+                        <form action="delete.php?land_id=$land_id&document=tax_pay_receipt" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -688,8 +731,12 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=tax_pay_receipt"
+                    method="post" enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
+                                  hover:shadow-lg
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -697,13 +744,15 @@ HTML;
                                   file:bg-violet-50 file:text-violet-700
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
+
                 </div>
             HTML;
         }
@@ -719,19 +768,23 @@ HTML;
                     </div>
                     
                     <div class="flex gap-[3.8rem]">
+                        <form action="view.php?land_id=$land_id&document=map_property" method="post">
                         <button class="text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-green-100 font-semibold text-sm
                             ">
                             View
                         </button>
-                        
-                        <button class="text-red-700 transition-all duration-300
+                      </form>
+                        <form action="delete.php?land_id=$land_id&document=map_property" method="post">
+                        <button type="submit"
+                        class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             ">
                             Delete
                         </button>
+                        </form>
                     </div>
                 </div>
             HTML;
@@ -745,23 +798,27 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-2 items-center">
-                        <input type="file" class="block text-sm text-slate-500
+                    <form action="upload.php?land_id=$land_id&document=map_property"
+                    method="post" enctype="multipart/form-data"
+                    class="flex gap-2 items-center">
+                        <input name="document_file"
+                        type="file" class="block text-sm text-slate-500
+                                  hover:shadow-lg
                                   file:transition-all file:duration-300
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
                                   file:text-sm file:font-semibold
                                   file:bg-violet-50 file:text-violet-700
-                                  hover:file:bg-violet-100
-                                  hover:drop-shadow-xl transition-all duration-300
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
-                        <button class="text-violet-700 transition-all duration-300
+                        <button type="submit"
+                        class="text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
                             hover:bg-violet-100">
                             Add Document
                         </button>
-                    </div>
+                    </form>
                 </div>
             HTML;
         }
