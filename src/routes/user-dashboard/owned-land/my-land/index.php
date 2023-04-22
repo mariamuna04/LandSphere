@@ -319,13 +319,9 @@ HTML;
                 <div id="alert-additional-content-3" 
                      class="p-4 mb-4 text-green-800 flex justify-between items-center border border-green-300 rounded-xl bg-green-50 mx-48"
                      role="alert">
-                    <div class="flex items-center">
-                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
+                    <div class="flex items-center gap-2">
+                           <img src="../../../../resource/icons/dashboard/file_upload_done.svg" alt="">
+
                         <span class="sr-only">Info</span>
                         <h3 class="text-lg font-medium">File Uploaded Successfully</h3>
                     </div>
@@ -345,15 +341,10 @@ HTML;
                 <div id="alert-additional-content-3" 
                      class="p-4 mb-4 text-red-800 flex justify-between items-center border border-red-300 rounded-xl bg-red-50 mx-48"
                      role="alert">
-                    <div class="flex items-center">
-                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
+                    <div class="flex items-center gap-2">
+                        <img src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
                         <span class="sr-only">Info</span>
-                        <h3 class="text-lg font-medium">File Uploaded Successfully</h3>
+                        <h3 class="text-lg font-medium">File Deleted!</h3>
                     </div>
                     <div class="flex">
                         <button type="button"
