@@ -50,7 +50,6 @@ $land_previous_owner = $lands["previous_owner"];
 $land_details = $lands["place_details"];
 $_land_type = $lands["land_type"];
 $land_type = null;
-
 if ($_land_type == 0) {
     $land_type = "Residential";
     $style = " bg-green-100 text-green-600 ";
@@ -66,8 +65,10 @@ if ($_land_type == 0) {
 $land_cp_sqft = $lands["cost_per_sqft"];
 $land_rcv = $lands["relative_cost_value"];
 $land_acquire_date = $lands["acquire_date"];
-// Convert to date format full date (e.g. 07th January, 2021)
+
+$land_age = date_diff(date_create($land_acquire_date), date_create('today'))->y;
 $land_acquire_date = date("jS F, Y", strtotime($land_acquire_date));
+
 
 // Land Document Information
 $registration_document = $lands["registration_paper"];
@@ -79,16 +80,31 @@ $map_property = $lands["map_property"];
 
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Excellent ';
 } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Very Good ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Very Good ';
 } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+    $environment_status = ' border border-green-600 bg-green-100 text-green-500"> Ecologically Good ';
 } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
-    $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+    $environment_status = ' border border-yellow-600  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
 } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
-    $environment_status = '  bg-red-100 text-red-500"> Ecologically Poor ';
+    $environment_status = '  border border-red-600 bg-red-100 text-red-500"> Ecologically Poor ';
 }
+
+$demand_status = "";
+
+if ($land_demand_points > 0 && $land_demand_points <= 2) {
+    $demand_status = ' border border-red-600 bg-red-100 text-red-500"> Demand Poor ';
+} else if ($land_demand_points > 2 && $land_demand_points <= 4) {
+    $demand_status = ' border border-yellow-600 bg-yellow-100 text-yellow-600"> Demand Fair ';
+} else if ($land_demand_points > 4 && $land_demand_points <= 6) {
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Good ';
+} else if ($land_demand_points > 6 && $land_demand_points <= 8) {
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Very Good ';
+} else if ($land_demand_points > 8 && $land_demand_points <= 10) {
+    $demand_status = ' border border-green-600 bg-green-100 text-green-500"> Demand Excellent ';
+}
+
 ?>
 
 
@@ -291,6 +307,9 @@ HTML;
                     <p class="text-lg text-gray-500 font-light ">
                         <?php echo $land_details ?>
                     </p>
+                    <p class="text-2xl text-gray-500 font-mono">
+                        <?php echo $land_area ?> sqft
+                    </p>
                 </div>
 
                 <div class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300">
@@ -327,14 +346,68 @@ HTML;
 
     <main id="information" class="mt-12">
         <h1 class="pb-12 text-3xl font-medium">
-            Land Cost Information. <span class="text-gray-500">Manage your costs responsibly.</span>
+            Land Information. <span class="text-gray-500"></span>
         </h1>
-        <div class="flex justify-around items-center align-middle">
-            <h1>Hello</h1>
-            <h1>Hello</h1>
-            <h1>Hello</h1>
-            <h1>Hello</h1>
-            <h1>Hello</h1>
+        <div class="flex flex-col gap-4">
+            <div class="flex justify-around items-center align-middle">
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Cost Per SQFT</h1>
+                    <h1 class="font-mono text-lg"> $<?php echo $land_cp_sqft ?> </h1>
+                </div>
+
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Total Cost</h1>
+                    <h1 class="font-mono text-lg"> $<?php echo $land_cp_sqft * $land_area ?> </h1>
+                </div>
+                <?php
+
+                $ratio = ($land_area * $land_cp_sqft) / ($land_area * $land_rcv);
+                if ($ratio >= 1) {
+                    echo <<< HTML
+                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                        <h1 class="font-bold text-xl text-green-800">Value Ratio</h1>
+                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
+                    </div>
+                    HTML;
+
+                } else {
+                    echo <<< HTML
+                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
+                        <h1 class="font-bold text-xl text-red-800">Value Ratio</h1>
+                        <h1 class="font-mono text-lg"> $<?php echo $ratio ?> </h1>
+                    </div>
+                    HTML;
+                }
+                ?>
+
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Owned For</h1>
+                    <h1 class="font-mono text-lg"> <?php echo $land_age ?> days </h1>
+                </div>
+
+
+            </div>
+            <div class="flex justify-around items-center align-middle">
+                <?php
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                        <p class="w-fit text-md font-medium p-3 rounded-2xl $environment_status </p>
+                    </div>
+                    HTML;
+
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                        <div class="font-bold font-mono text-md p-3 border border-green-600 rounded-xl  $style "> $land_type </div>
+                    </div>
+                    HTML;
+
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                            <p class="w-fit text-md font-bold p-3 rounded-2xl $demand_status </p>
+                    </div>
+                    HTML;
+                ?>
+            </div>
         </div>
     </main>
 
@@ -354,19 +427,18 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-red-300">
+                        
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -382,10 +454,20 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  hover:shadow-lg
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
@@ -404,19 +486,17 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-red-300">
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -432,10 +512,19 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300 
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
@@ -454,19 +543,18 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-red-300">
+                        
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -482,10 +570,19 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
@@ -504,19 +601,18 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200  transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-red-300">
+                        
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -532,10 +628,19 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
@@ -554,19 +659,20 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-red-300">
+                        
+                        
+                        
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -582,10 +688,19 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
@@ -603,19 +718,18 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle hover:shadow-lg
-                            hover:bg-blue-300">
+                    <div class="flex gap-[3.8rem]">
+                        <button class="text-green-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-green-100 font-semibold text-sm
+                            ">
                             View
                         </button>
-                        <button class="hover:border-primary text-green-600 border border-green-200 transition-all pt-[0.60rem] pb-[0.60rem]
-                        pl-6 pr-6 rounded-3xl align-middle hover:text-green-800 font-bold">
-                            Modify
-                        </button>
-                        <button class="text-red-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-red-300">
+                        
+                        <button class="text-red-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-8
+                            bg-red-100 font-semibold text-sm
+                            ">
                             Delete
                         </button>
                     </div>
@@ -631,10 +745,20 @@ HTML;
                         </h1>
                     </div>
                     
-                    <div class="flex gap-6">
-                        <button class="text-blue-800 font-bold transition-all pt-[0.60rem]
-                            pb-[0.60rem] pl-6 pr-6 rounded-3xl align-middle  hover:shadow-lg
-                            hover:bg-gray-50">
+                    <div class="flex gap-2 items-center">
+                        <input type="file" class="block text-sm text-slate-500
+                                  file:transition-all file:duration-300
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-violet-50 file:text-violet-700
+                                  hover:file:bg-violet-100
+                                  hover:drop-shadow-xl transition-all duration-300
+                                "/>
+                        <button class="text-violet-700 transition-all duration-300
+                            rounded-full align-middle hover:shadow-lg py-2 px-4
+                            bg-violet-100 font-semibold text-sm
+                            hover:bg-violet-100">
                             Add Document
                         </button>
                     </div>
