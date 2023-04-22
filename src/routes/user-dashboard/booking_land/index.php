@@ -31,8 +31,6 @@ if (isset($_POST["sign_out"])) {
     <link href="../../../../dist/output.css" rel="stylesheet">
     <link rel="icon" href="../../../resource/ico.svg">
     <title>LandSphere | Your Personal Land Manager</title
-
-
 </head>
 
 <body class="bg-beige-default">
@@ -187,203 +185,14 @@ HTML;
 
 </div>
 
-<section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-
-    <div>Your land that booked people</div>
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
-        <div class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
-            <?php
-            $sql = "SELECT * FROM booked_land_purchase 
-                    JOIN LAND on LAND.land_id = booked_land_purchase.land_id 
-                    WHERE booked_land_purchase.owner_id != " . $_SESSION["id"];
-
-            $result = mysqli_query($connection, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $_land_type = $row['land_type'];
-
-                if ($_land_type == 0) {
-                    $land_type = "Residential";
-                } else if ($_land_type == 1) {
-                    $land_type = "Commercial";
-                } else if ($_land_type == 2) {
-                    $land_type = "Industrial";
-                }
+<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
 
-                echo
-
-                    "
-
-<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
-transform motion-safe:hover:scale-[1.03]
-transition-all hover:shadow-lg text-gray-600 duration-300'>
-    <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
-         src='../../../resource/img/image_placeholder.webp'
-    />
-
-    <div class='mt-1 p-4 flex flex-col'>
-    
-        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5
-        group-hover:bg-beige-dark'>
-            " . $row['title'] . "
-        </p>
-
-        <p class='text-xs font-extrabold pb-1 opacity-75 text-gray-600'>
-            " . $row['area'] . "
-        </p>
-        
-
-       <p class='font-bold text-green-600 text-xl col-span-7'>
-            " . $row['address'] . " 
-        </p> 
-       
-        
-        <p class='text-sm text-gray-500 pb-2 pt-1 group-hover:text-black'>
-            " . $row['place_details'] . "
-        </p>
-        
-        <p class='text-lg text-gray-500 pb-3'>
-            " . $land_type . "
-        </p>
-        
-    </div>
-</a>";
-            }
-            ?>
-        </div>
-    </main>
-
-
-    <div>The lands you booked</div>
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
-        <div class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
-            <?php
-            $sql = "SELECT * FROM booked_land_purchase 
-                    JOIN LAND L on L.land_id = booked_land_purchase.land_id 
-                    WHERE potential_buyer_id = " . $_SESSION["id"];
-
-            $result = mysqli_query($connection, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $_land_type = $row['land_type'];
-
-                if ($_land_type == 0) {
-                    $land_type = "Residential";
-                } else if ($_land_type == 1) {
-                    $land_type = "Commercial";
-                } else if ($_land_type == 2) {
-                    $land_type = "Industrial";
-                }
-
-
-                echo
-
-                    "
-
-<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
-transform motion-safe:hover:scale-[1.03]
-transition-all hover:shadow-lg text-gray-600 duration-300'>
-    <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
-         src='../../../resource/img/image_placeholder.webp'
-    />
-
-    <div class='mt-1 p-4 flex flex-col'>
-    
-        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5
-        group-hover:bg-beige-dark'>
-            " . $row['title'] . "
-        </p>
-
-        <p class='text-xs font-extrabold pb-1 opacity-75 text-gray-600'>
-            " . $row['area'] . "
-        </p>
-        
-
-       <p class='font-bold text-green-600 text-xl col-span-7'>
-            " . $row['address'] . " 
-        </p> 
-       
-        
-        <p class='text-sm text-gray-500 pb-2 pt-1 group-hover:text-black'>
-            " . $row['place_details'] . "
-        </p>
-        
-        <p class='text-lg text-gray-500 pb-3'>
-            " . $land_type . "
-        </p>
-        
-    </div>
-</a>";
-            }
-            ?>
-        </div>
-    </main>
-
-
-    <div>Available for booking</div>
-    <main class="w-full bg-beige-light rounded-3xl p-4 flex justify-between">
-        <div class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
-            <?php
-            $sql = "SELECT * FROM LAND join OWNS on LAND.land_id= OWNS.land_id WHERE owner_id != " . $_SESSION["id"];
-            $result = mysqli_query($connection, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $_land_type = $row['land_type'];
-
-                if ($_land_type == 0) {
-                    $land_type = "Residential";
-                } else if ($_land_type == 1) {
-                    $land_type = "Commercial";
-                } else if ($_land_type == 2) {
-                    $land_type = "Industrial";
-                }
-
-
-                echo
-
-                    "
-
-<a href='#' class='group bg-white rounded-2xl w-full block shadow-md 
-transform motion-safe:hover:scale-[1.03]
-transition-all hover:shadow-lg text-gray-600 duration-300'>
-    <img class='w-full object-cover rounded-tl-2xl rounded-tr-2xl' alt='picture'
-         src='../../../resource/img/image_placeholder.webp'
-    />
-
-    <div class='mt-1 p-4 flex flex-col'>
-    
-        <p class='text-sm text-gray-500 font-semibold p-2 bg-beige-light rounded-2xl text-center mb-5
-        group-hover:bg-beige-dark'>
-            " . $row['title'] . "
-        </p>
-
-        <p class='text-xs font-extrabold pb-1 opacity-75 text-gray-600'>
-            " . $row['area'] . "
-        </p>
-        
-
-       <p class='font-bold text-green-600 text-xl col-span-7'>
-            " . $row['address'] . " 
-        </p> 
-       
-        
-        <p class='text-sm text-gray-500 pb-2 pt-1 group-hover:text-black'>
-            " . $row['place_details'] . "
-        </p>
-        
-        <p class='text-lg text-gray-500 pb-3'>
-            " . $land_type . "
-        </p>
-        
-    </div>
-</a>";
-            }
-            ?>
-        </div>
-    </main>
 </section>
 
 
-<footer id="index_footer" class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
-                                 pb-12 drop-shadow-xl">
+<footer id="index_footer"
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12 drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">

@@ -365,7 +365,8 @@ HTML;
 
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
-        $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id";
+        $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id WHERE sell_list.land_id NOT IN 
+                                                                           (SELECT land_id FROM booked_land_purchase)";
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {

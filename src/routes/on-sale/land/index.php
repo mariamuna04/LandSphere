@@ -5,6 +5,7 @@ if (!isset($_GET['land_id'])) {
     die();
 }
 $land_id = $_GET['land_id'];
+$user_id = $_SESSION['id'];
 
 include "../../../utility/php/connection.php";
 $connection = connection();
@@ -30,7 +31,7 @@ $get_land_sql = "SELECT * FROM owns
 $get_land_sql_result = mysqli_query($connection, $get_land_sql);
 $lands = mysqli_fetch_array($get_land_sql_result);
 
-$owner = $lands["owner_id"];
+$owner_id = $lands["owner_id"];
 $land_id = $lands["land_id"];
 $land_title = $lands["title"];
 $land_area = $lands["area"];
@@ -100,7 +101,7 @@ if ($land_demand_points > 0 && $land_demand_points <= 2) {
 $net_price = $land_area * $land_cp_sqft;
 $net_price = number_format($net_price, 2, '.', ',');
 
-$get_owner_name_sql = "SELECT * FROM user WHERE nid = " . $owner . ";";
+$get_owner_name_sql = "SELECT * FROM user WHERE nid = " . $owner_id . ";";
 $get_owner_name_sql_result = mysqli_query($connection, $get_owner_name_sql);
 $owner_name = mysqli_fetch_array($get_owner_name_sql_result);
 $owner_name = $owner_name["full_name"];
@@ -336,15 +337,38 @@ HTML;
                     </p>
 
                     <div class="flex gap-4">
-                        <form>
-                            <button
-                                class="hover:shadow-form bg-green-700
-                                py-3 px-8 text-center text-base transition-all duration-300
-                                font-bold text-white outline-none items-center
-                                col-span-2 rounded-full hover:bg-green-800
-                                hover:shadow-lg">
-                                Book Land
-                            </button>
+                        <form action="book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>" method="post">
+                            <?php
+                                $check_already_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = '$land_id' AND potential_buyer_id = '$user_id'";
+                                $check_already_booked_result = mysqli_query($connection, $check_already_booked_sql);
+
+                                if($check_already_booked_result->num_rows > 0) {
+                                    echo <<< HTML
+                                       <div                                       
+                                           class="                   
+                                           py-3 px-16 text-center text-base    
+                                           font-bold text-primary rounded-full outline-none items-center                 
+                                           col-span-2                     
+                                           ">                                              
+                                           Booked!                                                     
+                                       </div>                                                          
+                                    HTML;
+
+                                } else {
+                                    echo <<< HTML
+                                        <button type="submit"
+                                            class="hover:shadow-form bg-green-700
+                                            py-3 px-8 text-center text-base transition-all duration-300
+                                            font-bold text-white outline-none items-center
+                                            col-span-2 rounded-full hover:bg-green-800
+                                            hover:shadow-lg">
+                                            Book Land
+                                        </button>  
+                                    HTML;
+                                }
+
+                            ?>
+
                         </form>
 
 
