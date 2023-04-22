@@ -21,18 +21,90 @@ if ($ensure_land_id_sql_result_rows == 0) {
     die();
 }
 
-$get_land_table_sql = "SELECT * FROM land WHERE land_id = $land_id";
-$get_land_table_sql_result = mysqli_query($connection, $get_land_table_sql);
-$land_table = mysqli_fetch_array($get_land_table_sql_result);
+$get_land_sql = "SELECT * FROM owns 
+                  JOIN land l on l.land_id = owns.land_id 
+                  JOIN land_cost_info lci on l.land_id = lci.land_id 
+                  JOIN land_docs ld on l.land_id = ld.land_id 
+                  WHERE l.land_id = " . $land_id . " ORDER BY title;";
 
-$title = $land_table['title'];
-$area = $land_table['area'];
-$address = $land_table['address'];
-$environment_point = $land_table['environment_point'];
-$demand = $land_table['demand'];
-$previous_owner = $land_table['previous_owner'];
-$place_details = $land_table['place_details'];
-$land_type = $land_table['land_type'];
+$get_land_sql_result = mysqli_query($connection, $get_land_sql);
+$lands = mysqli_fetch_array($get_land_sql_result);
+
+$owner = $lands["owner_id"];
+$land_id = $lands["land_id"];
+$land_title = $lands["title"];
+$land_area = $lands["area"];
+$land_address = $lands["address"];
+$land_environment_points = $lands["environment_point"];
+$land_demand_points = $lands["demand"];
+$land_previous_owner = $lands["previous_owner"];
+$land_details = $lands["place_details"];
+$_land_type = $lands["land_type"];
+$land_type = null;
+
+if ($_land_type == 0) {
+    $land_type = "Residential";
+    $style = " bg-green-100 text-green-600 ";
+} else if ($_land_type == 1) {
+    $land_type = "Commercial";
+    $style = " bg-blue-100 text-blue-600 ";
+} else {
+    $land_type = "Industrial";
+    $style = " bg-yellow-100 text-yellow-600 ";
+}
+
+// Land Cost Information
+$land_cp_sqft = $lands["cost_per_sqft"];
+$land_rcv = $lands["relative_cost_value"];
+$land_acquire_date = $lands["acquire_date"];
+
+$land_age = date_diff(date_create($land_acquire_date), date_create('today'))->y;
+$land_acquire_date = date("jS F, Y", strtotime($land_acquire_date));
+
+// Land Document Information
+$registration_document = $lands["registration_paper"];
+$government_permit = $lands["government_permit"];
+$agreement_document = $lands["agreement"];
+$sale_deed = $lands["sale_deed"];
+$tax_payment = $lands["tax_pay_receipt"];
+$map_property = $lands["map_property"];
+
+$environment_status = "";
+if ($land_environment_points > 0 && $land_environment_points <= 2) {
+    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+} else if ($land_environment_points > 2 && $land_environment_points <= 4) {
+    $environment_status = ' bg-green-100 text-green-500"> Ecologically Very Good ';
+} else if ($land_environment_points > 4 && $land_environment_points <= 6) {
+    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+} else if ($land_environment_points > 6 && $land_environment_points <= 8) {
+    $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
+} else if ($land_environment_points > 8 && $land_environment_points <= 10) {
+    $environment_status = '  bg-red-100 text-red-500"> Ecologically Poor ';
+}
+
+
+$demand_status = "";
+
+if ($land_demand_points > 0 && $land_demand_points <= 2) {
+    $demand_status = ' bg-red-100 text-red-500"> Poorly Demanding ';
+} else if ($land_demand_points > 2 && $land_demand_points <= 4) {
+    $demand_status = ' bg-yellow-100 text-yellow-600"> Somewhat Demanding ';
+} else if ($land_demand_points > 4 && $land_demand_points <= 6) {
+    $demand_status = ' bg-green-100 text-green-500"> Demanding ';
+} else if ($land_demand_points > 6 && $land_demand_points <= 8) {
+    $demand_status = '  bg-green-100 text-green-500"> High Demanding ';
+} else if ($land_demand_points > 8 && $land_demand_points <= 10) {
+    $demand_status = ' bg-green-100 text-green-500"> Very Demanding ';
+}
+
+$net_price = $land_area * $land_cp_sqft;
+$net_price = number_format($net_price, 2, '.', ',');
+
+$get_owner_name_sql = "SELECT * FROM user WHERE nid = " . $owner . ";";
+$get_owner_name_sql_result = mysqli_query($connection, $get_owner_name_sql);
+$owner_name = mysqli_fetch_array($get_owner_name_sql_result);
+$owner_name = $owner_name["full_name"];
+
 
 
 ?>
@@ -193,28 +265,389 @@ HTML;
 
 </nav>
 
-<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+<div id="breadcrumb"
+     class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+    <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
+    justify-center group-hover:shadow-lg transition-all duration-300"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1">
+            <li class="inline-flex items-center">
+                <a href="../../../index.php"
+                   class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="../index.php"
+                       class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                        On Sale
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#"
+                       class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
+                        <?php echo $land_title ?>
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
 
-    <main id="gallery"
-          class="w-full rounded-3xl p-4 flex justify-between">
-        <div class="mt-4 flex w-full snap-x gap-4 overflow-x-auto pb-5 no-scroll">
+</div>
+
+<section class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
+
+    <main class="w-full rounded-3xl p-4 flex justify-between">
+        <section class="w-full flex-col p-4 flex gap-6">
+            <div class="w-full flex justify-between items-center gap-8">
+                <div class="flex flex-col gap-4 ">
+                    <div
+                        class="bg-beige-darkest text-zinc-600 font-mono w-fit align-middle p-1 rounded-xl font-sm px-3">
+                        <?php echo $land_id ?>
+                    </div>
+                    <h1 class="text-5xl font-bold text-green-600">
+                        <?php echo $land_title ?>
+                    </h1>
+                    <h1 class="text-xl font-mono font-bold text-gray-600">
+                        <?php echo $land_address ?>
+                    </h1>
+                    <p class="text-lg text-gray-500 font-light ">
+                        <?php echo $land_details ?>
+                    </p>
+
+                    <div class="flex gap-4">
+                        <form>
+                            <button
+                                class="hover:shadow-form bg-green-700
+                                py-3 px-8 text-center text-base transition-all duration-300
+                                font-bold text-white outline-none items-center
+                                col-span-2 rounded-full hover:bg-green-800
+                                hover:shadow-lg">
+                                Book Land
+                            </button>
+                        </form>
+
+
+                        <button
+                            class="hover:shadow-form
+                        py-3 px-8 text-center
+                        font-bold text-primary outline-none items-center transition-all duration-300
+                        col-span-2 rounded-full border border-primary hover:border-green-800
+                        hover:shadow-lg">
+                            Contact Owner
+                        </button>
+
+                    </div>
+                </div>
+
+                <div
+                    class="rounded-xl p-4 bg-beige-dark hover:shadow-lg transition-all duration-300 flex flex-col gap-2">
+                    <iframe class="h-52 w-[21rem] rounded-2xl border"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=90.4473602771759%2C23.796357186638033%2C90.45122265815735%2C23.79806774014946&amp;layer=mapnik&amp;marker=23.79721246620885%2C90.44929146766663"
+                    >
+
+                    </iframe>
+
+                    <a href="https://www.openstreetmap.org/?mlat=23.79721&amp;mlon=90.44929#map=19/23.79721/90.44929"
+                       class="text-center w-full mt-2 font-bold select-none text-gray-500 hover:underline">
+                        View Location
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <main id="gallery">
+        <div class="mt-4 flex w-full items-center snap-x gap-4 overflow-x-auto pb-5 pt-5 pl-2 pr-2 no-scroll">
             <?php
-            for ($i = 0;
-                 $i < 6;
-                 $i++) {
-                $random_number = rand(1, 10000);
-                $image = <<< HTML
-                <div class="min-w-[80%]">
-                    <div style="background-image: url('https://api.dicebear.com/6.x/shapes/svg?seed=$random_number%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9')" 
-                         class="h-80 w-full snap-center rounded-xl bg-cover bg-center shadow-md"></div>
+            for ($i = 0; $i < 5; $i++) {
+                $random = rand(1, 1000);
+                echo <<< HTML
+                <div class="min-w-[80%] transform motion-safe:hover:scale-[1.01] transition-all duration-300">
+                    <div class="h-72 w-full snap-center rounded-xl bg-center bg-cover shadow-md"
+                         style="background-image: url('https://api.dicebear.com/6.x/shapes/svg?seed=$random">
+                    </div>
                 </div>
                 HTML;
-                echo $image;
             }
             ?>
-
-
         </div>
+        <h1 class="text-center font-light text-gray-500 text-md">Swipe left to see more images</h1>
+    </main>
+
+    <main class="mt-12">
+
+        <div class="flex flex-col gap-4">
+            <div class="flex justify-around items-center align-middle">
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Cost Per SQFT</h1>
+                    <h1 class="font-mono text-lg"> $<?php echo $land_cp_sqft ?> </h1>
+                </div>
+
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Total Cost</h1>
+                    <h1 class="font-mono text-lg"> $<?php echo $net_price ?> </h1>
+                </div>
+                <?php
+
+                $ratio = $land_cp_sqft / $land_rcv;
+
+                if ($ratio >= 1) {
+                    echo <<< HTML
+                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                        <h1 class="font-bold text-xl text-green-800">Value Ratio</h1>
+                        <h1 class="font-mono text-lg"> $ratio </h1>
+                    </div>
+                    HTML;
+
+                } else {
+                    echo <<< HTML
+                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
+                        <h1 class="font-bold text-xl text-red-800">Value Ratio</h1>
+                        <h1 class="font-mono text-lg"> $ratio </h1>
+                    </div>
+                    HTML;
+                }
+                ?>
+
+                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Owner</h1>
+                    <h1 class="font-mono text-lg"> <?php echo $owner_name ?> </h1>
+                </div>
+
+
+            </div>
+            <div class="flex justify-around items-center align-middle">
+                <?php
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                        <p class="w-fit text-md font-bold p-3 rounded-2xl $environment_status </p>
+                    </div>
+                    HTML;
+
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                        <div class="font-bold text-md p-3 rounded-xl  $style "> $land_type </div>
+                    </div>
+                    HTML;
+
+                echo <<< HTML
+                    <div class="mt-2 flex justify-between items-center">
+                            <p class="w-fit text-md font-bold p-3 rounded-2xl $demand_status </p>
+                    </div>
+                    HTML;
+                ?>
+            </div>
+        </div>
+    </main>
+
+     <main id="information" class="mt-16 flex flex-col gap-4">
+        <h1 class="pb-6 text-3xl font-medium">
+            Legal Documents. <span class="text-gray-500"> View authentic documents reviewed by officials</span>
+        </h1>
+        <div class="grid grid-cols-3 gap-4">
+            <?php
+        if ($registration_document != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Registration Paper
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                    ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Registration Paper
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        }
+
+
+        if ($government_permit != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Government Permit
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Government Permit
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        }
+
+
+        if ($agreement_document != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Agreement Document
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Agreement Document
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        }
+
+
+        if ($sale_deed != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Sale Deed
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Sale Deed
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        }
+
+
+        if ($tax_payment != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Tax Payment
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Tax Payment
+                        </h1>
+                    </div>
+                    
+                    
+                </button>
+            HTML;
+        }
+
+        if ($map_property != null) {
+            echo <<< HTML
+                <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
+                        <h1 class="text-lg font-bold text-primary">
+                            Map Property
+                        </h1>
+                    </div>
+                    
+                   
+                </button>
+            HTML;
+        } else {
+            echo <<< HTML
+                <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
+                ">
+                    <div class="flex gap-4">
+                        <img src="../../../resource/icons/dashboard/docs_unavailable.svg" alt="">
+                        <h1 class="text-lg font-bold text-red-600">
+                            Map Property
+                        </h1>
+                    </div>
+                </button>
+            HTML;
+        }
+        ?>
+        </div>
+
+
+
     </main>
 </section>
 
