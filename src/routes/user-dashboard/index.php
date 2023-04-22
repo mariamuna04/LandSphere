@@ -146,7 +146,7 @@ $hour = date('H', strtotime($current_time));
                     $section =
                         <<< HTML
                         $first_name <span class="text-green-600">$last_name</span>
-HTML;
+                        HTML;
                     echo $section;
                     ?>
                 </div>
@@ -204,7 +204,7 @@ HTML;
                     $date = date("l, d F Y");
                     $printable_date = <<< HTML
                         <span class="font-bold">$date</span>
-HTML;
+                    HTML;
                     echo $printable_date;
 
                     $json = file_get_contents("https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current_weather=true&forecast_days=1&timezone=auto");
@@ -218,13 +218,13 @@ HTML;
                             <img src="../../resource/icons/dashboard/sun.svg" alt="">
                             <span class="font-bold">$printable_temp</span>
                         </span>
-HTML;
+                    HTML;
                     $night = <<< HTML
                         <span class="flex gap-1 align-middle items-center">
                             <img src="../../resource/icons/dashboard/moon.svg" alt="">
                             <span class="font-bold">$printable_temp</span>
                         </span>
-HTML;
+                    HTML;
 
                     if ($is_day) {
                         echo $day;
@@ -247,9 +247,9 @@ HTML;
                         if ($choice == 0) {
                             echo "Good Morning!";
                         } else if ($choice == 1) {
-                            echo "Top of the morning to you!";
-                        } else {
                             echo "Rise and shine!";
+                        } else {
+                            echo "Greetings!";
                         }
                     } else if ($afternoon) {
                         $choice = $rnd % 3;
@@ -428,7 +428,7 @@ HTML;
                             </div>
                         </div>
 
-HTML;
+                        HTML;
                         echo $card;
                     }
 
@@ -461,7 +461,7 @@ HTML;
                             </div>
                         </div>
 
-HTML;
+                        HTML;
                         echo $card;
                     }
 

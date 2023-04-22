@@ -20,6 +20,12 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../../");
 }
 
+$get_lands_that_is_booked_sql = "SELECT * FROM booked_land_purchase JOIN land l on booked_land_purchase.land_id = l.land_id
+         JOIN land_cost_info lci on l.land_id = lci.land_id WHERE potential_buyer_id = " . $_SESSION["id"] . ";";
+$get_lands_that_is_booked_table = mysqli_query($connection, $get_lands_that_is_booked_sql);
+$lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
+
+
 ?>
 
 
@@ -34,7 +40,8 @@ if (isset($_POST["sign_out"])) {
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
@@ -196,6 +203,65 @@ HTML;
 
 <section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
 
+    <p class="text-3xl pb-4 font-medium leading-relaxed">
+        Your <span class="font-bold text-primary">Bookings</span>. <span class="text-gray-500">Finish payment to register.</span>
+    </p>
+
+    <main class="w-full flex-col p-4 flex gap-6">
+        <?php
+        if ($lands_that_is_booked) {
+            $lands = mysqli_fetch_assoc($get_lands_that_is_booked_table);
+            while ($lands) {
+                $land_id = $lands["land_id"];
+                $land_title = $lands["title"];
+                $land_area = $lands["area"];
+                $land_address = $lands["address"];
+                $land_environment_points = $lands["environment_point"];
+                $land_demand_points = $lands["demand"];
+                $land_previous_owner = $lands["previous_owner"];
+                $land_details = $lands["place_details"];
+                $_land_type = $lands["land_type"];
+
+                $land_type = null;
+                if ($_land_type == 0) {
+                    $land_type = "Residential";
+                    $style = " bg-green-100 text-green-600 ";
+                } else if ($_land_type == 1) {
+                    $land_type = "Commercial";
+                    $style = " bg-blue-100 text-blue-600 ";
+                } else {
+                    $land_type = "Industrial";
+                    $style = " bg-yellow-100 text-yellow-600 ";
+                }
+
+                // Land Cost Information
+                $land_cp_sqft = $lands["cost_per_sqft"];
+                $land_rcv = $lands["relative_cost_value"];
+
+                echo <<< HTML
+                    <a href="#" class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                                transition-all duration-300 transform motion-safe:hover:scale-[1.02]">
+                        <div class="flex justify-between">
+                            <div class="flex gap-4">  
+                                <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
+                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                            </div>
+                            <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
+                        </div>
+                        
+                        <div class="mt-3 flex justify-between items-center align-middle">
+                            <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
+                            <p class="font-bold text-xl">$land_area sqft</p> 
+                        </div>
+                       
+                    </a>
+                    HTML;
+
+                $lands = mysqli_fetch_assoc($get_lands_that_is_booked_table);
+            }
+        }
+        ?>
+    </main>
 
 </section>
 

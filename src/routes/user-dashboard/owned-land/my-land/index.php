@@ -91,6 +91,11 @@ $sale_deed = $lands["sale_deed"];
 $tax_payment = $lands["tax_pay_receipt"];
 $map_property = $lands["map_property"];
 
+$has_all_legal_documents = false;
+if ($registration_document != null && $government_permit != null && $agreement_document != null && $sale_deed != null && $tax_payment != null && $map_property != null) {
+    $has_all_legal_documents = true;
+}
+
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
     $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
@@ -117,6 +122,11 @@ if ($land_demand_points > 0 && $land_demand_points <= 2) {
 } else if ($land_demand_points > 8 && $land_demand_points <= 10) {
     $demand_status = '  bg-green-100 text-green-500"> Demand Excellent ';
 }
+
+$is_land_listed_for_sale_sql = "SELECT * FROM sell_list WHERE land_id = " . $land_id . ";";
+$is_land_listed_for_sale_result = mysqli_query($connection, $is_land_listed_for_sale_sql);
+$is_land_listed_for_sale = mysqli_num_rows($is_land_listed_for_sale_result) > 0;
+
 
 ?>
 
@@ -361,11 +371,30 @@ HTML;
     <main class="w-full rounded-3xl p-4 flex justify-between">
         <section class="w-full flex-col p-4 flex gap-6">
             <div class="w-full flex justify-between items-center">
-                <div class="flex flex-col gap-4 ">
-                    <div
-                        class="bg-beige-darkest text-zinc-600 font-mono w-fit align-middle p-1 rounded-xl font-sm px-3">
-                        <?php echo $land_id ?>
+                <div class="flex flex-col gap-4">
+                    <div class="flex gap-6 items-center">
+                        <div
+                            class="bg-beige-darkest text-zinc-600 font-mono w-fit align-middle p-1 rounded-xl font-sm px-3">
+                            <?php echo $land_id ?>
+                        </div>
+                        <div>
+                            <?php
+                            if ($is_land_listed_for_sale) {
+                                echo <<< HTML
+                                     <div                                       
+                                         class="font-sm                 
+                                         p-0.5 bg-green-50 
+                                         font-bold text-primary rounded-2xl outline-none items-center                 
+                                         col-span-2 border border-green-300 px-4               
+                                         ">                                              
+                                         Listed For Sale                                                    
+                                     </div>
+                                HTML;
+                            }
+                            ?>
+                        </div>
                     </div>
+
                     <h1 class="text-5xl font-bold text-green-600">
                         <?php echo $land_title ?>
                     </h1>
@@ -378,6 +407,28 @@ HTML;
                     <p class="text-2xl text-gray-500 font-mono">
                         <?php echo $land_area ?> sqft
                     </p>
+
+                    <?php
+                    if (!$is_land_listed_for_sale) {
+                        if ($has_all_legal_documents) {
+                            echo <<< HTML
+                                    <form method="post" action="../../../../utility/php/list_for_sale.php?land_id=$land_id">
+                                    <button type="submit"
+                                            class="hover:shadow-form bg-green-700
+                                            py-3 px-8 text-center text-base transition-all duration-300
+                                            font-bold text-white outline-none items-center
+                                            col-span-2 rounded-full hover:bg-green-800
+                                            hover:shadow-lg w-fit">
+                                            List for Sale
+                                    </button>  
+                                    </form>
+                                HTML;
+                        } else {
+                            echo '<p class="font-bold text-sm text-red-600 opacity-75">Upload all legal documents to list for sale</p>';
+
+                        }
+                    }
+                    ?>
                 </div>
 
                 <div
@@ -402,7 +453,9 @@ HTML;
     <main id="gallery">
         <div class="mt-4 flex w-full items-center snap-x gap-4 overflow-x-auto pb-5 pt-5 pl-2 pr-2 no-scroll">
             <?php
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0;
+                 $i < 5;
+                 $i++) {
                 $random = rand(1, 1000);
                 echo <<< HTML
                 <div class="min-w-[80%] transform motion-safe:hover:scale-[1.01] transition-all duration-300">

@@ -24,6 +24,12 @@ $owner_has_land_sql = "SELECT * FROM sell_list WHERE user_id = {$_SESSION["id"]}
 $owner_has_land_result = mysqli_query($connection, $owner_has_land_sql);
 $owner_has_land = mysqli_num_rows($owner_has_land_result) > 0;
 
+$get_lands_that_not_listed_sql = "SELECT * FROM owns
+         JOIN land l on l.land_id = owns.land_id
+         WHERE owner_id = " . $_SESSION["id"] . " AND l.land_id NOT IN (SELECT land_id FROM sell_list);";
+$get_lands_that_not_listed_result = mysqli_query($connection, $get_lands_that_not_listed_sql);
+$user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_result) > 0;
+
 
 ?>
 
@@ -204,8 +210,11 @@ HTML;
 </div>
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+    <p class="text-3xl pb-2 font-medium">
+        Your Sale List
+    </p>
     <main class="w-full rounded-3xl p-4 flex justify-between">
-        <section class="w-full flex-col p-4 flex gap-6">
+        <section class="w-full flex-col flex gap-6">
             <?php
             if ($owner_has_land) {
                 $get_lands_sql = "SELECT * FROM sell_list 
@@ -353,6 +362,59 @@ HTML;
             ?>
         </section>
     </main>
+
+    <p class="text-3xl pb-2 pt-8 font-medium">
+        Lands that you have not listed yet ...
+    </p>
+
+    <main class="w-full flex-col p-4 flex gap-6">
+        <?php
+        if ($user_has_lands_that_not_listed) {
+            $lands = mysqli_fetch_assoc($get_lands_that_not_listed_result);
+            while ($lands) {
+                $land_id = $lands["land_id"];
+                $land_title = $lands["title"];
+                $land_area = $lands["area"];
+                $land_address = $lands["address"];
+                $land_environment_points = $lands["environment_point"];
+                $_land_type = $lands["land_type"];
+
+                $land_type = null;
+                if ($_land_type == 0) {
+                    $land_type = "Residential";
+                    $style = " bg-green-100 text-green-600 ";
+                } else if ($_land_type == 1) {
+                    $land_type = "Commercial";
+                    $style = " bg-blue-100 text-blue-600 ";
+                } else {
+                    $land_type = "Industrial";
+                    $style = " bg-yellow-100 text-yellow-600 ";
+                }
+
+                echo <<< HTML
+                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                                transition-all duration-300 ">
+                        <div class="flex justify-between">
+                            <div class="flex gap-4">  
+                                <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
+                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                            </div>
+                            <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
+                        </div>
+                        
+                        <div class="mt-3 flex justify-between items-center align-middle">
+                            <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
+                            <p class="font-bold text-xl">$land_area sqft</p> 
+                        </div>
+                    </div>
+                    HTML;
+                $lands = mysqli_fetch_assoc($get_lands_that_not_listed_result);
+            }
+        }
+        ?>
+    </main>
+
+
 </section>
 
 

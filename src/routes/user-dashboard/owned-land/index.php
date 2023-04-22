@@ -203,8 +203,7 @@ HTML;
 </div>
 
 <section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-
-    <p class="text-3xl pb-12 font-medium leading-relaxed">
+    <p class="text-3xl pb-4 font-medium leading-relaxed">
         Manage your <span class="text-primary">lands.</span>
         <span class="text-gray-500">
             Everything's at your fingertips.
