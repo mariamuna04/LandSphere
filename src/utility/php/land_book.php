@@ -15,6 +15,11 @@ if (!$connection) {
     die();
 }
 
+if(!isset($_SESSION['id'])) {
+    header('Location: ../../routes/sign-in/');
+    die();
+}
+
 $proceed_to_book_sql = "INSERT INTO booked_land_purchase (land_id, potential_buyer_id, owner_id) VALUES (". $land_id .", ". $user_id .", ". $owner_id .");";
 
 if (mysqli_query($connection, $proceed_to_book_sql)) {

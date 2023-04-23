@@ -127,6 +127,10 @@ $is_land_listed_for_sale_sql = "SELECT * FROM sell_list WHERE land_id = " . $lan
 $is_land_listed_for_sale_result = mysqli_query($connection, $is_land_listed_for_sale_sql);
 $is_land_listed_for_sale = mysqli_num_rows($is_land_listed_for_sale_result) > 0;
 
+$is_land_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = " . $land_id . ";";
+$is_land_booked_result = mysqli_query($connection, $is_land_booked_sql);
+$is_land_booked = mysqli_num_rows($is_land_booked_result) > 0;
+
 
 ?>
 
@@ -337,7 +341,7 @@ HTML;
                     </div>
                     <div class="flex">
                         <button type="button"
-                                class="text-green-600 bg-transparent hover:bg-green-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
+                                class="text-green-600  transition-all duration-300 bg-transparent hover:bg-green-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
                                 data-dismiss-target="#alert-additional-content-3" aria-label="Close">
                             Dismiss
                         </button>
@@ -349,7 +353,7 @@ HTML;
     if ($file_deleted_success) {
         echo <<< HTML
                 <div id="alert-additional-content-3" 
-                     class="p-4 mb-4 text-red-800 flex justify-between items-center border border-red-300 rounded-xl bg-red-50 mx-48"
+                     class="p-4 mb-4 text-red-800 flex  justify-between items-center border border-red-300 rounded-xl bg-red-50 mx-48"
                      role="alert">
                     <div class="flex items-center gap-2">
                         <img src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
@@ -358,7 +362,7 @@ HTML;
                     </div>
                     <div class="flex">
                         <button type="button"
-                                class="text-red-600 bg-transparent hover:bg-red-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
+                                class="text-red-600 transition-all duration-300 bg-transparent hover:bg-red-900 hover:text-white font-medium rounded-full px-3 py-1.5 text-center"
                                 data-dismiss-target="#alert-additional-content-3" aria-label="Close">
                             Dismiss
                         </button>
@@ -543,6 +547,18 @@ HTML;
         </h1>
 
         <?php
+            if($is_land_booked || $is_land_listed_for_sale){
+                echo '<p class="font-bold text-sm text-red-600 opacity-75">
+                    You cannot delete any document(s) because this land is either listed for sale or booked</p>';
+            }
+
+        ?>
+
+        <?php
+        $disabled = "";
+        if ($is_land_booked || $is_land_listed_for_sale) {
+            $disabled = "disabled";
+        }
         if ($registration_document != null) {
             echo <<< HTML
                 <div class="w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
@@ -567,8 +583,10 @@ HTML;
                         <button type="submit"
                         class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm
-                            ">
+                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled
+                            >
                             Delete
                         </button>
                         </form>
@@ -632,10 +650,11 @@ HTML;
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=government_permit" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="text-red-700 transition-all duration-300 
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm
-                            ">
+                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled>
                             Delete
                         </button>
                         </form>
@@ -700,8 +719,10 @@ HTML;
                         <button type="submit"
                         class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm
-                            ">
+                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled
+                            >
                             Delete
                         </button>
                         </form>
@@ -768,7 +789,10 @@ HTML;
                         class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
-                            ">
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled
+                            >
                             Delete
                         </button>
                         </form>
@@ -835,7 +859,10 @@ HTML;
                         class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
-                            ">
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled
+                            >
                             Delete
                         </button>
                         </form>
@@ -902,7 +929,10 @@ HTML;
                         class="text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
-                            ">
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none 
+                            " $disabled
+                            >
                             Delete
                         </button>
                         </form>
