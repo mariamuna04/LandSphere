@@ -111,7 +111,7 @@ if (isset($_POST["sign_out"])) {
 
         <!-- Dropdown menu -->
         <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow w-64">
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow-2xl w-64">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
@@ -142,7 +142,7 @@ if (isset($_POST["sign_out"])) {
                 </li>
                 
                 <li>
-                    <a href="../user-dashboard/payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../user-dashboard/payment-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Payment</span>
                     </a>
                 </li>

@@ -127,7 +127,7 @@ $user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_res
 
         <!-- Dropdown menu -->
 <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow w-64">
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow-2xl w-64">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
@@ -158,7 +158,7 @@ $user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_res
                 </li>
                 
                 <li>
-                    <a href="../payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../payment-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Payment</span>
                     </a>
                 </li>

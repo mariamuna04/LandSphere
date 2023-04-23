@@ -1,24 +1,5 @@
 <?php
-ini_set('display_errors', 0);
 session_start();
-
-include "../../utility/php/connection.php";
-$connection = connection();
-if (!$connection) {
-    header('Location: ../../static/error/HTTP521.html');
-    die();
-}
-
-if (isset($_POST["sign_out"])) {
-    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
-    $delete_token = mysqli_query($connection, $delete_token_sql);
-    session_destroy();
-    header("Location: ../../");
-}
-
-$sql = "SELECT * FROM ongoing_projects";
-$result = $connection->query($sql);
-
 
 ?>
 
@@ -27,38 +8,36 @@ $result = $connection->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../dist/output.css" rel="stylesheet">
-    <link rel="icon" href="../../resource/ico.svg">
-    <title>Contact Us</title>
-
+    <link href="../../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../../resource/ico.svg">
+    <title>LandSphere | Your Personal Land Manager</title
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-beige-dark flex gap-6 justify-between pl-24
+<nav id="index_navbar"
+     class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
-        <a href="../../index.php" class="flex select-none">
-            <img alt="" src="../../resource/icons/landSphere.svg">
+        <a href="../../../index.php" class="flex select-none">
+            <img alt="" src="../../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="../about-us"
+            <a href="../../about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="#"
-               class="transition-colors bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6
-                    text-green-700 font-medium">
-                Projects</a>
-            <a href="../on-sale"
+            <a href="../../projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
-                On Sale
-            </a>
-            <a href="../news"
+                Projects</a>
+            <a href="../../on-sale"
+               class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
+                On Sale</a>
+            <a href="../../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="../contact-us"
+            <a href="../../contact-us"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Contact</a>
         </div>
@@ -68,7 +47,7 @@ $result = $connection->query($sql);
             class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
                     flex gap-12 items-center">
         <span class="flex items-center gap-2">
-            <img src="../../resource/icons/search-navbar.svg" alt=" ">
+            <img src="../../../resource/icons/search-navbar.svg" alt=" ">
             <span class="text-xs font-medium text-gray-800">Search</span>
         </span>
         <span class="flex gap-1 select-none">
@@ -79,30 +58,30 @@ $result = $connection->query($sql);
     </button>
 
     <?php
-    if (isset($_SESSION["id"])) {
-        $full_name = $_SESSION["name"];
-        // count how many words in the name
-        $name_count = str_word_count($full_name);
-        // if the name has more than one word
-        if ($name_count > 1) {
-            $first_name = explode(" ", $_SESSION["name"])[0];
-            $last_name = explode(" ", $_SESSION["name"])[1];
-        } else {
-            $first_name = $_SESSION["name"];
-            $last_name = "";
-        }
-        $email = $_SESSION["email"];
 
-        $rnd = rand(0, 1000000);
+    $full_name = $_SESSION["name"];
+    // count how many words in the name
+    $name_count = str_word_count($full_name);
+    // if the name has more than one word
+    if ($name_count > 1) {
+        $first_name = explode(" ", $_SESSION["name"])[0];
+        $last_name = explode(" ", $_SESSION["name"])[1];
+    } else {
+        $first_name = $_SESSION["name"];
+        $last_name = "";
+    }
+    $email = $_SESSION["email"];
 
-        $loggedIn = <<<HTML
+    $rnd = rand(0, 1000000);
+    $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
                 class="flex items-center text-sm font-bold text-gray-900 rounded-full"
                 type="button">
+            <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 
-                    alt="user photo" height="32px" width="32px">
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                 alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
@@ -112,8 +91,7 @@ $result = $connection->query($sql);
             </svg>
         </button>
 
-        <!-- Dropdown menu -->
-        <div id="dropdownAvatarName"
+<div id="dropdownAvatarName"
              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow-2xl w-64">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
                 <div class="font-semibold">
@@ -126,32 +104,32 @@ $result = $connection->query($sql);
             <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
                 
-                                <li>
-                   <a href="../user-dashboard/owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                <li>
+                   <a href="../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Owned Lands</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a href="../user-dashboard/sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Sale List</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="../user-dashboard/successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Successor</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a href="../user-dashboard/payment-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
-                        <span class="font-bold pl-1">Payment</span>
+                    <a class="flex px-4 py-2 bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1 text-primary select-none">Payment</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a href="../user-dashboard/booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a  href="../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>
@@ -160,16 +138,16 @@ $result = $connection->query($sql);
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
                         <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
                     </a>
                 </li>
                 <hr>
                 <li>
-                    <a href="../user-dashboard/account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../resource/icons/dashboard/account.svg" alt="">
+                            <img src="../../../resource/icons/dashboard/account.svg" alt="">
                         </span>
                         <span>Manage your Account</span>
                     </a>
@@ -179,7 +157,7 @@ $result = $connection->query($sql);
                     <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
-                                <img src="../../resource/icons/dashboard/cancel.svg" alt="">
+                                <img src="../../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>
                             Sign out
                         </button>
@@ -189,36 +167,19 @@ $result = $connection->query($sql);
 
         </div>
 HTML;
-        echo $loggedIn;
-    } else {
-        $loggedOut =
-            <<<HTML
-        <div class="flex gap-6 items-center">
-        <button onclick="window.location.href = '../sign-in';"
-                class="hover:border-green-600 border border-beige-darker transition-colors pt-[0.60rem] pb-[0.60rem]
-                pl-6 pr-6 rounded-3xl align-middle">
-            Sign In
-        </button>
-        <button onclick="window.location.href = '../sign-up';"
-                class="bg-primary border border-green-600 hover:bg-green-800 transition-colors pt-[0.60rem]
-                pb-[0.60rem] pl-6 pr-6 rounded-3xl font-bold text-white">
-            Sign Up
-        </button>
-        </div>
-HTML;
-        echo $loggedOut;
-    }
+    echo $loggedIn;
     ?>
 
 
 </nav>
+
 <div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
     justify-center group-hover:shadow-lg transition-all duration-300"
          aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1">
             <li class="inline-flex items-center">
-                <a href="../../index.php"
+                <a href="../../../index.php"
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
@@ -238,44 +199,24 @@ HTML;
                     </svg>
                     <a href="#"
                        class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
-                        Our Projects
+                        Your Payments
                     </a>
                 </div>
             </li>
         </ol>
     </div>
-
 </div>
 
-<section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
-    <h1 class="pb-12 text-3xl font-medium">
-        Ongoing Projects. <span class="text-gray-500">An overview of how we are utilizing lands.</span>
-    </h1>
-    <div class="grid grid-cols-3 gap-12">
-        <?php
-        while ($row = $result->fetch_assoc()) {
-            $rnd2 = rand(1, 100000);
-            $project_display = <<<HTML
-<div class="group transform motion-safe:hover:scale-[1.02]
-transition-all">
-        <div style="background-image: url('https://api.dicebear.com/6.x/shapes/svg?seed=$rnd2')"
-                 class="group-hover:shadow-lg h-44 w-full snap-center bg-cover bg-center shadow-lg rounded-lg pb-4">
-        </div>
-        <div class="pt-4 text-center flex flex-col">
-            <h1 class="text-xl font-bold text-black group-hover:text-primary transition-all duration-300">{$row['title']}</h1>
-            <h1 class="text-sm font-light">{$row['address']}</h1>
-            <h1 class="text-xs font-semibold text-zinc-500">Complete date: {$row['finish_by']}</h1>
-        </div>
-</div>
-HTML;
-            echo $project_display;
-        }
-        ?>
+<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+    <main class="w-full flex-col p-4 flex gap-6">
+
+    </main>
+
 </section>
 
 
-<footer class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12
-drop-shadow-xl">
+<footer id="index_footer"
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12 drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">
@@ -283,13 +224,15 @@ drop-shadow-xl">
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Community </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Rules and Regulations </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Volunteers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Option </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300">Opt Out </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Community </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Rules and Regulations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Volunteers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Opt Out </a>
+
 
             </div>
+            <a></a>
         </div>
 
         <div class="flex flex-col">
@@ -297,10 +240,10 @@ drop-shadow-xl">
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
             </div>
         </div>
 
@@ -309,10 +252,10 @@ drop-shadow-xl">
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -321,27 +264,27 @@ drop-shadow-xl">
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-facebook.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-twitter.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-linkedin.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="../../static/error/HTTP501.html">
-                <img src="../../resource/icons/footer/icon-youtube.svg" alt="">
+            <a href="../../../static/error/HTTP501.html">
+                <img src="../../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
 
@@ -350,15 +293,17 @@ drop-shadow-xl">
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
-        </div>
-    </div>
-</footer>
 
+        </div>
+
+    </div>
+
+</footer>
 <!-- Search modal -->
 <div id="defaultModal"
      tabindex="-1"
@@ -367,12 +312,13 @@ drop-shadow-xl">
      md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
     backdrop-blur-md transition-all">
 
+
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <div class="flex justify-between p-4 border-b rounded-t items-center">
-                <img src="../../resource/icons/modal-search-icon.svg" alt="">
+                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
                        id="search_text-field"
@@ -398,11 +344,10 @@ drop-shadow-xl">
             </div>
         </div>
     </div>
+
 </div>
-
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <script>
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
@@ -417,6 +362,5 @@ drop-shadow-xl">
     if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
         document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
     }
-
 </script>
 </html>

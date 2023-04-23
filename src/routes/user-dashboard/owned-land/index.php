@@ -119,7 +119,7 @@ $owner_has_land = mysqli_num_rows($owner_has_land_result) > 0;
 
         <!-- Dropdown menu -->
 <div id="dropdownAvatarName"
-             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow w-64">
+             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl w-64 shadow-2xl">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
                 <div class="font-semibold">
                         $first_name <span class="text-green-600">$last_name</span>
@@ -150,7 +150,7 @@ $owner_has_land = mysqli_num_rows($owner_has_land_result) > 0;
                 </li>
                 
                 <li>
-                    <a href="../payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../payment-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Payment</span>
                     </a>
                 </li>
@@ -356,7 +356,7 @@ HTML;
                         
                         <div class="mt-2 flex justify-between items-center">
                             <p class="py-1">$land_details</p> 
-                            <p class="w-fit text-md font-medium px-2.5 rounded-2xl" $environment_status </p>
+                            <p class="w-fit text-md font-medium px-2.5 rounded-2xl $environment_status </p>
                         </div>
                         
                         <div class="mt-2 w-full  flex justify-around">       
