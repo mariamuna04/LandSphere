@@ -9,18 +9,22 @@ if (!$connection) {
 
 $land_id = $_GET["land_id"];
 $document = $_GET["document"];
-$token = '';
 
-if (!isset($_SESSION['token'])) {
+
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
     die();
 } else {
     $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
 }
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
 
-$get_token_sql = "SELECT * FROM login WHERE token = '$token';";
-$get_token = mysqli_query($connection, $get_token_sql);
 
-if ($get_token->num_rows > 0) {
+if ($token == $get_token['token']) {
     if (isset($_FILES["document_file"]) && $_FILES["document_file"]["error"] == UPLOAD_ERR_OK) {
         $file_size = $_FILES["document_file"]["size"];
         $file_tmp = $_FILES["document_file"]["tmp_name"];

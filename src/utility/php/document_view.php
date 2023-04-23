@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
@@ -10,26 +10,41 @@ if (!$connection) {
 $land_id = $_GET["land_id"];
 $document = $_GET["document"];
 
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+    die();
+} else {
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
+}
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
+
+
+if ($token == $get_token['token']) {
+
 // Retrieve the PDF file from the database
-$sql = "SELECT " . $document . " FROM land_docs WHERE land_id = " . $land_id . ";";
-$result = mysqli_query($connection, $sql);
+    $sql = "SELECT " . $document . " FROM land_docs WHERE land_id = " . $land_id . ";";
+    $result = mysqli_query($connection, $sql);
 
 // Check if the PDF file was found
-if (mysqli_num_rows($result) > 0) {
-    // Get the file name and contents
-    $row = mysqli_fetch_assoc($result);
-    $content = $row[$document];
+    if (mysqli_num_rows($result) > 0) {
+        // Get the file name and contents
+        $row = mysqli_fetch_assoc($result);
+        $content = $row[$document];
 
-    // Set the content type header to indicate that the response is a PDF file
-    header('Content-Type: application/pdf');
+        // Set the content type header to indicate that the response is a PDF file
+        header('Content-Type: application/pdf');
 
-    // Set the content disposition header to force the browser to download the file
-    header('Content-Disposition: inline; filename="' . $content . '"');
+        // Set the content disposition header to force the browser to download the file
+        header('Content-Disposition: inline; filename="' . $content . '"');
 
-    // Output the file contents to the browser
-    echo $content;
-} else echo "PDF file not found.";
-
+        // Output the file contents to the browser
+        echo $content;
+    } else echo "PDF file not found.";
+}
 
 // Close the database connection
 mysqli_close($connection);

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
@@ -10,10 +10,28 @@ if (!$connection) {
 $land_id = $_GET["land_id"];
 $document = $_GET["document"];
 
-$sql = "UPDATE land_docs SET " . $document . " = NULL WHERE land_id = " . $land_id . ";";
 
-if (mysqli_query($connection, $sql)) {
-    header("Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=" . $land_id . "&delete_success=1");
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+
+    die();
 } else {
-    echo "Error deleting file: " . mysqli_error($connection);
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
 }
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
+
+
+if ($token == $get_token['token']) {
+    $sql = "UPDATE land_docs SET " . $document . " = NULL WHERE land_id = " . $land_id . ";";
+    if (mysqli_query($connection, $sql)) {
+        header("Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=" . $land_id . "&delete_success=1");
+    } else {
+        echo "Error deleting file: " . mysqli_error($connection);
+    }
+}
+
+mysqli_close($connection);

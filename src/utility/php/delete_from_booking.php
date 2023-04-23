@@ -14,12 +14,17 @@ if (!$connection) {
     die();
 }
 
-$token = $_SESSION['token']; // Session
-$user_id = $_SESSION['id'];
 $land_id = $_GET['land_id'];
-
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+    die();
+} else {
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
+}
 $get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
-$get_token_result = mysqli_query($connection, $get_token_sql); // db
+$get_token_result = mysqli_query($connection, $get_token_sql);
 $get_token = mysqli_fetch_assoc($get_token_result);
 
 

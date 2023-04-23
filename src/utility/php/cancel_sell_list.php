@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include "../../utility/php/connection.php";
 $connection = connection();
@@ -9,10 +10,26 @@ if (!$connection) {
 
 $land_id = $_GET["land_id"];
 
-$sql = "DELETE FROM sell_list WHERE land_id = " . $land_id . ";";
-
-if (mysqli_query($connection, $sql)) {
-    header("Location: ../../routes/user-dashboard/sale-list/");
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+    die();
 } else {
-    echo "Error" . mysqli_error($connection);
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
 }
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
+
+
+if ($token == $get_token['token']) {
+    $sql = "DELETE FROM sell_list WHERE land_id = " . $land_id . ";";
+    if (mysqli_query($connection, $sql)) {
+        header("Location: ../../routes/user-dashboard/sale-list/");
+    } else {
+        echo "Error" . mysqli_error($connection);
+    }
+}
+
+mysqli_close($connection);
