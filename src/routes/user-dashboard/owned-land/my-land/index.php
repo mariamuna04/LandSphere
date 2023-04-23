@@ -236,6 +236,38 @@ $is_land_booked = mysqli_num_rows($is_land_booked_result) > 0;
             </div>
             <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                
+                <li>
+                   <a href="../../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Owned Lands</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../../sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Sale List</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../../successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Successor</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../../payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Payment</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../../booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Bookings</span>
+                    </a>
+                </li>
+                <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
+                
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
@@ -571,25 +603,30 @@ HTML;
                     
                     <div class="flex gap-2">
                      <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=registration_paper" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
-                      </form>
-                        
+                     </form>
+                       
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=registration_paper" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
+                            bg-red-100 font-semibold text-sm
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none flex gap-1 items-center
                             " $disabled
                             >
-                            Delete
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
-                        </form>
+                     </form>
                     </div>
                 </div>
             HTML;
@@ -617,11 +654,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
                 </div>
@@ -641,21 +680,27 @@ HTML;
                     
                     <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=government_permit" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=government_permit" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300 
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
-                            " $disabled>
-                            Delete
+                            bg-red-100 font-semibold text-sm
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none flex gap-1 items-center
+                            " $disabled
+                            >
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
                         </form>
                     </div>
@@ -684,11 +729,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300 
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
                 </div>
@@ -708,22 +755,27 @@ HTML;
                     
                     <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=agreement" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=agreement" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-red-100 font-semibold text-sm disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
+                            bg-red-100 font-semibold text-sm
+                            disabled:opacity-75 disabled:cursor-not-allowed
+                            disabled:hover:shadow-none flex gap-1 items-center
                             " $disabled
                             >
-                            Delete
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
                         </form>
                     </div>
@@ -753,11 +805,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
                 </div>
@@ -777,23 +831,27 @@ HTML;
                     
                     <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=sale_deed" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=sale_deed" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
+                            disabled:hover:shadow-none flex gap-1 items-center
                             " $disabled
                             >
-                            Delete
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
                         </form>
                     </div>
@@ -823,11 +881,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
                 </div>
@@ -847,23 +907,27 @@ HTML;
                     
                     <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=tax_pay_receipt" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=tax_pay_receipt" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
+                            disabled:hover:shadow-none flex gap-1 items-center
                             " $disabled
                             >
-                            Delete
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
                         </form>
                     </div>
@@ -893,11 +957,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
 
@@ -917,23 +983,27 @@ HTML;
                     
                     <div class="flex gap-2">
                         <form action="../../../../utility/php/document_view.php?land_id=$land_id&document=map_property" method="post">
-                        <button class="text-green-700 transition-all duration-300
+                        <button class="group text-green-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
-                            bg-green-100 font-semibold text-sm
+                            bg-green-100 font-semibold text-sm flex gap-2 items-center
                             ">
-                            View
+                            <span class="translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">View</span>
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5 " src="../../../../resource/icons/dashboard/view.svg" alt="">
                         </button>
                       </form>
                         <form action="../../../../utility/php/document_delete.php?land_id=$land_id&document=map_property" method="post">
                         <button type="submit"
-                        class="text-red-700 transition-all duration-300
+                        class="group text-red-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-8
                             bg-red-100 font-semibold text-sm
                             disabled:opacity-75 disabled:cursor-not-allowed
-                            disabled:hover:shadow-none 
+                            disabled:hover:shadow-none flex gap-1 items-center
                             " $disabled
                             >
-                            Delete
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/file_delete.svg" alt="">
+                            <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Delete</span>
                         </button>
                         </form>
                     </div>
@@ -963,11 +1033,13 @@ HTML;
                                   hover:file:bg-violet-100 hover:drop-shadow-xl transition-all duration-300
                                 "/>
                         <button type="submit"
-                        class="text-violet-700 transition-all duration-300
+                        class="group text-violet-700 transition-all duration-300
                             rounded-full align-middle hover:shadow-lg py-2 px-4
                             bg-violet-100 font-semibold text-sm
-                            hover:bg-violet-100">
-                            Add Document
+                            hover:bg-violet-100  flex gap-1 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-4 h-4 " src="../../../../resource/icons/dashboard/upload_attachment.svg" alt="">
+                            <span class="-translate-x-[0.6rem] group-hover:translate-x-0 transition-all duration-300">Add Attachment</span>
                         </button>
                     </form>
                 </div>

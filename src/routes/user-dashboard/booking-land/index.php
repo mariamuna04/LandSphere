@@ -128,6 +128,38 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
             </div>
             <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                
+                <li>
+                   <a href="../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Owned Lands</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Sale List</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Successor</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Payment</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="flex px-4 py-2 bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1 text-primary select-none">Bookings</span>
+                    </a>
+                </li>
+                <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
+                
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
@@ -239,8 +271,8 @@ HTML;
                 $land_rcv = $lands["relative_cost_value"];
 
                 echo <<< HTML
-                    <a href="#" class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
-                                transition-all duration-300 transform motion-safe:hover:scale-[1.02]">
+                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                                transition-all duration-300">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
                                 <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
@@ -253,10 +285,27 @@ HTML;
                             <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
                             <p class="font-bold text-xl">$land_area sqft</p> 
                         </div>
-                       
-                    </a>
                     HTML;
 
+                echo <<< HTML
+                    <div class="flex gap-4 justify-between mt-4 items-center">
+                        <form method="post" action="payment.php?land_id=$land_id">
+                            <button class=" group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
+                                <span class="text-white translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Proceed to Payment</span>
+                                <img class="invisible  opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300" 
+                                src="../../../resource/icons/dashboard/proceed_to_payment.svg" alt="">
+                            </button>
+                        </form>  
+                        <form action="delete.php?land_id=$land_id" method="post">
+                            <button class="group text-red-600 font-bold py-2 px-4 rounded-full border border-red-300 flex gap-1 hover:bg-red-100 transition-all duration-300">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300" src="../../../resource/icons/dashboard/file_delete.svg" alt="">
+                                <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Remove From Bookings</span>
+                            </button>
+                        </form> 
+                    </div>
+                HTML;
+                echo '</div>';
                 $lands = mysqli_fetch_assoc($get_lands_that_is_booked_table);
             }
         }

@@ -134,6 +134,39 @@ $lands_exists = mysqli_num_rows($get_lands_result) > 0;
             </div>
             <ul class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                
+                 <li>
+                   <a href="../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Owned Lands</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Sale List</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="flex px-4 py-2 bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1 text-primary select-none">Successor</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../payment" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Payment</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="../booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Bookings</span>
+                    </a>
+                </li>
+                <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
+                
+                
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
