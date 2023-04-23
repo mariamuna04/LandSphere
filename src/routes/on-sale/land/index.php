@@ -107,7 +107,6 @@ $owner_name = mysqli_fetch_array($get_owner_name_sql_result);
 $owner_name = $owner_name["full_name"];
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -183,6 +182,8 @@ $owner_name = $owner_name["full_name"];
         $email = $_SESSION["email"];
 
         if (isset($_POST["sign_out"])) {
+            $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+            $delete_token = mysqli_query($connection, $delete_token_sql);
             session_destroy();
             header("Location: ../../../");
         }
@@ -377,7 +378,7 @@ HTML;
                         <?php echo $land_details ?>
                     </p>
 
-                    <div class="flex gap-4">
+                    <div class="flex gap-4 items-baseline">
                         <form
                             action="../../../utility/php/land_book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>"
                             method="post">
@@ -397,8 +398,8 @@ HTML;
                                        </div>                                                          
                                     HTML;
 
-                                } else {
-                                    echo <<< HTML
+                            } else {
+                                echo <<< HTML
                                         <button type="submit"
                                             class="hover:shadow-form bg-green-700
                                             py-3 px-8 text-center text-base transition-all duration-300
@@ -408,7 +409,7 @@ HTML;
                                             Book Land
                                         </button>  
                                     HTML;
-                                }
+                            }
 
                             ?>
 
@@ -529,14 +530,14 @@ HTML;
         </div>
     </main>
 
-     <main id="information" class="mt-16 flex flex-col gap-4">
+    <main id="information" class="mt-16 flex flex-col gap-4">
         <h1 class="pb-6 text-3xl font-medium">
             Legal Documents. <span class="text-gray-500"> View authentic documents reviewed by officials</span>
         </h1>
         <div class="grid grid-cols-3 gap-4">
             <?php
-        if ($registration_document != null) {
-            echo <<< HTML
+            if ($registration_document != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -548,8 +549,8 @@ HTML;
                     
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                     ">
                     <div class="flex gap-4">
@@ -562,11 +563,11 @@ HTML;
                     
                 </button>
             HTML;
-        }
+            }
 
 
-        if ($government_permit != null) {
-            echo <<< HTML
+            if ($government_permit != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -578,8 +579,8 @@ HTML;
                     
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                 ">
                     <div class="flex gap-4">
@@ -592,11 +593,11 @@ HTML;
                     
                 </button>
             HTML;
-        }
+            }
 
 
-        if ($agreement_document != null) {
-            echo <<< HTML
+            if ($agreement_document != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -608,8 +609,8 @@ HTML;
                     
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                 ">
                     <div class="flex gap-4">
@@ -622,11 +623,11 @@ HTML;
                     
                 </button>
             HTML;
-        }
+            }
 
 
-        if ($sale_deed != null) {
-            echo <<< HTML
+            if ($sale_deed != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -638,8 +639,8 @@ HTML;
                     
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                 ">
                     <div class="flex gap-4">
@@ -652,11 +653,11 @@ HTML;
                     
                 </button>
             HTML;
-        }
+            }
 
 
-        if ($tax_payment != null) {
-            echo <<< HTML
+            if ($tax_payment != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -668,8 +669,8 @@ HTML;
                     
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                 ">
                     <div class="flex gap-4">
@@ -682,10 +683,10 @@ HTML;
                     
                 </button>
             HTML;
-        }
+            }
 
-        if ($map_property != null) {
-            echo <<< HTML
+            if ($map_property != null) {
+                echo <<< HTML
                 <button class="hover:shadow-lg motion-safe:hover:scale-[1.02] transition-all duration-300 w-full bg-green-200 items-center p-6 flex justify-between rounded-xl">
                     <div class="flex gap-4">
                         <img src="../../../resource/icons/dashboard/docs_available.svg" alt="">
@@ -697,8 +698,8 @@ HTML;
                    
                 </button>
             HTML;
-        } else {
-            echo <<< HTML
+            } else {
+                echo <<< HTML
                 <button disabled class="disabled:opacity-75 w-full bg-red-200 items-center p-6 flex justify-between rounded-xl
                 ">
                     <div class="flex gap-4">
@@ -709,11 +710,10 @@ HTML;
                     </div>
                 </button>
             HTML;
-        }
+            }
             mysqli_close($connection);
-        ?>
+            ?>
         </div>
-
 
 
     </main>

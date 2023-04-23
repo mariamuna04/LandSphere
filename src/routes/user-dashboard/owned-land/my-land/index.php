@@ -31,6 +31,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../../../");
 }
@@ -579,10 +581,10 @@ HTML;
         </h1>
 
         <?php
-            if($is_land_booked || $is_land_listed_for_sale){
-                echo '<p class="font-bold text-sm text-red-600 opacity-75">
+        if ($is_land_booked || $is_land_listed_for_sale) {
+            echo '<p class="font-bold text-sm text-red-600 opacity-75">
                     You cannot delete any document(s) because this land is either listed for sale or booked</p>';
-            }
+        }
 
         ?>
 

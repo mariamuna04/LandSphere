@@ -33,11 +33,6 @@ $previous_birth_certificate = $row['birth_certificate_number'];
 $previous_passport_number = $row['passport_number'];
 $yearly_income = $row['yearly_income'];
 
-if (isset($_POST["sign_out"])) {
-    session_destroy();
-    header("Location: ../../../");
-}
-
 $password_modify = false;
 $new_password_match = false;
 $auth_error = false;

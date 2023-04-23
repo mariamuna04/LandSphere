@@ -16,6 +16,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../../");
 }
@@ -236,7 +238,7 @@ HTML;
 </div>
 
 <section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <p class="text-3xl pb-4 font-medium leading-relaxed">
+    <p class="text-3xl font-medium ">
         Manage your <span class="text-primary">lands.</span>
         <span class="text-gray-500">
             Everything's at your fingertips.

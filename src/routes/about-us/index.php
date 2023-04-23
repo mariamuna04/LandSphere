@@ -10,6 +10,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../");
 }
@@ -85,11 +87,6 @@ if (isset($_POST["sign_out"])) {
             $last_name = "";
         }
         $email = $_SESSION["email"];
-
-        if (isset($_POST["sign_out_action"])) {
-            session_destroy();
-            header("Location: ../../");
-        }
 
         $rnd = rand(0, 1000000);
 

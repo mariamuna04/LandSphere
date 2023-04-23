@@ -16,6 +16,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../../");
 }
@@ -308,7 +310,7 @@ HTML;
                                 src="../../../resource/icons/dashboard/proceed_to_payment.svg" alt="">
                             </button>
                         </form>  
-                        <form action="delete.php?land_id=$land_id" method="post">
+                        <form action="../../../utility/php/delete_from_booking.php?land_id=$land_id" method="post">
                             <button class="group text-red-600 font-bold py-2 px-4 rounded-full border border-red-300 flex gap-1 hover:bg-red-100 transition-all duration-300">
                             <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
                             duration-300" src="../../../resource/icons/dashboard/file_delete.svg" alt="">

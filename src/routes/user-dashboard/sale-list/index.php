@@ -16,6 +16,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../../");
 }
@@ -244,7 +246,7 @@ HTML;
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
     <p class="text-3xl pb-2 font-medium">
-        Your Sale List
+        Your <span class="font-bold text-primary">Sale List</span>
     </p>
     <main class="w-full rounded-3xl p-4 flex justify-between">
         <section class="w-full flex-col flex gap-6">
@@ -313,7 +315,7 @@ HTML;
                     }
 
                     echo <<< HTML
-                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                    <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300 transform">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
@@ -368,12 +370,11 @@ HTML;
                         echo <<< HTML
                            <div class="text-lg text-gray-400 font-black">Hang tight, No one booked yet...</div>
                            <form method="post" action="../../../utility/php/cancel_sell_list.php?land_id=$land_id">
-                            <button type="submit"
-                                class="text-red-700 transition-all duration-300
-                                rounded-full align-middle hover:shadow-lg py-2 px-8
-                                bg-red-100 font-semibold text-sm
-                                ">
-                            Remove
+                            <button class="group text-red-600 text-sm font-bold py-2 px-4 rounded-full border border-red-300 flex gap-1 hover:bg-red-100 
+                            transition-all duration-300 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5" src="../../../resource/icons/dashboard/file_delete.svg" alt="">
+                                <span class="-translate-x-[0.55rem] translate-y-[0.1rem] group-hover:translate-x-0 transition-all duration-300">Remove From Sell List</span>
                             </button>
                             </form>
                         HTML;
@@ -396,9 +397,17 @@ HTML;
         </section>
     </main>
 
-    <p class="text-3xl pb-2 pt-8 font-medium">
-        Lands that you have not listed yet ...
-    </p>
+    <?php
+    if ($user_has_lands_that_not_listed) {
+        echo <<< HTML
+                <p class="text-3xl pb-2 pt-8 font-medium">
+                    Lands that you have <span class="font-bold text-primary">not listed </span> yet ...
+                </p>
+            HTML;
+
+    }
+    ?>
+
 
     <main class="w-full flex-col p-4 flex gap-6">
         <?php
@@ -425,7 +434,7 @@ HTML;
                 }
 
                 echo <<< HTML
-                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                    <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300 ">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
@@ -439,6 +448,15 @@ HTML;
                             <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
                             <p class="font-bold text-xl">$land_area sqft</p> 
                         </div>
+                        
+                        <form class="mt-3 flex justify-end" method="post" action="../../../utility/php/list_for_sale.php?land_id=$land_id">
+                            <button class="group text-green-600 text-sm font-bold py-2 px-4 rounded-full border border-green-300 flex gap-1 hover:bg-green-100 
+                            transition-all duration-300 items-center">
+                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                            duration-300 w-5 h-5" src="../../../resource/icons/dashboard/add.svg" alt="">
+                                <span class="-translate-x-[0.65rem]  group-hover:translate-x-0 transition-all duration-300">Add to Sell List</span>
+                            </button>
+                         </form>
                     </div>
                     HTML;
                 $lands = mysqli_fetch_assoc($get_lands_that_not_listed_result);

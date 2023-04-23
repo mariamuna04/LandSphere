@@ -9,6 +9,8 @@ if (!$connection) {
 }
 
 if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
     session_destroy();
     header("Location: ../../");
 }
@@ -87,10 +89,6 @@ if (isset($_POST["sign_out"])) {
         }
         $email = $_SESSION["email"];
 
-        if (isset($_POST["sign_out_action"])) {
-            session_destroy();
-            header("Location: ../../");
-        }
         $rnd = rand(0, 1000000);
 
         $loggedIn = <<<HTML
@@ -176,7 +174,7 @@ if (isset($_POST["sign_out"])) {
                 <hr>
                 <li>
                     <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
-                        <button name="sign_out_action" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
+                        <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
                                 <img src="../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>

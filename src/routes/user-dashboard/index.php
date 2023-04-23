@@ -5,17 +5,20 @@ if (!isset($_SESSION["id"])) {
     header("Location: ../sign-in");
 }
 
-if (isset($_POST["sign_out"])) {
-    session_destroy();
-    header("Location: ../../");
-}
-
 include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../static/error/HTTP521.html');
     die();
 }
+
+if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    session_destroy();
+    header("Location: ../../");
+}
+
 
 $query = "SELECT * FROM owns 
           JOIN land l on l.land_id = owns.land_id 
