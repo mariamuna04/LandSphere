@@ -374,7 +374,7 @@ HTML;
                             transition-all duration-300 items-center">
                             <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
                             duration-300 w-5 h-5" src="../../../resource/icons/dashboard/file_delete.svg" alt="">
-                                <span class="-translate-x-[0.55rem] translate-y-[0.1rem] group-hover:translate-x-0 transition-all duration-300">Remove From Sell List</span>
+                                <span class="-translate-x-[0.55rem]  group-hover:translate-x-0 transition-all duration-300">Remove From Sell List</span>
                             </button>
                             </form>
                         HTML;

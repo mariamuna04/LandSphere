@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 0);
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -17,76 +16,105 @@ if (!$connection) {
     die();
 }
 
+// Get user Data
+$fetch_existing_user_data_sql = "SELECT * FROM user WHERE nid = " . $_SESSION['id'] . ";";
+$fetch_existing_data_result = mysqli_query($connection, $fetch_existing_user_data_sql);
+$fetch_existing_data_row = mysqli_fetch_assoc($fetch_existing_data_result);
 
-$sql = "SELECT * FROM user WHERE nid =" . $_SESSION['id'] . ";";
-$result = mysqli_query($connection, $sql);
-$row = mysqli_fetch_assoc($result);
+// Get User Password
+$fetch_existing_password_sql = "SELECT * FROM login WHERE user_nid = " . $_SESSION['id'] . ";";
+$fetch_existing_password_result = mysqli_query($connection, $fetch_existing_password_sql);
+$fetch_existing_password_row = mysqli_fetch_assoc($fetch_existing_password_result);
 
-$nid = $_SESSION['id'];
-$previous_full_name = $row['full_name'];
-$previous_email = $row['email'];
-$previous_phone_number = $row['phone_number'];
-$previous_date_of_birth = $row['date_of_birth'];
-$previous_address = $row['address'];
-$previous_occupation = $row['occupation'];
-$previous_birth_certificate = $row['birth_certificate_number'];
-$previous_passport_number = $row['passport_number'];
-$yearly_income = $row['yearly_income'];
+// Get User Payment Method
+$fetch_existing_payment_sql = "SELECT * FROM payment_method WHERE user_id = " . $_SESSION['id'] . ";";
+$fetch_existing_payment_result = mysqli_query($connection, $fetch_existing_payment_sql);
+$fetch_existing_payment_row = mysqli_fetch_assoc($fetch_existing_payment_result);
+$previous_card_exist = mysqli_num_rows($fetch_existing_payment_result) > 0;
 
+// Authentication Variable
 $password_modify = false;
-$new_password_match = false;
-$auth_error = false;
+$password_match = false;
+$current_password_match = false;
+$authentication = true;
 
 if (isset($_POST["submit"])) {
+    // User Data Information
+    $new_name = $_POST['full_name'];
+    if (empty($new_name)) $new_name = $fetch_existing_data_row['full_name'];
+
+    $new_email = $_POST['email'];
+    if (empty($new_email)) $new_email = $fetch_existing_data_row['email'];
+
+    $new_phone_number = $_POST['phone_number'];
+    if (empty($new_phone_number)) $new_phone_number = $fetch_existing_data_row['phone_number'];
+
+    $new_address = $_POST['address'];
+    if (empty($new_address)) $new_address = $fetch_existing_data_row['address'];
+
+    $new_occupation = $_POST['occupation'];
+    if (empty($new_occupation)) $new_occupation = $fetch_existing_data_row['occupation'];
+
+    $new_yearly_income = $_POST['yearly_income'];
+    if (empty($new_yearly_income)) $new_yearly_income = $fetch_existing_data_row['yearly_income'];
+
+    // User Password Information
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
+    if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) $password_modify = true;
+    if ($password_modify) $password_match = $new_password == $confirm_password;
 
-    if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
-        $password_modify = true;
-    }
-
+    // User Card Information
+    $card_number = $_POST['card_number'];
+    $card_expire_date = $_POST['expiry_date'];
+    $card_cvc = $_POST['cvc'];
+    $card_name = $_POST['name_on_card'];
+    $card_billing_address = $_POST['billing_address'];
 
     $current_password = $_POST['current_password'];
-    $auth_sql = "SELECT * FROM user JOIN login l on user.nid = l.user_nid WHERE user_nid = '$nid';";
-    $auth_result = mysqli_query($connection, $auth_sql);
-    $auth_row = mysqli_fetch_assoc($auth_result);
-    $auth = $current_password == $auth_row['password'];
+    $current_password_match = $current_password == $fetch_existing_password_row['password'];
 
-    if ($password_modify) {
-        $new_password_match = $new_password == $confirm_password;
-        $auth = $auth && $new_password_match;
-    }
+    // Final Authentication check
+    // If password is modified, then check if the new password matches and the current password matches
+    // If password is not modified, then check if the current password matches
+    $authentication = $password_modify ? $password_match && $current_password_match : $current_password_match;
 
-    if ($auth) {
-        $full_name = $_POST['full_name'];
-        $email = $_POST['email'];
-        $phone_number = $_POST['phone_number'];
-        $date_of_birth = $_POST['date_of_birth'];
-        $address = $_POST['address'];
-        $occupation = $_POST['occupation'];
-        $birth_certificate = $_POST['birth_certificate'];
-        $passport_number = $_POST['passport_number'];
-        $yearly_income = $_POST['yearly_income'];
 
-        $sql = "UPDATE user SET full_name = '$full_name', email = '$email', phone_number = '$phone_number', address = '$address', occupation = '$occupation', yearly_income = '$yearly_income' WHERE nid = '$nid';";
-        $result = mysqli_query($connection, $sql);
+    if ($authentication) {
+        $update_new_user_data_sql = "UPDATE user 
+            SET full_name = '$new_name', email = '$new_email', phone_number = '$new_phone_number', address = 
+                '$new_address', occupation = '$new_occupation', yearly_income = '$new_yearly_income' 
+            WHERE nid = " . $_SESSION['id'] . ";";
+        $update_new_user_data_result = mysqli_query($connection, $update_new_user_data_sql);
 
         if ($password_modify) {
-            $sql = "UPDATE login SET password = '$new_password' WHERE user_nid = '$nid';";
-            $result = mysqli_query($connection, $sql);
+            $update_new_password_sql = "UPDATE login SET password = '$new_password' WHERE user_nid = " . $_SESSION['id'] . ";";
+            $update_new_password_result = mysqli_query($connection, $update_new_password_sql);
         }
 
-        if ($result) {
-            $_SESSION["name"] = $full_name;
-            $_SESSION["email"] = $email;
-            header("Location: ../");
+        if ($previous_card_exist) {
+            if (empty($card_number)) $card_number = $fetch_existing_payment_row['card_number'];
+            if (empty($card_expire_date)) $card_expire_date = $fetch_existing_payment_row['expire_date'];
+            if (empty($card_cvc)) $card_cvc = $fetch_existing_payment_row['cvc'];
+            if (empty($card_name)) $card_name = $fetch_existing_payment_row['name_on_card'];
+            if (empty($card_billing_address)) $card_billing_address = $fetch_existing_payment_row['billing_address'];
+
+            $update_new_payment_sql = "UPDATE payment_method 
+                SET card_number = '$card_number', expire_date = '$card_expire_date', cvc = '$card_cvc', 
+                    name_on_card = '$card_name', billing_address = '$card_billing_address' 
+                WHERE user_id = " . $_SESSION['id'] . ";";
+            $update_new_payment_result = mysqli_query($connection, $update_new_payment_sql);
         } else {
-            header("Location: ../../../../static/error/HTTP521.html");
-        }
-    } else {
-        $auth_error = true;
+            if (!empty($card_number) || !empty($card_expire_date) || !empty($card_cvc) || !empty($card_name) || !empty($card_billing_address)) {
+                $insert_new_payment_sql = "INSERT INTO payment_method (user_id, card_number, expire_date, cvc, name_on_card, billing_address) 
+                VALUES (" . $_SESSION['id'] . ", '$card_number', '$card_expire_date', '$card_cvc', '$card_name', '$card_billing_address');";
+                $insert_new_payment_result = mysqli_query($connection, $insert_new_payment_sql);
+            }
 
+        }
+        header("Location: ../");
     }
+
 
 }
 
@@ -164,10 +192,10 @@ if (isset($_POST["submit"])) {
                  alt='user photo'>"
             ?>
             <p class="text-xl mt-6 font-bold">
-                <?php echo $previous_full_name; ?>
+                <?php echo $fetch_existing_data_row['full_name']; ?>
             </p>
             <p class="text-lg text-gray-400 font-medium">
-                <?php echo $previous_email; ?>
+                <?php echo $fetch_existing_data_row['email']; ?>
             </p>
 
             <div class="mt-6 flex flex-col g-4 items-center w-fit">
@@ -195,7 +223,7 @@ if (isset($_POST["submit"])) {
                        name="nid" disabled
                        id="nid"
                     <?php
-                    echo "value='" . $nid . "'";
+                    echo "value='" . $fetch_existing_data_row['nid'] . "'";
                     ?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -207,7 +235,7 @@ if (isset($_POST["submit"])) {
                        name="full_name"
                        id="full_name"
                     <?php
-                    echo "value='" . $previous_full_name . "'";
+                    echo "value='" . $fetch_existing_data_row['full_name'] . "'";
                     ?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -219,7 +247,7 @@ if (isset($_POST["submit"])) {
                        name="email"
                        id="email"
                     <?php
-                    echo "value='" . $previous_email . "'";
+                    echo "value='" . $fetch_existing_data_row['email'] . "'";
                     ?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -234,7 +262,7 @@ if (isset($_POST["submit"])) {
                                name="phone_number"
                                id="phone_number"
                             <?php
-                            echo "value='" . $previous_phone_number . "'";
+                            echo "value='" . $fetch_existing_data_row['phone_number'] . "'";
                             ?>
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -248,7 +276,7 @@ if (isset($_POST["submit"])) {
                                name="birthday"
                                id="birthday"
                             <?php
-                            echo "value='" . $previous_date_of_birth . "'";
+                            echo "value='" . $fetch_existing_data_row['date_of_birth'] . "'";
                             ?>
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -263,7 +291,7 @@ if (isset($_POST["submit"])) {
                        name="address"
                        id="address"
                     <?php
-                    echo "value='" . $previous_address . "'";
+                    echo "value='" . $fetch_existing_data_row['address'] . "'";
                     ?>
                        class="-mt-2 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -277,7 +305,7 @@ if (isset($_POST["submit"])) {
                                name="occupation"
                                id="occupation"
                             <?php
-                            echo "value='" . $previous_occupation . "'";
+                            echo "value='" . $fetch_existing_data_row['occupation'] . "'";
                             ?>
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -291,7 +319,7 @@ if (isset($_POST["submit"])) {
                                name="yearly_income"
                                id="yearly_income"
                             <?php
-                            echo "value='" . $yearly_income . "'";
+                            echo "value='" . $fetch_existing_data_row['yearly_income'] . "'";
                             ?>
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -327,12 +355,7 @@ if (isset($_POST["submit"])) {
                        id="new_password"
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center
-                    <?php
-                       if ($new_password_match) {
-                           echo 'bg-red-100 border-2 border-red-500';
-                       }
-                       ?>"
+                               outline-none focus:shadow-md font-mono text-center"
                 />
             </div>
 
@@ -343,15 +366,90 @@ if (isset($_POST["submit"])) {
                        id="confirm_password"
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center
-                    <?php
-                       if ($new_password_match) {
-                           echo 'bg-red-100 border-2 border-red-500';
-                       }
-                       ?>"
+                               outline-none focus:shadow-md font-mono text-center"
                 />
             </div>
         </div>
+
+        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
+
+
+        <div class="flex flex-col place-items-center w-full">
+            <img class="mb-4" src="../../../resource/icons/dashboard/card.svg" alt="">
+            <h1 class="text-md text-gray-700 font-medium">
+                Add a Payment Method
+            </h1>
+            <span class="font-light text-gray-600">
+                SECURED BY
+            </span>
+
+            <h1 class="text-xl font-bold font-mono text-primary">
+                SSL Encryption</h1>
+            </h1>
+
+        </div>
+        <div class="w-full flex flex-col gap-4">
+            <div class="flex-col">
+                <label for="card_number" class="text-sm pl-2">Card Number</label>
+                <input type="text"
+                       name="card_number"
+                       id="card_number" placeholder="XXXX-XXXX-XXXX-XXXX"
+                       class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center  tracking-widest"
+                />
+            </div>
+
+            <div class="flex gap-4 items-center">
+                <div class="flex-col">
+                    <label for="expiry_date" class="text-sm pl-2">Expiry Date</label>
+                    <input type="date"
+                           name="expiry_date"
+                           id="expiry_date"
+                           class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+                    />
+                </div>
+
+                <div class="flex-col">
+                    <label for="cvc" class="text-sm pl-2">CVC</label>
+                    <input type="text"
+                           name="cvc"
+                           id="cvc" placeholder="XXX"
+                           class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+                    />
+                </div>
+
+            </div>
+
+            <div class="flex-col">
+                <label for="name_on_card" class="text-sm pl-2">Name On Card</label>
+                <input type="text"
+                       name="name_on_card"
+                       id="name_on_card" placeholder="Name on Card"
+                    <?php echo "value='" . $fetch_existing_payment_row['name_on_card'] . "'" ?>
+                       class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono  tracking-widest"
+                />
+            </div>
+
+            <div class="flex-col">
+                <label for="billing_address" class="text-sm pl-2">Billing Address</label>
+                <input type="text"
+                       name="billing_address"
+                    <?php echo "value='" . $fetch_existing_payment_row['billing_address'] . "'" ?>
+                       id="billing_address" placeholder="Billing Address"
+                       class="mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono  tracking-widest"
+                />
+            </div>
+        </div>
+
 
         <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
         <div class="col-span-2 flex w-full justify-center gap-12">
@@ -361,12 +459,7 @@ if (isset($_POST["submit"])) {
                    placeholder="Enter Password to Save Changes"
                    class="mt-1 rounded-xl
                                w-96 py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center
-                   <?php
-                   if ($auth_error) {
-                       echo 'bg-red-100 border-2 border-red-500';
-                   }
-                   ?>"
+                               outline-none focus:shadow-md font-mono text-center"
             />
             <label for="current_password"></label>
 

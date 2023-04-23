@@ -28,6 +28,10 @@ $get_lands_that_is_booked_table = mysqli_query($connection, $get_lands_that_is_b
 $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
 
 
+$get_payment_information_sql = "SELECT * FROM payment_method WHERE user_id = " . $_SESSION["id"] . ";";
+$get_payment_information_table = mysqli_query($connection, $get_payment_information_sql);
+$payment_information = mysqli_num_rows($get_payment_information_table) > 0;
+
 ?>
 
 
@@ -299,27 +303,40 @@ HTML;
                             <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
                             <p class="font-bold text-xl">$land_area sqft</p> 
                         </div>
+
+                        <div class="flex gap-4 justify-between mt-4 items-center">
                     HTML;
 
+                if($payment_information){
+                    echo <<< HTML
+                            <form method="post" action="payment.php?land_id=$land_id">
+                                <button class="group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
+                                    <span class="text-white translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Proceed to Payment</span>
+                                    <img class="invisible  opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300" 
+                                    src="../../../resource/icons/dashboard/proceed_to_payment.svg" alt="">
+                                </button>
+                            </form>
+                    HTML;
+                } else {
+                    echo <<< HTML
+                            <div>
+                                <p class="text-red-600 font-extrabold text-sm opacity-75">Payment Method is not provided</p>
+                                <p class="font-extrabold text-gray-600">Head to <a class="text-primary hover:underline" href="../account-settings">Account Settings</a> to add a payment method</p>
+                            </div> 
+                    HTML;
+                }
+
                 echo <<< HTML
-                    <div class="flex gap-4 justify-between mt-4 items-center">
-                        <form method="post" action="payment.php?land_id=$land_id">
-                            <button class="group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
-                                <span class="text-white translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Proceed to Payment</span>
-                                <img class="invisible  opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300" 
-                                src="../../../resource/icons/dashboard/proceed_to_payment.svg" alt="">
-                            </button>
-                        </form>  
-                        <form action="../../../utility/php/delete_from_booking.php?land_id=$land_id" method="post">
-                            <button class="group text-red-600 font-bold py-2 px-4 rounded-full border border-red-300 flex gap-1 hover:bg-red-100 transition-all duration-300">
-                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
-                            duration-300" src="../../../resource/icons/dashboard/file_delete.svg" alt="">
-                                <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Remove From Bookings</span>
-                            </button>
-                        </form> 
-                    </div>
+                            <form action="../../../utility/php/delete_from_booking.php?land_id=$land_id" method="post">
+                                <button class="group text-red-600 font-bold py-2 px-4 rounded-full border border-red-300 flex gap-1 hover:bg-red-100 transition-all duration-300">
+                                <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                                duration-300" src="../../../resource/icons/dashboard/file_delete.svg" alt="">
+                                    <span class="-translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Remove From Bookings</span>
+                                </button>
+                            </form> 
+                        </div>
+                    </div>  
                 HTML;
-                echo '</div>';
                 $lands = mysqli_fetch_assoc($get_lands_that_is_booked_table);
             }
         }
