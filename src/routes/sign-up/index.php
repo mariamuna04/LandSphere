@@ -8,79 +8,71 @@ if (!$connection) {
     die();
 }
 
-$password_left_empty = false;
-$password_mismatch = false;
+// Error variables (BLANK)
+$full_name_left_blank = false;
+$email_left_blank = false;
+$phone_number_left_blank = false;
+$date_of_birth_left_blank = false;
+$address_left_blank = false;
+$nid_left_blank = false;
+$password_left_blank = false;
+$confirm_password_left_blank = false;
 
-$full_name_left_empty = false;
-$email_left_empty = false;
-$phone_number_left_empty = false;
-$date_of_birth_left_empty = false;
-$address_left_empty = false;
-$nid_left_empty = false;
-$birth_certificate_number_left_empty = false;
-$passport_number_left_empty = false;
-$occupation_left_empty = false;
-$yearly_income_left_empty = false;
-
+// Error variables (NOT MATCH)
+$password_not_match = false;
 
 
 if (isset($_POST['submit'])) {
+    // Essential Info Check
     $full_name = $_POST['full_name'];
+    if (empty($full_name)) $full_name_left_blank = true;
     $email = $_POST['email'];
+    if (empty($email)) $email_left_blank = true;
     $phone_number = $_POST['phone_number'];
+    if (empty($phone_number)) $phone_number_left_blank = true;
     $date_of_birth = $_POST['date_of_birth'];
+    if (empty($date_of_birth)) $date_of_birth_left_blank = true;
     $address = $_POST['address'];
+    if (empty($address)) $address_left_blank = true;
     $nid = $_POST['nid'];
-    $birth_certificate_number = $_POST['birth_certificate_number'];
-    $passport_number = $_POST['passport_number'];
-    $occupation = $_POST['occupation'];
-    $yearly_income = $_POST['yearly_income'];
-    
-    $password = $_POST['password'];
+    if (empty($nid)) $nid_left_blank = true;
+
+    $essential_info_left_blank = $full_name_left_blank || $email_left_blank || $phone_number_left_blank || $date_of_birth_left_blank || $address_left_blank || $nid_left_blank;
+
+    // Password Check
+    $password = $_POST['new_password'];
+    if (empty($password)) $password_left_blank = true;
     $confirm_password = $_POST['confirm_password'];
+    if (empty($confirm_password)) $confirm_password_left_blank = true;
 
-    if (empty($password) || empty($confirm_password)) {
-        $password_left_empty = true;
+    if (!$password_left_blank || !$confirm_password_left_blank) {
+        if ($password != $confirm_password) {
+            $password_not_match = true;
+        }
     }
 
-    if ($password != $confirm_password) {
-        $password_mismatch = true;
-    }
-    
-    if (empty($full_name)) {
-        $full_name_left_empty = true;
-    }
-    
-    if (empty($email)) {
-        $email_left_empty = true;
-    }
-    
-    if (empty($phone_number)) {
-        $phone_number_left_empty = true;
-    }
-    
-    if (empty($date_of_birth)) {
-        $date_of_birth_left_empty = true;
-    }
-    
-    if (empty($address)) {
-        $address_left_empty = true;
-    }
-    
-    if (empty($nid)) {
-        $nid_left_empty = true;
-    }
-    
-    $any_necessary_field_left_empty = $password_left_empty || 
-        $password_mismatch || $full_name_left_empty || 
-        $email_left_empty || $phone_number_left_empty || 
-        $date_of_birth_left_empty || $address_left_empty || 
-        $nid_left_empty;
+    $proceed = !$essential_info_left_blank && !$password_not_match;
 
-
+    if ($proceed) {
+        echo "Proceed";
+        $create_a_user_sql = "INSERT INTO user 
+    (full_name, email, phone_number, date_of_birth, address, nid) 
+    VALUES ('" . $full_name . "', '" . $email . "', '" . $phone_number . "', '" . $date_of_birth . "', '" . $address . "', " . $nid . ")";
+        $create_a_user_result = mysqli_query($connection, $create_a_user_sql);
+        $echo = "Hello";
+        if ($create_a_user_result) {
+            $create_login_entry_sql = "INSERT INTO login (user_nid, password) VALUES ('" . $nid . "', '" . $password . "')";
+            $create_login_entry_result = mysqli_query($connection, $create_login_entry_sql);
+            if ($create_login_entry_result) {
+                header('Location: ../sign-in/');
+            } else {
+                header('Location: ../../static/error/HTTP521.html');
+            }
+        } else {
+            header('Location: ../../static/error/HTTP521.html');
+        }
+    }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -119,8 +111,7 @@ if (isset($_POST['submit'])) {
                            class="w-full rounded-xl
                                 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono<?php
-                           if ($full_name_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($full_name_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                     <label for="full_name" class="text-sm"></label>
@@ -132,8 +123,7 @@ if (isset($_POST['submit'])) {
                            class="w-full rounded-xl
                                 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono<?php
-                           if ($email_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($email_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                     <label for="email" class="text-sm"></label>
@@ -145,8 +135,7 @@ if (isset($_POST['submit'])) {
                            class="w-full rounded-xl
                                 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono<?php
-                           if ($phone_number_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($phone_number_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                     <label for="phone_number" class="text-sm"></label>
@@ -159,8 +148,7 @@ if (isset($_POST['submit'])) {
                            class="w-full rounded-xl
                                 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono<?php
-                           if ($date_of_birth_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($date_of_birth_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
 
@@ -171,8 +159,7 @@ if (isset($_POST['submit'])) {
                            class="w-full rounded-xl mt-2
                                py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono<?php
-                           if ($address_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($address_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                     <label for="address" class="text-sm"></label>
@@ -189,14 +176,13 @@ if (isset($_POST['submit'])) {
                                py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono
                                <?php
-                           if ($nid_left_empty) echo ' border border-red-500 bg-red-100 ';
-                           else echo ' bg-white ';
+                           if ($nid_left_blank) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                     <label for="nid"></label>
 
 
-                    <input type="text" 
+                    <input type="text"
                            name="birth_certificate_number"
                            id="birth_certificate_number"
                            placeholder="Birth Certificate Number (optional)"
@@ -259,8 +245,7 @@ if (isset($_POST['submit'])) {
                                py-2 px-3 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-lg font-mono
                                <?php
-                               if ($password_left_empty || $password_mismatch) echo ' border-red-500 bg-red-100 ';
-                               else echo ' bg-white ';
+                               if ($password_left_blank || $password_not_match) echo ' border-red-500 bg-red-100 ';
                                ?>"
                         />
                         <label for="new_password" class="text-sm"></label>
@@ -273,8 +258,7 @@ if (isset($_POST['submit'])) {
                                py-2 px-3 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-lg font-mono
                                <?php
-                               if ($password_left_empty || $password_mismatch) echo ' border-red-500 bg-red-100 ';
-                               else echo ' bg-white ';
+                               if ($confirm_password_left_blank || $password_not_match) echo ' border-red-500 bg-red-100 ';
                                ?>"
                         />
                         <label for="confirm_password" class="text-sm"></label>
