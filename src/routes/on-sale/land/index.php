@@ -378,6 +378,21 @@ HTML;
                         <?php echo $land_details ?>
                     </p>
 
+                    <div>
+                        <?php
+                        $random = rand(1, 1000);
+                        echo <<< HTML
+                            <div class="p-2 rounded-full flex gap-2 w-fit items-center bg-beige-dark hover:shadow-lg">
+                                <img class="w-12 h-12 mr-2 rounded-full"
+                                src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9" alt="">
+                                <div>
+                                    <h1 class="text-lg font-bold pr-4">Owned By <span class="text-primary">$owner_name</span> </h1>
+                                </div>
+                            </div>
+                        HTML;
+                        ?>
+                    </div>
+
                     <div class="flex gap-4 items-baseline">
                         <form
                             action="../../../utility/php/land_book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>"
@@ -466,24 +481,25 @@ HTML;
 
     <main class="mt-12">
 
-        <div class="flex flex-col gap-4">
-            <div class="flex justify-around items-center align-middle">
-                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+        <div class="flex flex-col gap-8">
+            <div class="flex justify-around items-center align-middle gap-6">
+                <div class="w-full p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
                     <h1 class="font-bold text-xl text-green-800">Cost Per SQFT</h1>
                     <h1 class="font-mono text-lg"> $<?php echo $land_cp_sqft ?> </h1>
                 </div>
 
-                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                <div class="w-full p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
                     <h1 class="font-bold text-xl text-green-800">Total Cost</h1>
                     <h1 class="font-mono text-lg"> $<?php echo $net_price ?> </h1>
                 </div>
                 <?php
 
                 $ratio = $land_cp_sqft / $land_rcv;
+                $ratio = round($ratio, 3);
 
                 if ($ratio >= 1) {
                     echo <<< HTML
-                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <div class="w-full p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
                         <h1 class="font-bold text-xl text-green-800">Value Ratio</h1>
                         <h1 class="font-mono text-lg"> $ratio </h1>
                     </div>
@@ -491,7 +507,7 @@ HTML;
 
                 } else {
                     echo <<< HTML
-                    <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
+                    <div class="w-full p-2 text-center font-medium px-2.5 rounded-2xl bg-red-100 flex-col flex">
                         <h1 class="font-bold text-xl text-red-800">Value Ratio</h1>
                         <h1 class="font-mono text-lg"> $ratio </h1>
                     </div>
@@ -499,14 +515,14 @@ HTML;
                 }
                 ?>
 
-                <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
-                    <h1 class="font-bold text-xl text-green-800">Owner</h1>
-                    <h1 class="font-mono text-lg"> <?php echo $owner_name ?> </h1>
+                <div class="w-full p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">
+                    <h1 class="font-bold text-xl text-green-800">Owned from</h1>
+                    <h1 class="font-mono text-lg"> <?php echo $land_acquire_date ?> </h1>
                 </div>
 
 
             </div>
-            <div class="flex justify-around items-center align-middle">
+            <div class="grid grid-cols-3  place-items-center">
                 <?php
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">

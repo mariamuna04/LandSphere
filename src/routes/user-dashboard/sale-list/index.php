@@ -245,9 +245,18 @@ HTML;
 </div>
 
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <p class="text-3xl pb-2 font-medium">
-        Your <span class="font-bold text-primary">Sale List</span>
-    </p>
+    <?php
+    if ($owner_has_land) {
+        echo <<< HTML
+            <p class="text-3xl pb-2 font-medium">
+                Your <span class="font-bold text-primary">Sale List</span>
+            </p>
+        HTML;
+
+    }
+
+    ?>
+
     <main class="w-full rounded-3xl p-4 flex justify-between">
         <section class="w-full flex-col flex gap-6">
             <?php
@@ -361,9 +370,7 @@ HTML;
                                 <div>
                                     <h1 class="text-lg font-bold pr-4">$potential_buyer_name</h1>
                                     <h1 class="text-sm font-bold font-mono text-gray-500 pr-4">$potential_buyer_email</h1>
-                                    
                                 </div>
-                                  
                             </div>
                         HTML;
                     } else {
@@ -387,9 +394,8 @@ HTML;
                 echo <<< HTML
                     <p class="text-center text-3xl pb-12 font-medium leading-relaxed text-gray-500">
                         You are not selling any lands
-                        
-                    </p>
 
+                    </p>
                 HTML;
 
             }

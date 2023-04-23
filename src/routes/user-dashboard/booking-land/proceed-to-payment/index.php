@@ -1,61 +1,87 @@
 <?php
 session_start();
-if (!isset($_SESSION["id"])) {
+if (!isset($_GET['land_id'])) {
     $_SESSION['redirect_url'] = "http" .
         (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
         "://" . $_SERVER['HTTP_HOST'] .
         $_SERVER['REQUEST_URI'];
-    header("Location: ../../sign-in");
+    header('Location: ../../../../static/error/HTTP404.html');
+    die();
 }
+$land_id = $_GET['land_id'];
 
-include "../../../utility/php/connection.php";
+include "../../../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
     header('Location: ../../../static/error/HTTP521.html');
     die();
 }
 
-$get_lands_that_is_booked_sql = "SELECT * FROM booked_land_purchase JOIN land l on booked_land_purchase.land_id = l.land_id
-         JOIN land_cost_info lci on l.land_id = lci.land_id WHERE potential_buyer_id = " . $_SESSION["id"] . " ORDER BY title;";
-$get_lands_that_is_booked_table = mysqli_query($connection, $get_lands_that_is_booked_sql);
-$lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
+if (isset($_POST["sign_out"])) {
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    session_destroy();
+    header("Location: ../../../../");
+}
+
+$get_land_information = "SELECT * FROM land 
+                        JOIN owns o on land.land_id = o.land_id
+                        JOIN land_cost_info lci on land.land_id = lci.land_id
+                        WHERE land.land_id = " . $land_id . ";";
+$get_land_information_result = mysqli_query($connection, $get_land_information);
+$land = mysqli_fetch_assoc($get_land_information_result);
+
+$cost_per_sqft = $land["cost_per_sqft"];
+$land_area = $land["area"];
+$total_cost = $cost_per_sqft * $land_area;
+$landsphere_income = $total_cost * 0.015;
+$service_charge = 1600;
+$tax = $total_cost * 0.15;
+$registration_charge = 2100;
+$verification_charge = 300;
+$grand_total = $total_cost + $landsphere_income + $service_charge + $tax + $registration_charge + $verification_charge;
+$grand_total = number_format($grand_total, 2, '.', ',');
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../../dist/output.css" rel="stylesheet">
-    <link rel="icon" href="../../../resource/ico.svg">
-    <title>LandSphere | Your Personal Land Manager</title
+    <link href="../../../../../dist/output.css" rel="stylesheet">
+    <link rel="icon" href="../../../../resource/ico.svg">
+    <title>LandSphere | Your Personal Land Manager</title>
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar"
+<nav id="navbar"
      class="bg-beige-dark flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex gap-5 items-center">
 
-        <a href="../../../index.php" class="flex select-none">
-            <img alt="" src="../../../resource/icons/landSphere.svg">
+        <a href="../../../../index.php" class="flex select-none">
+            <img alt="" src="../../../../resource/icons/landSphere.svg">
         </a>
 
         <div class="flex gap-2 items-center">
-            <a href="../../about-us"
+            <a href="../../../about-us"
                class="hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6 transition-colors">
                 About</a>
-            <a href="../../projects"
+            <a href="../../../projects"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Projects</a>
-            <a href="../../on-sale"
+            <a href="../../../on-sale"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
-                On Sale</a>
-            <a href="../../news"
+                On Sale
+            </a>
+            <a href="../../../news"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 News</a>
-            <a href="../../contact-us"
+            <a href="../../../contact-us"
                class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-6 pr-6">
                 Contact</a>
         </div>
@@ -65,7 +91,7 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
             class="transition-colors hover:bg-beige-darkest rounded-3xl pt-[0.60rem] pb-[0.60rem] pl-3 pr-3
                     flex gap-12 items-center">
         <span class="flex items-center gap-2">
-            <img src="../../../resource/icons/search-navbar.svg" alt=" ">
+            <img src="../../../../resource/icons/search-navbar.svg" alt=" ">
             <span class="text-xs font-medium text-gray-800">Search</span>
         </span>
         <span class="flex gap-1 select-none">
@@ -76,7 +102,6 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
     </button>
 
     <?php
-
     $full_name = $_SESSION["name"];
     // count how many words in the name
     $name_count = str_word_count($full_name);
@@ -109,6 +134,7 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
             </svg>
         </button>
 
+        <!-- Dropdown menu -->
 <div id="dropdownAvatarName"
              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-2xl shadow-2xl w-64">
             <div class="px-4 py-3 text-lg text-gray-900 bg-beige-dark rounded-t-2xl">
@@ -123,31 +149,31 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
                 aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
                 
                 <li>
-                   <a href="../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                   <a href="../../owned-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Owned Lands</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a href="../sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../../sale-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Sale List</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="../successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../../successors" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Successor</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a class="flex px-4 py-2 bg-gray-100 gap-3 w-full items-center">
-                        <span class="font-bold pl-1 text-primary select-none">Payment</span>
+                    <a href="../../payment-list" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                        <span class="font-bold pl-1">Payment</span>
                     </a>
                 </li>
                 
                 <li>
-                    <a  href="../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>
@@ -156,16 +182,16 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
                 <li>
                     <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
                         <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
                     </a>
                 </li>
                 <hr>
                 <li>
-                    <a href="../account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../account-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../../resource/icons/dashboard/account.svg" alt="">
+                            <img src="../../../../resource/icons/dashboard/account.svg" alt="">
                         </span>
                         <span>Manage your Account</span>
                     </a>
@@ -175,7 +201,7 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
                     <form method="post" action="" class="flex px-4 mb-1.5 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <button name="sign_out" class="w-full flex gap-2 items-center text-red-600 rounded-2xl">
                             <span>
-                                <img src="../../../resource/icons/dashboard/cancel.svg" alt="">
+                                <img src="../../../../resource/icons/dashboard/cancel.svg" alt="">
                             </span>
                             Sign out
                         </button>
@@ -190,14 +216,14 @@ HTML;
 
 
 </nav>
-
-<div class="group fixed w-full top-0 mt-24 flex justify-center z-50">
+<div id="breadcrumb"
+     class="group fixed w-full top-0 mt-24 flex justify-center z-50">
     <div class="flex px-5 py-2 bg-beige-dark rounded-3xl shadow-md
     justify-center group-hover:shadow-lg transition-all duration-300"
          aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1">
             <li class="inline-flex items-center">
-                <a href="../../../index.php"
+                <a href="../../../../index.php"
                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                     <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
@@ -215,25 +241,120 @@ HTML;
                               d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                               clip-rule="evenodd"></path>
                     </svg>
+                    <a href="../index.php"
+                       class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                        Your Bookings
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
                     <a href="#"
                        class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
-                        Your Payments
+                        Payment of <span class="text-primary"><?php echo $land['title'] ?></span>
                     </a>
                 </div>
             </li>
         </ol>
     </div>
+
 </div>
 
-<section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <main class="w-full flex-col p-4 flex gap-6">
+<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
+    <div class="flex flex-col gap-2 items-center justify-center">
+        <h1 class="text-3xl font-bold text-center text-gray-700">
+            Payment Process of
+        </h1>
+        <h1 class=" font-bold text-center text-4xl text-primary">
+            <?php echo $land['title'] ?>
+        </h1>
+        <div class="bg-beige-darkest text-zinc-600 w-fit font-mono align-middle p-1 rounded-xl font-sm px-3">
+            <?php echo $land['land_id'] ?>
+        </div>
+    </div>
+
+    <main class="mt-12 grid grid-cols-2 gap-12">
+        <div>
+            Form
+        </div>
+
+        <div class="m-6 flex-col items-center">
+            <div
+                class="bg-beige-dark rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 font-mono flex-col gap-2">
+                <h1 class=" text-end pb-3 text-xl font-bold">
+                    Payment Summary
+                    <hr class="border-4 border-gray-400 rounded-full my-2">
+                </h1>
+
+                <div class="flex justify-between">
+                    <p>Cost Per SQFT</p>
+                    <p class="font-bold text-zinc-600 tracking-widest">$<?php echo $land['cost_per_sqft'] ?></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <p>Total Area</p>
+                    <p class="font-bold text-zinc-600 tracking-widest">SQFT <?php echo $land['area'] ?></p>
+                </div>
+                <hr class="border-2 border-gray-300 rounded-full my-2">
+
+                <div class="flex justify-between">
+                    <p>Price of Land</p>
+                </div>
+
+                <div class="flex justify-between">
+                    <p>Cost Per SQFT * Total Area</p>
+                    <p class="font-bold tracking-widest">$<?php echo $total_cost ?></p>
+                </div>
+
+                <hr class="border-2 border-gray-300 rounded-full my-2">
+
+                <div class="flex justify-between">
+                    <p>1.5% LandSphere Charge</p>
+                    <p class="font-bold tracking-widest">$<?php echo $landsphere_income ?></p>
+                </div>
+
+                <hr class="border-2 border-gray-300 rounded-full my-2">
+                <div class="flex justify-between">
+                    <p>15% TAX</p>
+                    <p class="font-bold tracking-widest">$<?php echo $tax ?></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <p>Registration Charge</p>
+                    <p class="font-bold tracking-widest">$<?php echo $registration_charge ?></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <p>Verification Charge</p>
+                    <p class="font-bold tracking-widest">$<?php echo $verification_charge ?></p>
+                </div>
+                <hr class="border-4 border-gray-400 rounded-full my-2">
+                <div class="flex justify-between">
+                    <p class="font-black text-lg">Grand Total</p>
+                    <p class="font-bold text-lg tracking-widest text-primary"> $<?php echo $grand_total ?></p>
+                </div>
+
+
+            </div>
+            <p class=" text-center w-full mt-4 text-sm font-mono text-zinc-500"> Percentages are calculated on the total
+                cost of land.
+            </p>
+        </div>
+
 
     </main>
 </section>
 
 
 <footer id="index_footer"
-        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12 pb-12 drop-shadow-xl">
+        class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12
+                                 pb-12 drop-shadow-xl">
 
     <div class="grid grid-cols-4 text-white gap-x-12 gap-y-3">
         <div class="flex flex-col">
@@ -241,11 +362,11 @@ HTML;
                 For Land Owners
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Community </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Rules and Regulations </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Volunteers </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Opt Out </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Community </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Rules and Regulations </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Volunteers </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Option </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Opt Out </a>
 
 
             </div>
@@ -257,10 +378,10 @@ HTML;
                 For Visitors
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Guides </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Office Locations </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Benefits </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> History </a>
             </div>
         </div>
 
@@ -269,10 +390,10 @@ HTML;
                 Resources
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Help and Support </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Blog </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> News Archive </a>
             </div>
         </div>
 
@@ -281,27 +402,28 @@ HTML;
                 Company
             </h1>
             <div class=" flex flex-col gap-2">
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety & Security </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> About Us </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Leadership </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Careers </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Press </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Trust, Safety &
+                    Security </a>
             </div>
         </div>
 
         <div class="col-span-4 pt-3 flex gap-4 items-center">
             <h1 class="text-lg font-bold"> Follow us </h1>
-            <a href="../../../static/error/HTTP501.html">
-                <img src="../../../resource/icons/footer/icon-facebook.svg" alt="">
+            <a href="../../../../static/error/HTTP501.html">
+                <img src="../../../../resource/icons/footer/icon-facebook.svg" alt="">
             </a>
-            <a href="../../../static/error/HTTP501.html">
-                <img src="../../../resource/icons/footer/icon-twitter.svg" alt="">
+            <a href="../../../../static/error/HTTP501.html">
+                <img src="../../../../resource/icons/footer/icon-twitter.svg" alt="">
             </a>
-            <a href="../../../static/error/HTTP501.html">
-                <img src="../../../resource/icons/footer/icon-linkedin.svg" alt="">
+            <a href="../../../../static/error/HTTP501.html">
+                <img src="../../../../resource/icons/footer/icon-linkedin.svg" alt="">
             </a>
-            <a href="../../../static/error/HTTP501.html">
-                <img src="../../../resource/icons/footer/icon-youtube.svg" alt="">
+            <a href="../../../../static/error/HTTP501.html">
+                <img src="../../../../resource/icons/footer/icon-youtube.svg" alt="">
             </a>
         </div>
 
@@ -310,10 +432,10 @@ HTML;
         <div class="col-span-4 flex align-middle items-center justify-between pt-3">
             <h1 class="font-bold"> &copy; 2023 <a href="#" class="text-green-400">LandSphere </a> Inc.</h1>
             <div class="flex gap-6 pt-1">
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Terms of Service </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Privacy Policy </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Cookie Settings </a>
+                <a href="../../../../static/error/HTTP501.html" class="hover:text-green-300"> Accessibility </a>
             </div>
 
         </div>
@@ -321,7 +443,7 @@ HTML;
     </div>
 
 </footer>
-<!-- Search modal -->
+
 <div id="defaultModal"
      tabindex="-1"
      aria-hidden="true"
@@ -335,7 +457,7 @@ HTML;
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <div class="flex justify-between p-4 border-b rounded-t items-center">
-                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
+                <img src="../../../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
                        name="search_box"
                        id="search_text-field"
@@ -381,3 +503,4 @@ HTML;
     }
 </script>
 </html>
+

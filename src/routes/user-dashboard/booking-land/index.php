@@ -318,7 +318,7 @@ HTML;
                 if ($payment_information) {
                     if (!$is_land_in_payment_table) {
                         echo <<< HTML
-                            <form method="post" action="payment.php?land_id=$land_id">
+                            <form method="post" action="proceed-to-payment/?land_id=$land_id">
                                 <button class="group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
                                     <span class="text-white translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Proceed to Payment</span>
                                     <img class="invisible  opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300" 
