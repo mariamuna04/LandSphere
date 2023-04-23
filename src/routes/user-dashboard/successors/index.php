@@ -160,7 +160,7 @@ $lands_exists = mysqli_num_rows($get_lands_result) > 0;
                 </li>
                 
                 <li>
-                    <a href="../booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>

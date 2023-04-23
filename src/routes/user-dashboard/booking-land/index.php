@@ -154,7 +154,7 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
                 </li>
                 
                 <li>
-                    <a class="flex px-4 py-2 bg-gray-100 gap-3 w-full items-center">
+                    <a class="flex mb-2 px-4 py-2 bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1 text-primary select-none">Bookings</span>
                     </a>
                 </li>
@@ -230,14 +230,26 @@ HTML;
             </li>
         </ol>
     </div>
-
 </div>
 
 <section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+    <?php
+    if ($lands_that_is_booked) {
+        echo <<< HTML
+            <p class="text-3xl pb-4 font-medium leading-relaxed">
+                Your <span class="font-bold text-primary">Bookings</span>. 
+                <span class="text-gray-500">Finish payment to register.</span>
+            </p>
+        HTML;
+    } else {
+        echo <<< HTML
+            <p class="text-3xl text-center text-gray-500 pb-4 font-medium leading-relaxed">
+                You have not booked any land yet...
+            </p>
+        HTML;
 
-    <p class="text-3xl pb-4 font-medium leading-relaxed">
-        Your <span class="font-bold text-primary">Bookings</span>. <span class="text-gray-500">Finish payment to register.</span>
-    </p>
+    }
+    ?>
 
     <main class="w-full flex-col p-4 flex gap-6">
         <?php
@@ -271,7 +283,7 @@ HTML;
                 $land_rcv = $lands["relative_cost_value"];
 
                 echo <<< HTML
-                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                    <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
@@ -290,7 +302,7 @@ HTML;
                 echo <<< HTML
                     <div class="flex gap-4 justify-between mt-4 items-center">
                         <form method="post" action="payment.php?land_id=$land_id">
-                            <button class=" group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
+                            <button class="group bg-green-600 hover:bg-green-700 font-bold py-2 px-6 rounded-full flex gap-2 transition-all duration-300 items-center">
                                 <span class="text-white translate-x-[0.85rem] group-hover:translate-x-0 transition-all duration-300">Proceed to Payment</span>
                                 <img class="invisible  opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300" 
                                 src="../../../resource/icons/dashboard/proceed_to_payment.svg" alt="">

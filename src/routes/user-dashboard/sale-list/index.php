@@ -162,7 +162,7 @@ $user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_res
                 </li>
                 
                 <li>
-                    <a href="../booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>
@@ -352,7 +352,7 @@ HTML;
                         $random = rand(0, 100000);
 
                         echo <<< HTML
-                            <div class="text-lg text-gray-500 font-black">Booked By -></div>
+                            <div class="text-lg text-green-700 font-black">Booked By</div>
                             <div class="p-2 rounded-full flex gap-2 items-center bg-beige-light">
                                 <img class="w-12 h-12 mr-2 rounded-full"
                                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9" alt="">
@@ -366,7 +366,7 @@ HTML;
                         HTML;
                     } else {
                         echo <<< HTML
-                           <div class="text-lg text-gray-500 font-black">Hang tight, No one booked yet...</div>
+                           <div class="text-lg text-gray-400 font-black">Hang tight, No one booked yet...</div>
                            <form method="post" action="../../../utility/php/cancel_sell_list.php?land_id=$land_id">
                             <button type="submit"
                                 class="text-red-700 transition-all duration-300

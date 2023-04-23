@@ -154,7 +154,7 @@ $result = $connection->query($sql);
                 </li>
                 
                 <li>
-                    <a href="../user-dashboard/booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../user-dashboard/booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>

@@ -98,29 +98,29 @@ if ($registration_document != null && $government_permit != null && $agreement_d
 
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
+    $environment_status = ' bg-green-100 text-green-600"> Ecologically Excellent ';
 } else if ($land_environment_points > 2 && $land_environment_points <= 4) {
-    $environment_status = '  bg-green-100 text-green-500"> Ecologically Very Good ';
+    $environment_status = '  bg-green-100 text-green-600"> Ecologically Very Good ';
 } else if ($land_environment_points > 4 && $land_environment_points <= 6) {
-    $environment_status = ' bg-green-100 text-green-500"> Ecologically Good ';
+    $environment_status = ' bg-green-100 text-green-600"> Ecologically Good ';
 } else if ($land_environment_points > 6 && $land_environment_points <= 8) {
     $environment_status = '  bg-yellow-100 text-yellow-600"> Ecologically Fair ';
 } else if ($land_environment_points > 8 && $land_environment_points <= 10) {
-    $environment_status = ' bg-red-100 text-red-500"> Ecologically Poor ';
+    $environment_status = ' bg-red-100 text-red-600"> Ecologically Poor ';
 }
 
 $demand_status = "";
 
 if ($land_demand_points > 0 && $land_demand_points <= 2) {
-    $demand_status = ' bg-red-100 text-red-500"> Demand Poor ';
+    $demand_status = ' bg-red-100 text-red-600"> Demand Poor ';
 } else if ($land_demand_points > 2 && $land_demand_points <= 4) {
     $demand_status = ' bg-yellow-100 text-yellow-600"> Demand Fair ';
 } else if ($land_demand_points > 4 && $land_demand_points <= 6) {
-    $demand_status = ' bg-green-100 text-green-500"> Demand Good ';
+    $demand_status = ' bg-green-100 text-green-600"> Demand Good ';
 } else if ($land_demand_points > 6 && $land_demand_points <= 8) {
-    $demand_status = '  bg-green-100 text-green-500"> Demand Very Good ';
+    $demand_status = '  bg-green-100 text-green-600"> Demand Very Good ';
 } else if ($land_demand_points > 8 && $land_demand_points <= 10) {
-    $demand_status = '  bg-green-100 text-green-500"> Demand Excellent ';
+    $demand_status = '  bg-green-100 text-green-600"> Demand Excellent ';
 }
 
 $is_land_listed_for_sale_sql = "SELECT * FROM sell_list WHERE land_id = " . $land_id . ";";
@@ -262,7 +262,7 @@ $is_land_booked = mysqli_num_rows($is_land_booked_result) > 0;
                 </li>
                 
                 <li>
-                    <a href="../../booking-land" class="flex px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
+                    <a href="../../booking-land" class="flex mb-2 px-4 py-2 hover:bg-gray-100 gap-3 w-full items-center">
                         <span class="font-bold pl-1">Bookings</span>
                     </a>
                 </li>
@@ -549,7 +549,7 @@ HTML;
 
 
             </div>
-            <div class="flex justify-around items-center align-middle">
+            <div class="grid grid-cols-3 place-items-center">
                 <?php
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
@@ -559,7 +559,7 @@ HTML;
 
                 echo <<< HTML
                     <div class="mt-2 flex justify-between items-center">
-                        <div class="font-bold text-md text-md p-3 rounded-xl  $style "> $land_type </div>
+                        <div class="w-fit text-md font-bold p-3 rounded-2xl  $style "> $land_type </div>
                     </div>
                     HTML;
 
