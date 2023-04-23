@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
         $phone_number = $session_phone_number;
     }
 
-    $sql = "INSERT INTO contact_anonymous (full_name, email, phone_number, post) 
+    $sql = "INSERT INTO message_admin (full_name, email, phone_number, post) 
             VALUES ('$full_name', '$email', '$phone_number', '$post')";
 
     mysqli_query($connection, $sql);

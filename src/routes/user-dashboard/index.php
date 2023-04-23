@@ -310,11 +310,11 @@ $hour = date('H', strtotime($current_time));
                         <div class="p-2 text-center rounded-2xl text-sm font-semibold mt-2 transition-all duration-400
                         <?php
                         if ($average_env_pts >= 0 && $average_env_pts <= 4) {
-                            echo "group-hover:bg-green-100 text-green-500";
+                            echo " text-green-700 ";
                         } else if ($average_env_pts > 4 && $average_env_pts <= 8) {
-                            echo "group-hover:bg-yellow-100 text-yellow-600 animate-pulse";
+                            echo " text-yellow-700 animate-pulse";
                         } else if ($average_env_pts > 8 && $average_env_pts <= 10) {
-                            echo "group-hover:bg-red-100 text-red-500 animate-pulse";
+                            echo " text-red-700 animate-pulse";
                         }
                         ?>">
                             <p>Environment</p>
@@ -368,7 +368,7 @@ $hour = date('H', strtotime($current_time));
                   transform motion-safe:hover:scale-[1.02] hover:text-green-700
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/for-sale.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Your Sale List </span>
+                    <span class="text-lg font-bold  pl-2"> Your Sale List </span>
 
                 </a>
 
@@ -378,7 +378,7 @@ $hour = date('H', strtotime($current_time));
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/successor.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Your Successor </span>
+                    <span class="text-lg font-bold pl-2"> Your Successor </span>
 
                 </a>
                 <a href="./payment"
@@ -386,7 +386,7 @@ $hour = date('H', strtotime($current_time));
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class="h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/payment.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Your Payment </span>
+                    <span class="text-lg font-bold pl-2"> Your Payment </span>
 
                 </a>
 
@@ -395,7 +395,7 @@ $hour = date('H', strtotime($current_time));
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">
                     <img class=" h-12 w-12 pb-4 pt-1" src="../../resource/icons/dashboard/booking.svg" alt="">
-                    <span class="text-lg font-bold pt-4 pl-2"> Your Bookings </span>
+                    <span class="text-lg font-bold pl-2"> Your Bookings </span>
 
                 </a>
             </div>
