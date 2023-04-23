@@ -430,7 +430,10 @@ if (isset($_POST["submit"])) {
                 <input type="text"
                        name="name_on_card"
                        id="name_on_card" placeholder="Name on Card"
-                    <?php echo "value='" . $fetch_existing_payment_row['name_on_card'] . "'" ?>
+                    <?php
+                    if ($previous_card_exist) {
+                        echo "value='" . $fetch_existing_payment_row['name_on_card'] . "'";
+                    } ?>
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono  tracking-widest"
@@ -441,7 +444,10 @@ if (isset($_POST["submit"])) {
                 <label for="billing_address" class="text-sm pl-2">Billing Address</label>
                 <input type="text"
                        name="billing_address"
-                    <?php echo "value='" . $fetch_existing_payment_row['billing_address'] . "'" ?>
+                    <?php
+                    if ($previous_card_exist) {
+                        echo "value='" . $fetch_existing_payment_row['billing_address'] . "'";
+                    } ?>
                        id="billing_address" placeholder="Billing Address"
                        class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
