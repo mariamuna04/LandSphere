@@ -41,7 +41,31 @@ $registration_charge = 2100;
 $verification_charge = 300;
 $document_charge = 120;
 $grand_total = $total_cost + $landsphere_income + $service_charge + $tax + $registration_charge + $verification_charge + $document_charge;
-$grand_total = number_format($grand_total, 2, '.', ',');
+$grand_total = number_format($grand_total, 2);
+
+$fetch_owner_name_sql = "SELECT * FROM user WHERE nid = " . $land["owner_id"] . ";";
+$fetch_owner_name = mysqli_query($connection, $fetch_owner_name_sql);
+$owner_name_row = mysqli_fetch_assoc($fetch_owner_name);
+$owner_name = $owner_name_row["full_name"];
+$owner_email = $owner_name_row["email"];
+
+$fetch_buyer_name_sql = "SELECT * FROM user WHERE nid = " . $_SESSION["id"] . ";";
+$fetch_buyer_name = mysqli_query($connection, $fetch_buyer_name_sql);
+$buyer_name_row = mysqli_fetch_assoc($fetch_buyer_name);
+$buyer_name = $buyer_name_row["full_name"];
+$buyer_email = $buyer_name_row["email"];
+
+$fetch_owner_payment_information_sql = "SELECT * FROM payment_method WHERE user_id = " . $_SESSION['id'] . ";";
+$fetch_owner_payment_information = mysqli_query($connection, $fetch_owner_payment_information_sql);
+$owner_payment_information = mysqli_fetch_assoc($fetch_owner_payment_information);
+$card_number = $owner_payment_information["card_number"];
+$card_holder_name = $owner_payment_information["name_on_card"];
+$expiry_date = $owner_payment_information["expire_date"];
+$cvc = $owner_payment_information["cvc"];
+$billing_address = $owner_payment_information["billing_address"];
+
+// divide card number into 4 parts, with hyphen in between, 4 digits each
+$card_number = substr($card_number, 0, 4) . "-" . substr($card_number, 4, 4) . "-" . substr($card_number, 8, 4) . "-" . substr($card_number, 12, 4);
 
 
 ?>
@@ -267,8 +291,8 @@ HTML;
 
 </div>
 
-<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
-    <div class="flex flex-col gap-2 items-center justify-center">
+<section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
+    <main class="flex flex-col gap-2 items-center justify-center">
         <h1 class="text-3xl font-bold text-center text-gray-700">
             Payment Process of
         </h1>
@@ -278,14 +302,128 @@ HTML;
         <div class="bg-beige-darkest text-zinc-600 w-fit font-mono align-middle p-1 rounded-xl font-sm px-3">
             <?php echo $land['land_id'] ?>
         </div>
-    </div>
+        <p class="p-1 rounded-xl px-3 text-zinc-400 font-bold font-mono">
+            <?php echo $land['address'] ?>
+        </p>
+    </main>
 
-    <main class="mt-12 grid grid-cols-2 gap-12">
-        <div>
-            Form
+    <main class="mt-12 grid grid-cols-2 gap-4 ">
+        <div class="flex-col flex gap-3 pb-4">
+            <div class="rounded-2xl pt-6 transition-all duration-300 flex-col flex gap-4">
+                <div class="rounded-full flex gap-2 items-center justify-between
+                    bg-beige-dark hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center">
+                        <?php
+                        $random = rand(1, 1000);
+                        echo <<< HTML
+                        <img class="w-16 h-16 rounded-full"
+                             src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                             alt="">
+                        HTML;
+                        ?>
+
+                        <div class="flex-col items-end ">
+                            <h1 class="text-lg font-semibold  pl-4 "><?php echo $owner_name ?></h1>
+                            <h1 class="font-semibold text-zinc-500 pl-4 "><?php echo $owner_email ?></h1>
+                        </div>
+                    </div>
+                    <h1 class="font-semibold text-zinc-500 pr-8">Owner</h1>
+                </div>
+
+                <div class="rounded-full flex gap-2 items-center justify-between
+                    bg-beige-dark hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center">
+                        <?php
+                        $random = rand(1, 1000);
+                        echo <<< HTML
+                        <img class="w-16 h-16 rounded-full"
+                             src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                             alt="">
+                        HTML;
+                        ?>
+                        <div class="flex-col items-end ">
+                            <h1 class="text-lg font-semibold  pl-4 "><?php echo $buyer_name ?>
+                            </h1>
+                            <h1 class="font-semibold text-zinc-500 pl-4 "><?php echo $buyer_email ?>
+                            </h1>
+                        </div>
+                    </div>
+                    <h1 class="font-semibold text-zinc-500 pr-8">Buyer</h1>
+                </div>
+            </div>
+
+            <h1 class="pl-4 pt-3 text-lg text-gray-500 font-bold">
+                Select Installment Plan and Deadline
+            </h1>
+
+            <form method="post" action="" class="flex flex-col h-full justify-between gap-2">
+
+                <!-- action="../../../../utility/php/confirm_payment.php" -->
+
+
+                <div class="flex justify-between items-center">
+                    <div class="flex flex-col gap-1">
+                        <label for="installment" class="text-sm font-bold pl-4">Select Installment Period</label>
+                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Select 0 for no installment
+                            plan)</label>
+                    </div>
+                    <input type="number" name="installment" id="installment"
+                           min="0" max="36" value="0"
+                           placeholder="Email address or Phone Number"
+                           class="rounded-xl text-right w-24
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono mr-4"
+                    />
+                </div>
+
+                <div class="flex justify-between items-center pb-3">
+                    <div class="flex flex-col gap-1">
+                        <label for="deadline" class="text-sm font-bold pl-4">Deadline</label>
+                    </div>
+                    <input type="date" name="deadline" id="deadline"
+                           class="rounded-xl text-right
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono mr-4"
+                    />
+                </div>
+
+                <div
+                    class="group hover:shadow-lg flex-col gap-1 p-4 bg-zinc-800 text-white rounded-2xl font-mono tracking-widest">
+                    <div class="flex justify-between">
+                        <h1 class="font-bold">Card Number</h1>
+                        <p><?php echo $card_number ?></p>
+                    </div>
+                    <div class="flex justify-between">
+                        <h1 class="font-bold">Expiry Date</h1>
+                        <p><?php echo $expiry_date ?></p>
+                    </div>
+                    <div class="flex justify-between">
+                        <h1 class="font-bold">CVC</h1>
+                        <p><?php echo $cvc ?></p>
+                    </div>
+                    <div class="flex justify-between">
+                        <h1 class="font-bold">Cardholder Name</h1>
+                        <p><?php echo $card_holder_name ?></p>
+                    </div>
+                    <div class="flex justify-between">
+                        <h1 class="font-bold">Billing Address</h1>
+                        <p><?php echo $billing_address ?></p>
+                    </div>
+                </div>
+
+                <button name="submit" type="submit"
+                        class="hover:shadow-form bg-green-700
+                        py-3 px-8 text-center text-base
+                        font-bold text-white outline-none items-center
+                        col-span-2 rounded-full hover:bg-green-800
+                        hover:shadow-lg">
+                    Confirm Payment
+                </button>
+
+
+            </form>
         </div>
-
-        <div class="m-6 flex-col items-center">
+        <div class="m-6 flex-col items-center align-middle my-auto">
             <div
                 class="bg-beige-dark rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 font-mono flex-col gap-2">
                 <h1 class=" text-end pb-3 text-xl font-bold">
@@ -300,7 +438,9 @@ HTML;
 
                 <div class="flex justify-between">
                     <p>Total Area</p>
-                    <p class="font-bold text-zinc-600 tracking-widest">SQFT <?php echo $land['area'] ?></p>
+                    <p class="font-bold text-zinc-600 tracking-widest">
+                        SQFT <?php echo $land['area'] ?>
+                    </p>
                 </div>
                 <hr class="border-2 border-gray-300 rounded-full my-2">
 
@@ -349,15 +489,13 @@ HTML;
 
 
             </div>
-            <p class=" text-center w-full mt-4 text-sm font-mono text-zinc-500"> Percentages are calculated on the total
+            <p class=" text-center w-full mt-4 text-sm font-mono text-zinc-500"> Percentages are calculated on the
+                total
                 cost of land
             </p>
         </div>
-
-
     </main>
 </section>
-
 
 <footer id="index_footer"
         class="container mx-auto my-auto mb-12 bg-green-900 rounded-xl pl-24 pr-24 pt-12

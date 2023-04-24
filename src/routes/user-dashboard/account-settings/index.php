@@ -426,10 +426,10 @@ if (isset($_POST["submit"])) {
             </div>
 
             <div class="flex-col">
-                <label for="name_on_card" class="text-sm pl-2">Name On Card</label>
+                <label for="name_on_card" class="text-sm pl-2">Card Holder Name</label>
                 <input type="text"
                        name="name_on_card"
-                       id="name_on_card" placeholder="Name on Card"
+                       id="name_on_card" placeholder="Card Holder Name"
                     <?php
                     if ($previous_card_exist) {
                         echo "value='" . $fetch_existing_payment_row['name_on_card'] . "'";
