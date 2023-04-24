@@ -71,6 +71,8 @@ $payment_id = date("Y") . $land_id . $_SESSION['id'];
 $deadline_left_blank = false;
 
 $date_diff = 0;
+$today = date("Y-m-d");
+$deadline_passed = false;
 
 if (isset($_POST['submit'])) {
     $installment = $_POST['installment'];
@@ -81,9 +83,12 @@ if (isset($_POST['submit'])) {
     // check if the date is more than 3 years from now
     $over_3_years = false;
     $deadline = date("Y-m-d", strtotime($deadline));
-    $today = date("Y-m-d");
     $date_diff = date_diff(date_create($today), date_create($deadline));
     $date_diff = $date_diff->format("%y");
+
+    if ($deadline < $today) {
+        $deadline_passed = true;
+    }
 
     if (!$deadline_left_blank && $date_diff < 4 && $deadline > $today) {
         $confirm_payment_sql = "INSERT INTO payment (payment_id, buyer_nid, land_id, due_time, total_amount, installments) VALUES
@@ -398,7 +403,11 @@ HTML;
                 <div class="flex justify-between items-center pb-3">
                     <div class="flex flex-col gap-1">
                         <label for="deadline" class="text-sm font-bold pl-4">Deadline</label>
-                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Cannot be more than 3
+                        <label for="installment" class="text-sm pl-4
+                        <?php
+                        if ($date_diff > 3) echo ' text-red-500 ';
+                        ?>
+                        ">(Cannot be more than 3
                             years)</label>
                     </div>
                     <input type="date" name="deadline" id="deadline"
@@ -406,10 +415,26 @@ HTML;
                            py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono mr-4
                            <?php
-                           if ($deadline_left_blank || $date_diff > 3 || $deadline < $today) echo ' border border-red-500 bg-red-100 ';
+                           if ($deadline_left_blank || $date_diff > 3 || $deadline_passed) echo ' border border-red-500 bg-red-100 ';
                            ?>"
                     />
                 </div>
+                <?php
+                if ($deadline_passed) {
+                    $deadline_left_blank = false;
+                    echo <<< HTML
+                            <label for="deadline" class="text-sm text-red-500 font-bold pl-4 -translate-y-3 text-center">Deadline is past</label>
+                        HTML;
+                }
+
+                if ($deadline_left_blank) {
+                    $deadline_passed = false;
+                    echo <<< HTML
+                            <label for="deadline" class="text-sm text-red-500 font-bold pl-4 -translate-y-3 text-center">Deadline is past</label>
+                        HTML;
+                }
+
+                ?>
 
                 <div
                     class="group hover:shadow-lg flex-col gap-1 p-4 bg-zinc-800 text-white rounded-2xl font-mono tracking-widest">

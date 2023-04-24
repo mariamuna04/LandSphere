@@ -17,7 +17,7 @@ if (!$connection) {
 $land_id = $_GET['land_id'];
 $token = '';
 $user_id = '';
-if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+if (!isset($_SESSION['token']) || !isset($_SESSION['id'])) {
     die();
 } else {
     $token = $_SESSION['token'];
@@ -34,9 +34,12 @@ if ($token == $get_token['token']) {
     $delete_booking = mysqli_query($connection, $delete_booking_sql);
     if ($delete_booking) {
         header('Location: ../../routes/user-dashboard/booking-land');
-    } else {
-        echo 'Error';
     }
 } else {
-    echo 'Error';
+    session_destroy();
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    header('Location: ../../routes/sign-in/');
 }
+
+mysqli_close($connection);

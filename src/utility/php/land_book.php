@@ -17,7 +17,7 @@ if (!$connection) {
 
 $token = '';
 $user_id = '';
-if (!isset($_SESSION['token']) && !isset($_SESSION['id'])) {
+if (!isset($_SESSION['token']) || !isset($_SESSION['id'])) {
     die();
 } else {
     $token = $_SESSION['token'];
@@ -36,7 +36,13 @@ if ($token == $get_token['token']) {
         header('Location: ../../static/error/HTTP500.html');
     }
 
+} else {
+    session_destroy();
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    header('Location: ../../routes/sign-in/');
 }
+
 
 mysqli_close($connection);
 
