@@ -16,6 +16,25 @@ if (!$connection) {
     die();
 }
 
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token'])) {
+    die();
+} else {
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
+}
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
+
+if ($token != $get_token['token']) {
+    session_destroy();
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    header('Location: ../../sign-in/');
+}
+
 // Get user Data
 $fetch_existing_user_data_sql = "SELECT * FROM user WHERE nid = " . $_SESSION['id'] . ";";
 $fetch_existing_data_result = mysqli_query($connection, $fetch_existing_user_data_sql);

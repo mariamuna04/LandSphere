@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
     $phone_number = $_POST['telephone'];
     $post = $_POST['message'];
 
-    if(isset($_SESSION['id'])) {
+    if (isset($_SESSION['id'])) {
         $full_name = $session_full_name;
         $email = $session_email;
         $phone_number = $session_phone_number;
@@ -109,23 +109,31 @@ if (isset($_POST['submit'])) {
     </button>
 
     <?php
-    if (isset($_SESSION["id"])) {
-        $full_name = $_SESSION["name"];
-        // count how many words in the name
-        $name_count = str_word_count($full_name);
-        // if the name has more than one word
-        if ($name_count > 1) {
-            $first_name = explode(" ", $_SESSION["name"])[0];
-            $last_name = explode(" ", $_SESSION["name"])[1];
-        } else {
-            $first_name = $_SESSION["name"];
-            $last_name = "";
-        }
-        $email = $_SESSION["email"];
+    if (isset($_SESSION["id"]) && isset($_SESSION["token"])) {
+        // Verify Token
+        $token = $_SESSION['token'];
+        $user_id = $_SESSION['id'];
+        $get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+        $get_token_result = mysqli_query($connection, $get_token_sql);
+        $get_token = mysqli_fetch_assoc($get_token_result);
 
-        $rnd = rand(0, 1000000);
+        if ($token == $get_token['token']) {
+            $full_name = $_SESSION["name"];
+            // count how many words in the name
+            $name_count = str_word_count($full_name);
+            // if the name has more than one word
+            if ($name_count > 1) {
+                $first_name = explode(" ", $_SESSION["name"])[0];
+                $last_name = explode(" ", $_SESSION["name"])[1];
+            } else {
+                $first_name = $_SESSION["name"];
+                $last_name = "";
+            }
+            $email = $_SESSION["email"];
 
-        $loggedIn = <<<HTML
+            $rnd = rand(0, 1000000);
+
+            $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
                 class="flex items-center text-sm font-bold text-gray-900 rounded-full"
@@ -219,7 +227,13 @@ if (isset($_POST['submit'])) {
 
         </div>
 HTML;
-        echo $loggedIn;
+            echo $loggedIn;
+        } else {
+            session_destroy();
+            $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+            $delete_token = mysqli_query($connection, $delete_token_sql);
+            header('Location: ./');
+        }
     } else {
         $loggedOut =
             <<<HTML
@@ -292,9 +306,9 @@ HTML;
         <div class="mb-5 col-span-2">
             <input type="text" name="full_name" id="full_name"
                    placeholder="Full Name"
-                   <?php if (isset($_SESSION['id'])) {
-                       echo 'value="' . $session_full_name . '" disabled';
-                   } ?>
+                <?php if (isset($_SESSION['id'])) {
+                    echo 'value="' . $session_full_name . '" disabled';
+                } ?>
                    class="w-full rounded-2xl
                            bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono"
@@ -307,9 +321,9 @@ HTML;
                    name="email"
                    id="email"
                    placeholder="Email address"
-                   <?php if (isset($_SESSION['id'])) {
-                       echo 'value="' . $session_email . '" disabled';
-                   } ?>
+                <?php if (isset($_SESSION['id'])) {
+                    echo 'value="' . $session_email . '" disabled';
+                } ?>
                    class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -322,9 +336,9 @@ HTML;
                    name="telephone"
                    id="telephone"
                    placeholder="Telephone number"
-                   <?php if (isset($_SESSION['id'])) {
-                       echo 'value="' . $session_phone_number . '" disabled';
-                   } ?>
+                <?php if (isset($_SESSION['id'])) {
+                    echo 'value="' . $session_phone_number . '" disabled';
+                } ?>
                    class="w-full rounded-2xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"

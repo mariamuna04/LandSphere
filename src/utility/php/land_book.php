@@ -18,6 +18,7 @@ if (!$connection) {
 $token = '';
 $user_id = '';
 if (!isset($_SESSION['token']) || !isset($_SESSION['id'])) {
+    header('Location: ../../routes/sign-in/');
     die();
 } else {
     $token = $_SESSION['token'];

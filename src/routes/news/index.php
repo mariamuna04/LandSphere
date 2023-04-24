@@ -77,22 +77,30 @@ $result = mysqli_query($connection, $sql);
     </button>
 
     <?php
-    if (isset($_SESSION["id"])) {
-        $full_name = $_SESSION["name"];
-        // count how many words in the name
-        $name_count = str_word_count($full_name);
-        // if the name has more than one word
-        if ($name_count > 1) {
-            $first_name = explode(" ", $_SESSION["name"])[0];
-            $last_name = explode(" ", $_SESSION["name"])[1];
-        } else {
-            $first_name = $_SESSION["name"];
-            $last_name = "";
-        }
-        $email = $_SESSION["email"];
+    if (isset($_SESSION["id"]) && isset($_SESSION["token"])) {
+        // Verify Token
+        $token = $_SESSION['token'];
+        $user_id = $_SESSION['id'];
+        $get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+        $get_token_result = mysqli_query($connection, $get_token_sql);
+        $get_token = mysqli_fetch_assoc($get_token_result);
 
-        $rnd = rand(0, 1000000);
-        $loggedIn = <<<HTML
+        if ($token == $get_token['token']) {
+            $full_name = $_SESSION["name"];
+            // count how many words in the name
+            $name_count = str_word_count($full_name);
+            // if the name has more than one word
+            if ($name_count > 1) {
+                $first_name = explode(" ", $_SESSION["name"])[0];
+                $last_name = explode(" ", $_SESSION["name"])[1];
+            } else {
+                $first_name = $_SESSION["name"];
+                $last_name = "";
+            }
+            $email = $_SESSION["email"];
+
+            $rnd = rand(0, 1000000);
+            $loggedIn = <<<HTML
     <div class="flex gap-6 items-center">
         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
                 class="flex items-center text-sm font-bold text-gray-900 rounded-full"
@@ -187,7 +195,13 @@ $result = mysqli_query($connection, $sql);
 
         </div>
 HTML;
-        echo $loggedIn;
+            echo $loggedIn;
+        } else {
+            session_destroy();
+            $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+            $delete_token = mysqli_query($connection, $delete_token_sql);
+            header('Location: ./');
+        }
     } else {
         $loggedOut =
             <<<HTML
