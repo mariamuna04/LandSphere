@@ -298,11 +298,13 @@ HTML;
 
                 echo <<< HTML
                     <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
-                                transition-all duration-300">
+                                transition-all duration-300 group">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
                                 <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
-                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                                <form method="post" action="../../on-sale/land/?land_id=$land_id">
+                                    <button type="submit" class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</button>
+                                </form>
                             </div>
                             <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
                         </div>
@@ -313,6 +315,7 @@ HTML;
                         </div>
 
                         <div class="flex gap-4 justify-between mt-4 items-center">
+                            
                     HTML;
 
                 if ($payment_information) {

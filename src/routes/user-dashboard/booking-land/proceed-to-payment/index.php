@@ -34,12 +34,13 @@ $land = mysqli_fetch_assoc($get_land_information_result);
 $cost_per_sqft = $land["cost_per_sqft"];
 $land_area = $land["area"];
 $total_cost = $cost_per_sqft * $land_area;
-$landsphere_income = $total_cost * 0.015;
+$landsphere_income = $total_cost * 0.05;
 $service_charge = 1600;
 $tax = $total_cost * 0.15;
 $registration_charge = 2100;
 $verification_charge = 300;
-$grand_total = $total_cost + $landsphere_income + $service_charge + $tax + $registration_charge + $verification_charge;
+$document_charge = 120;
+$grand_total = $total_cost + $landsphere_income + $service_charge + $tax + $registration_charge + $verification_charge + $document_charge;
 $grand_total = number_format($grand_total, 2, '.', ',');
 
 
@@ -315,7 +316,7 @@ HTML;
                 <hr class="border-2 border-gray-300 rounded-full my-2">
 
                 <div class="flex justify-between">
-                    <p>1.5% LandSphere Charge</p>
+                    <p>5% LandSphere Charge</p>
                     <p class="font-bold tracking-widest">$<?php echo $landsphere_income ?></p>
                 </div>
 
@@ -334,6 +335,12 @@ HTML;
                     <p>Verification Charge</p>
                     <p class="font-bold tracking-widest">$<?php echo $verification_charge ?></p>
                 </div>
+
+                <div class="flex justify-between">
+                    <p>Document Charge</p>
+                    <p class="font-bold tracking-widest">$<?php echo $document_charge ?></p>
+                </div>
+
                 <hr class="border-4 border-gray-400 rounded-full my-2">
                 <div class="flex justify-between">
                     <p class="font-black text-lg">Grand Total</p>
@@ -343,7 +350,7 @@ HTML;
 
             </div>
             <p class=" text-center w-full mt-4 text-sm font-mono text-zinc-500"> Percentages are calculated on the total
-                cost of land.
+                cost of land
             </p>
         </div>
 

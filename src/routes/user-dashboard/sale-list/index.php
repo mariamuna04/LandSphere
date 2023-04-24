@@ -325,7 +325,7 @@ HTML;
 
                     echo <<< HTML
                     <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
-                                transition-all duration-300 transform">
+                                transition-all duration-300 transform group">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
                                 <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
@@ -440,7 +440,7 @@ HTML;
                 }
 
                 echo <<< HTML
-                    <div class="flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300 ">
                         <div class="flex justify-between">
                             <div class="flex gap-4">  
