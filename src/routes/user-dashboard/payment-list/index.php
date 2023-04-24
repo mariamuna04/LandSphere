@@ -33,10 +33,12 @@ if ($token != $get_token['token']) {
     $delete_token = mysqli_query($connection, $delete_token_sql);
     header('Location: ../../sign-in/');
 }
-$get_lands_that_is_booked_sql = "SELECT * FROM booked_land_purchase JOIN land l on booked_land_purchase.land_id = l.land_id
-         JOIN land_cost_info lci on l.land_id = lci.land_id WHERE potential_buyer_id = " . $_SESSION["id"] . " ORDER BY title;";
-$get_lands_that_is_booked_table = mysqli_query($connection, $get_lands_that_is_booked_sql);
-$lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
+
+$get_lands_in_payment_list = "SELECT * FROM payment WHERE buyer_nid = " . $user_id . ";";
+$lands_in_payment_list_result = mysqli_query($connection, $get_lands_in_payment_list);
+$has_lands_in_payment_list = mysqli_num_rows($lands_in_payment_list_result);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +48,8 @@ $lands_that_is_booked = mysqli_num_rows($get_lands_that_is_booked_table) > 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../../dist/output.css" rel="stylesheet">
     <link rel="icon" href="../../../resource/ico.svg">
-    <title>LandSphere | Your Personal Land Manager</title
+    <title>LandSphere | Your Personal Land Manager</title>
+
 </head>
 
 <body class="bg-beige-default">
@@ -244,9 +247,124 @@ HTML;
 </div>
 
 <section class="container mx-auto my-auto mt-48 mb-16 pl-36 pr-36">
-    <main class="w-full flex-col p-4 flex gap-6">
+    <?php
+    if ($has_lands_in_payment_list) {
+        echo <<< HTML
+            <p class="text-3xl font-medium ">
+                Your <span class="text-primary">Payments.</span>
+                <span class="text-gray-500">
+                    Your dream is coming true!
+                </span>
+            </p>
+        HTML;
+    } else {
+        echo <<< HTML
+            <p class="text-3xl font-medium text-center w-full">
+              <span class="text-gray-500">
+                    You have not process payments of any land yet!
+              </span>
+            </p>
+        HTML;
+    }
+    ?>
 
+    <main id="your_payments" class="grid-cols-2 grid place-items-center gap-4 mt-4">
+        <?php
+        if ($has_lands_in_payment_list) {
+            $lands_in_payment_list = mysqli_fetch_assoc($lands_in_payment_list_result);
+            while ($lands_in_payment_list) {
+                $payment_id = $lands_in_payment_list['payment_id'];
+                $land_id = $lands_in_payment_list['land_id'];
+                $due_time = $lands_in_payment_list['due_time'];
+                $total_amount = $lands_in_payment_list['total_amount'];
+                $paid_amount = 0;
+                $installment = $lands_in_payment_list['installments'];
+
+                $get_land_information_sql = "SELECT * FROM land WHERE land_id = '$land_id'";
+                $get_land_information_result = mysqli_query($connection, $get_land_information_sql);
+                $land_information = mysqli_fetch_assoc($get_land_information_result);
+
+                $get_installment_information_sql = "SELECT * FROM installment WHERE payment_id = '$payment_id'";
+                $get_installment_information_result = mysqli_query($connection, $get_installment_information_sql);
+                $installment_number_row_count = mysqli_num_rows($get_installment_information_result);
+
+                if ($installment_number_row_count > 0) {
+                    $get_paid_amount_sql = "SELECT SUM(amount) AS paid_amount FROM installment WHERE payment_id = '$payment_id'";
+                    $get_paid_amount_result = mysqli_query($connection, $get_paid_amount_sql);
+                    $paid_amount_row = mysqli_fetch_assoc($get_paid_amount_result);
+                    $paid_amount = $paid_amount_row['paid_amount'];
+                }
+
+                $next_installment_amount = 0;
+                if ($installment != 0) {
+                    $next_installment_amount = ($total_amount - $paid_amount) / ($installment - $installment_number_row_count);
+                } else {
+                    $next_installment_amount = $total_amount;
+                }
+                $next_installment_amount = number_format($next_installment_amount, 2);
+
+                $percentage = ($paid_amount / $total_amount) * 100;
+                $percentage = (int)$percentage;
+                if ($percentage > 100) {
+                    $percentage = 100;
+                }
+
+                $paid_amount = number_format($paid_amount, 2);
+                $total_amount = number_format($total_amount, 2);
+
+
+                echo <<< HTML
+                    <a href="#" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
+                    rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
+                    antialiased motion-safe:hover:scale-[1.02]">
+                        <div class="flex justify-between font-mono tracking-wide">
+                            <div class="bg-beige-darkest text-sm px-2 py-1 rounded-xl">$land_id</div>
+                            <div class="bg-zinc-600 text-white text-sm px-2 py-1 rounded-xl opacity-50">$payment_id</div>
+                        </div>
+                        
+                        <div class="transition-all duration-300 group-hover:text-primary font-bold text-2xl">
+                            {$land_information['title']}
+                        </div>
+                        
+                        <div class="transition-all duration-300 group-hover:text-zinc-800 text-zinc-500 font-bold text-lg">
+                            {$land_information['address']}
+                        </div>
+                        
+                        <hr class="border-2 border-gray-300 rounded-full my-2">
+                        <div class="grid-cols-2 grid place-items-center justify-between my-2">
+                            <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium 
+                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Deadline: $due_time</div>
+                            <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium
+                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Installments:
+                                <span class="font-mono pl-3"> $installment_number_row_count / $installment </span>
+                            </div>
+                        </div>
+                               
+                        <div class="bg-beige-darkest w-full h-3 rounded-full">
+                            <div class="bg-green-400 group-hover:bg-primary transition-all duration-500 h-full rounded-full" style="width: {$percentage}%">
+                            </div>
+                        </div>
+                        <div class="grid-cols-2 grid place-items-center justify-between my-2 font-mono">
+                            <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium
+                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Paid Amount: <br> $paid_amount</div>
+                            <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium
+                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Total Amount: <br> $total_amount</div>
+                        </div>
+
+                        <h1 class="w-full text-center font-bold text-zinc-500">
+                            Next Installment Amount ~ <span class="font-mono tracking-widest text-primary">$next_installment_amount</span>
+                        </h1>
+
+                    </a>
+                HTML;
+                $lands_in_payment_list = mysqli_fetch_assoc($lands_in_payment_list_result);
+            }
+        }
+
+        ?>
     </main>
+
+
 </section>
 
 

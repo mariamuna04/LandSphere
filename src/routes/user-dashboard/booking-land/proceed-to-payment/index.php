@@ -455,19 +455,28 @@ HTML;
 
                 ?>
 
-                <div
-                    class="group hover:shadow-lg flex-col gap-1 p-4 bg-zinc-800 text-white rounded-2xl font-mono tracking-widest">
+                <div id="privacy"
+                     class="group hover:shadow-lg flex-col gap-1 p-4 bg-zinc-800 text-white rounded-2xl font-mono tracking-widest">
                     <div class="flex justify-between">
                         <h1 class="font-bold">Card Number</h1>
-                        <p><?php echo $card_number ?></p>
+                        <div>
+                            <span id="hidden_bullet1">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+                            <span id="visible_bullet1" class="hidden animate-bounce"><?php echo $card_number ?></span>
+                        </div>
                     </div>
                     <div class="flex justify-between">
                         <h1 class="font-bold">Expiry Date</h1>
-                        <p><?php echo $expiry_date ?></p>
+                        <div>
+                            <span id="hidden_bullet2">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+                            <span id="visible_bullet2" class="hidden animate-bounce"><?php echo $expiry_date ?></span>
+                        </div>
                     </div>
                     <div class="flex justify-between">
                         <h1 class="font-bold">CVC</h1>
-                        <p><?php echo $cvc ?></p>
+                        <div>
+                            <span id="hidden_bullet3">&bull;&bull;&bull;</span>
+                            <span id="visible_bullet3" class="hidden animate-bounce"><?php echo $cvc ?></span>
+                        </div>
                     </div>
                     <div class="flex justify-between">
                         <h1 class="font-bold">Cardholder Name</h1>
@@ -701,6 +710,39 @@ HTML;
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <script>
+    const card_privacy = document.getElementById("privacy");
+    const hidden_bullet1 = document.getElementById("hidden_bullet1");
+    const visible_bullet1 = document.getElementById("visible_bullet1");
+
+    const hidden_bullet2 = document.getElementById("hidden_bullet2");
+    const visible_bullet2 = document.getElementById("visible_bullet2");
+
+    const hidden_bullet3 = document.getElementById("hidden_bullet3");
+    const visible_bullet3 = document.getElementById("visible_bullet3");
+
+    card_privacy.addEventListener("mouseover", () => {
+        hidden_bullet1.style.display = "none";
+        visible_bullet1.style.display = "inline";
+
+        hidden_bullet2.style.display = "none";
+        visible_bullet2.style.display = "inline";
+
+        hidden_bullet3.style.display = "none";
+        visible_bullet3.style.display = "inline";
+    });
+
+    card_privacy.addEventListener("mouseout", () => {
+        hidden_bullet1.style.display = "inline";
+        visible_bullet1.style.display = "none";
+
+        hidden_bullet2.style.display = "inline";
+        visible_bullet2.style.display = "none";
+
+        hidden_bullet3.style.display = "inline";
+        visible_bullet3.style.display = "none";
+    });
+
+
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
