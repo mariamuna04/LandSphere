@@ -34,11 +34,11 @@ if ($token != $get_token['token']) {
     header('Location: ../../sign-in/');
 }
 
+
+// Get lands in payment list, used in while loop
 $get_lands_in_payment_list = "SELECT * FROM payment WHERE buyer_nid = " . $user_id . ";";
 $lands_in_payment_list_result = mysqli_query($connection, $get_lands_in_payment_list);
 $has_lands_in_payment_list = mysqli_num_rows($lands_in_payment_list_result);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -270,45 +270,85 @@ HTML;
 
     <main id="your_payments" class="grid-cols-2 grid place-items-center gap-4 mt-4">
         <?php
+        // If there are any lands in payment list
         if ($has_lands_in_payment_list) {
+            // Start the loop
             $lands_in_payment_list = mysqli_fetch_assoc($lands_in_payment_list_result);
             while ($lands_in_payment_list) {
+                // Get Payment table information for each land
                 $payment_id = $lands_in_payment_list['payment_id'];
                 $land_id = $lands_in_payment_list['land_id'];
                 $due_time = $lands_in_payment_list['due_time'];
                 $total_amount = $lands_in_payment_list['total_amount'];
-                $paid_amount = 0;
+                $paid_amount = 0;   // because paid can be calculated from installment table
                 $installment = $lands_in_payment_list['installments'];
+                // Now for installment == 0 or 1, we have a special case.
+                // 0 or 1 means pay fully. so there will be 1 transaction (or we say installment)
+                // NULL and 0 SAME FOR ME
+                if ($installment == 0 || $installment == 1 || $installment == null) {
+                    // handle this special case
+                    $installment = 1;
+                }
 
+                // Get Land table information for each land
                 $get_land_information_sql = "SELECT * FROM land WHERE land_id = '$land_id'";
                 $get_land_information_result = mysqli_query($connection, $get_land_information_sql);
                 $land_information = mysqli_fetch_assoc($get_land_information_result);
 
+                // Get Installment table information for each land
                 $get_installment_information_sql = "SELECT * FROM installment WHERE payment_id = '$payment_id'";
                 $get_installment_information_result = mysqli_query($connection, $get_installment_information_sql);
                 $installment_number_row_count = mysqli_num_rows($get_installment_information_result);
 
+                // Check if there are already some installments paid
+                // if so, get total paid amount from installment table
                 if ($installment_number_row_count > 0) {
+                    // get total paid amount
                     $get_paid_amount_sql = "SELECT SUM(amount) AS paid_amount FROM installment WHERE payment_id = '$payment_id'";
                     $get_paid_amount_result = mysqli_query($connection, $get_paid_amount_sql);
                     $paid_amount_row = mysqli_fetch_assoc($get_paid_amount_result);
+                    // paid amount is updated here, this will be used later
                     $paid_amount = $paid_amount_row['paid_amount'];
                 }
 
-                $next_installment_amount = 0;
-                if ($installment != 0) {
-                    $next_installment_amount = ($total_amount - $paid_amount) / ($installment - $installment_number_row_count);
-                } else {
-                    $next_installment_amount = $total_amount;
-                }
-                $next_installment_amount = number_format($next_installment_amount, 2);
 
+                // calculate the next installment amount
+                // 3 cases: installment = 1; installment = last installment; installment = any other installment
+                $next_installment_amount = 0;
+                // if installment = 1, then next installment amount = total amount
+                if ($installment == 1) {
+                    $next_installment_amount = $total_amount;
+                } // if installment = last installment, then next installment amount = total amount - paid amount
+                else if ($installment == $installment_number_row_count) {
+                    // calculate next installment amount for last installment
+                    $next_installment_amount = $total_amount - $paid_amount;
+                    // if next installment amount is negative, then set it to 0
+                    // client may overpay UwU
+                    if ($next_installment_amount < 0) {
+                        $next_installment_amount = 0;
+                    }
+                    // finally for normal cases, next installment amount = (total amount - paid amount) / (installment - installment_number_row_count)
+                } else {
+                    $next_installment_amount = ($total_amount - $paid_amount) / ($installment - $installment_number_row_count);
+                }
+
+                // check if overpaid
+                if ($paid_amount > $total_amount) {
+                    $next_installment_amount = 0;
+                }
+
+                // convert next installment amount to 2 decimal places
+                $converted_next_installment_amount = number_format($next_installment_amount, 2);
+
+                // Calculate progressbar width
                 $percentage = ($paid_amount / $total_amount) * 100;
                 $percentage = (int)$percentage;
+                // if percentage is greater than 100, set it to 100
                 if ($percentage > 100) {
                     $percentage = 100;
                 }
 
+                // convert paid amount and total amount to 2 decimal places
                 $paid_amount = number_format($paid_amount, 2);
                 $total_amount = number_format($total_amount, 2);
 
@@ -352,7 +392,7 @@ HTML;
                         </div>
 
                         <h1 class="w-full text-center font-bold text-zinc-500">
-                            Next Installment Amount ~ <span class="font-mono tracking-widest text-primary">$next_installment_amount</span>
+                            Next Installment Amount ~ <span class="font-mono tracking-widest text-primary">$converted_next_installment_amount</span>
                         </h1>
 
                     </a>
