@@ -67,6 +67,31 @@ $billing_address = $owner_payment_information["billing_address"];
 // divide card number into 4 parts, with hyphen in between, 4 digits each
 $card_number = substr($card_number, 0, 4) . "-" . substr($card_number, 4, 4) . "-" . substr($card_number, 8, 4) . "-" . substr($card_number, 12, 4);
 
+$payment_id = date("Y") . $land_id . $_SESSION['id'];
+$deadline_left_blank = false;
+
+$date_diff = 0;
+
+if (isset($_POST['submit'])) {
+    $installment = $_POST['installment'];
+    if (empty($installment)) $installment = 0;
+    $deadline = $_POST['deadline'];
+    if (empty($deadline)) $deadline_left_blank = true;
+
+    // check if the date is more than 3 years from now
+    $over_3_years = false;
+    $deadline = date("Y-m-d", strtotime($deadline));
+    $today = date("Y-m-d");
+    $date_diff = date_diff(date_create($today), date_create($deadline));
+    $date_diff = $date_diff->format("%y");
+
+    if (!$deadline_left_blank && $date_diff < 4 && $deadline > $today) {
+        $confirm_payment_sql = "INSERT INTO payment (payment_id, buyer_nid, land_id, due_time, total_amount, installments) VALUES
+            (" . $payment_id . ", " . $_SESSION['id'] . " , " . $land_id . ", '" . $deadline . "', " . $total_cost . ", " . $installment . ");";
+        $confirm_payment = mysqli_query($connection, $confirm_payment_sql);
+        header("Location: ../");
+    }
+}
 
 ?>
 
@@ -351,27 +376,21 @@ HTML;
                     <h1 class="font-semibold text-zinc-500 pr-8">Buyer</h1>
                 </div>
             </div>
-
             <h1 class="pl-4 pt-3 text-lg text-gray-500 font-bold">
                 Select Installment Plan and Deadline
             </h1>
 
             <form method="post" action="" class="flex flex-col h-full justify-between gap-2">
-
-                <!-- action="../../../../utility/php/confirm_payment.php" -->
-
-
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col gap-1">
                         <label for="installment" class="text-sm font-bold pl-4">Select Installment Period</label>
-                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Select 0 for no installment
+                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Leave empty for no installment
                             plan)</label>
                     </div>
                     <input type="number" name="installment" id="installment"
-                           min="0" max="36" value="0"
-                           placeholder="Email address or Phone Number"
-                           class="rounded-xl text-right w-24
-                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           min="1" max="36"
+                           class="rounded-xl text-right
+                            py-3 px-6 text-base font-medium text-[#6B7280]
                            outline-none focus:shadow-md font-mono mr-4"
                     />
                 </div>
@@ -379,11 +398,16 @@ HTML;
                 <div class="flex justify-between items-center pb-3">
                     <div class="flex flex-col gap-1">
                         <label for="deadline" class="text-sm font-bold pl-4">Deadline</label>
+                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Cannot be more than 3
+                            years)</label>
                     </div>
                     <input type="date" name="deadline" id="deadline"
                            class="rounded-xl text-right
-                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md font-mono mr-4"
+                           py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono mr-4
+                           <?php
+                           if ($deadline_left_blank || $date_diff > 3 || $deadline < $today) echo ' border border-red-500 bg-red-100 ';
+                           ?>"
                     />
                 </div>
 
@@ -411,7 +435,7 @@ HTML;
                     </div>
                 </div>
 
-                <button name="submit" type="submit"
+                <button type="submit" name="submit"
                         class="hover:shadow-form bg-green-700
                         py-3 px-8 text-center text-base
                         font-bold text-white outline-none items-center
