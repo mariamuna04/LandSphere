@@ -572,6 +572,7 @@ HTML;
             </p>
         </div>
     </main>
+
 </section>
 
 <footer id="index_footer"

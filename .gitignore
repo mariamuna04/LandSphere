@@ -25,3 +25,10 @@ package.json.ember-try
 *.iml
 *.iws
 */.DS_Store
+
+# Database
+databases/.idea
+databases/*.iml
+databases/*.iws
+databases/*.ipr
+databases/git

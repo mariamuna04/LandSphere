@@ -403,7 +403,7 @@ $hour = date('H', strtotime($current_time));
                     <span class="text-lg font-bold pl-2"> Your Successor </span>
 
                 </a>
-                <a href="./payment"
+                <a href="./payment-list"
                    class="flex flex-col justify-between bg-beige-light shadow-md p-4 rounded-2xl backdrop-blur-sm
                   transform motion-safe:hover:scale-[1.02] hover:text-green-600
                   transition-all hover:shadow-lg duration-300 hover:bg-white bg-opacity-80 hover:bg-opacity-100">

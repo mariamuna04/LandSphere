@@ -3,7 +3,7 @@
 const HOST = 'localhost';
 const USER = 'root';
 const PASSWORD = '';
-const DATABASE = 'dbms_project';
+const DATABASE = 'landsphere';
 
 function connection(): bool|mysqli
 {

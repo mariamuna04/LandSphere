@@ -35,6 +35,7 @@ if ($token != $get_token['token']) {
 }
 
 
+
 // Get lands in payment list, used in while loop
 $get_lands_in_payment_list = "SELECT * FROM payment WHERE buyer_nid = " . $user_id . ";";
 $lands_in_payment_list_result = mysqli_query($connection, $get_lands_in_payment_list);
@@ -253,7 +254,7 @@ HTML;
             <p class="text-3xl font-medium ">
                 Your <span class="text-primary">Payments.</span>
                 <span class="text-gray-500">
-                    Your dream is coming true!
+                    Dreams are coming true!
                 </span>
             </p>
         HTML;
@@ -296,7 +297,7 @@ HTML;
                 $land_information = mysqli_fetch_assoc($get_land_information_result);
 
                 // Get Installment table information for each land
-                $get_installment_information_sql = "SELECT * FROM installment WHERE payment_id = '$payment_id'";
+                $get_installment_information_sql = "SELECT * FROM installment WHERE id = '$payment_id'";
                 $get_installment_information_result = mysqli_query($connection, $get_installment_information_sql);
                 $installment_number_row_count = mysqli_num_rows($get_installment_information_result);
 
@@ -304,7 +305,7 @@ HTML;
                 // if so, get total paid amount from installment table
                 if ($installment_number_row_count > 0) {
                     // get total paid amount
-                    $get_paid_amount_sql = "SELECT SUM(amount) AS paid_amount FROM installment WHERE payment_id = '$payment_id'";
+                    $get_paid_amount_sql = "SELECT SUM(amount) AS paid_amount FROM installment WHERE id = '$payment_id'";
                     $get_paid_amount_result = mysqli_query($connection, $get_paid_amount_sql);
                     $paid_amount_row = mysqli_fetch_assoc($get_paid_amount_result);
                     // paid amount is updated here, this will be used later
@@ -354,7 +355,7 @@ HTML;
 
 
                 echo <<< HTML
-                    <a href="#" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
+                    <a href="./installment/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
                     rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
                     antialiased motion-safe:hover:scale-[1.02]">
                         <div class="flex justify-between font-mono tracking-wide">
