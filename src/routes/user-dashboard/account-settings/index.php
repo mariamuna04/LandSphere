@@ -404,8 +404,9 @@ if (isset($_POST["submit"])) {
             </span>
 
             <h1 class="text-xl font-bold font-mono text-primary">
-                SSL Encryption</h1>
+                SSL Encryption
             </h1>
+
 
         </div>
         <div class="w-full flex flex-col gap-4">
