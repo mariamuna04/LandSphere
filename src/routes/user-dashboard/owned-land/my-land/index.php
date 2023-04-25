@@ -548,6 +548,7 @@ HTML;
                 <?php
 
                 $ratio = $land_cp_sqft / $land_rcv;
+                $ratio = round($ratio, 2);
                 if ($ratio >= 1) {
                     echo <<< HTML
                     <div class="w-[20%] p-2 text-center font-medium px-2.5 rounded-2xl bg-beige-dark flex-col flex">

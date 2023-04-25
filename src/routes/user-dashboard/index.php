@@ -323,7 +323,7 @@ $hour = date('H', strtotime($current_time));
                                 } else {
                                     echo $total_area;
                                 }
-                                ?> sqft</p>
+                                ?> SQFT</p>
                         </div>
                     </div>
 
