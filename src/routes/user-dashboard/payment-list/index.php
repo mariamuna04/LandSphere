@@ -349,15 +349,27 @@ HTML;
                     $percentage = 100;
                 }
 
+                if ($paid_amount != $total_amount) {
+                    echo <<< HTML
+                        <a href="./installment/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
+                        rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
+                        antialiased motion-safe:hover:scale-[1.02]">
+                    HTML;
+                } else {
+                    echo <<< HTML
+                        <a href="./transfer-ownership/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 w-full pb-4 px-4
+                        rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 bg-green-50
+                        antialiased motion-safe:hover:scale-[1.02]">
+                            <h1 class="text-center font-black pb-4 pt-4 mb-2 rounded-b-2xl bg-green-300 text-green-700">&#127881; Click to Transfer Ownership &#127881; </h1>
+                    HTML;
+                }
+
                 // convert paid amount and total amount to 2 decimal places
                 $paid_amount = number_format($paid_amount, 2);
                 $total_amount = number_format($total_amount, 2);
 
 
                 echo <<< HTML
-                    <a href="./installment/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
-                    rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
-                    antialiased motion-safe:hover:scale-[1.02]">
                         <div class="flex justify-between font-mono tracking-wide">
                             <div class="bg-beige-darkest text-sm px-2 py-1 rounded-xl">$land_id</div>
                             <div class="bg-zinc-600 text-white text-sm px-2 py-1 rounded-xl opacity-50">$payment_id</div>

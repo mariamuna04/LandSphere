@@ -54,12 +54,19 @@ $max_payable_amount = 0;
 $get_payment_information_sql = "SELECT * FROM payment WHERE payment_id = " . $payment_id . ";";
 $get_payment_information_result = mysqli_query($connection, $get_payment_information_sql);
 $payment_information = mysqli_fetch_assoc($get_payment_information_result);
+$installments = $payment_information['installments'];   // Get number of installments also
 $total_amount = $payment_information['total_amount'];
 $total_paid = $payment_information['paid_amount'];
 if ($total_paid == 0 || $total_paid == null) {
     $total_paid = 0;
 }
 $max_payable_amount = $total_amount - $total_paid;
+
+// Check if it is a full payment or installment payment
+$full_payment = false;
+if ($installments == 1 || $installments == 0 || $installments == null) {
+    $full_payment = true;
+}
 
 // Left Blank variables
 $installment_amount_left_blank = false;
@@ -74,6 +81,7 @@ $card_number_error = false;
 $password_error = false;
 if (isset($_POST['submit'])) {
     $pay_amount = $_POST['installment_amount'];
+    if ($full_payment) $pay_amount = $max_payable_amount;
     if (empty($pay_amount)) $installment_amount_left_blank = true;
     if ($pay_amount > $max_payable_amount) $installment_overpaid_error = true;
     if ($pay_amount <= 0) $installment_amount_error = true;
@@ -354,7 +362,11 @@ HTML;
     <main class="mt-12 grid grid-cols-2 gap-6">
         <div class="m-2 p-6 flex-col flex gap-3 ">
             <h1 class="text-2xl font-bold text-primary text-center">
-                Pay an Installment
+                <?php
+                if ($full_payment) echo 'Full Payment';
+                else echo 'Pay an Installment';
+                ?>
+
             </h1>
             <form method="post" action="" class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
@@ -367,17 +379,19 @@ HTML;
                            name="installment_amount"
                            id="installment_amount"
                            placeholder="Enter Amount ($)"
+                        <?php if ($full_payment) echo 'value="' . $max_payable_amount . '" disabled'; ?>
                            class="w-full rounded-xl text-center
                                 py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono
+                               outline-none focus:shadow-md font-mono disabled:cursor-not-allowed
+                               disabled:border disabled:border-gray-300 disabled:bg-gray-100
                                <?php if ($installment_amount_left_blank || $installment_amount_error || $installment_overpaid_error) echo ' border-2 border-red-500 bg-red-100 '; ?>"
                     />
                     <?php
-                    if ($installment_amount_left_blank)
+                    if ($installment_amount_left_blank && !$full_payment)
                         echo '<label for="installment_amount" class="text-sm text-center text-red-600 ">Installment Amount left empty</label>';
-                    if ($installment_amount_error)
+                    if ($installment_amount_error && !$full_payment)
                         echo '<label for="installment_amount" class="text-sm text-center text-red-600 ">Invalid Installment Value</label>';
-                    if ($installment_overpaid_error)
+                    if ($installment_overpaid_error && !$full_payment)
                         echo <<< HTML
                             <label for="installment_amount" class="text-sm text-center text-red-600 ">Installment Overpaid. Amount cannot exceed $$max_payable_amount</label>
                         HTML;
@@ -451,7 +465,7 @@ HTML;
                 } else {
                     echo <<< HTML
                             <h1 class="text-2xl font-bold text-zinc-500 text-center">
-                                No Installments Paid Yet
+                                No Payment Yet
                             </h1>
                          HTML;
                 }
@@ -485,14 +499,14 @@ HTML;
                         HTML;
                         $get_installment_information = mysqli_fetch_assoc($get_installment_information_result);
                     }
-                    $print_total_amount = number_format($total_amount, 2);
+                    $print_paid_amount = number_format($total_paid, 2);
                     echo <<< HTML
                         <div class="flex justify-between opacity-75">
                             <h1 class="text-lg font-bold">
                                 Total Paid Amount
                             </h1>
                             <h1 class="text-lg font-mono tracking-widest font-bold text-primary">
-                                $$print_total_amount
+                                $$print_paid_amount
                             </h1>
                         </div>
                     HTML;
