@@ -76,6 +76,7 @@ if (isset($_POST['submit'])) {
     $pay_amount = $_POST['installment_amount'];
     if (empty($pay_amount)) $installment_amount_left_blank = true;
     if ($pay_amount > $max_payable_amount) $installment_overpaid_error = true;
+    if ($pay_amount <= 0) $installment_amount_error = true;
     $card_number = $_POST['card_number'];
     if (empty($card_number)) $card_number_left_blank = true;
     $password = $_POST['password'];
@@ -94,7 +95,7 @@ if (isset($_POST['submit'])) {
         $actual_password = $fetch_actual_password['password'];
         if ($password != $actual_password) $password_error = true;
 
-        if ($card_number == $actual_card_number && $password == $actual_password && !$installment_overpaid_error) {
+        if ($card_number == $actual_card_number && $password == $actual_password && !$installment_overpaid_error && !$installment_amount_error) {
             $insert_installment_sql = "INSERT INTO installment (id, amount) VALUES (" . $payment_id . ", " . $pay_amount . ");";
             $insert_installment_result = mysqli_query($connection, $insert_installment_sql);
             if ($insert_installment_result) {
@@ -369,17 +370,18 @@ HTML;
                            class="w-full rounded-xl text-center
                                 py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono
-                               <?php if ($installment_amount_left_blank || $installment_amount_error) echo ' border-2 border-red-500 bg-red-100 '; ?>"
+                               <?php if ($installment_amount_left_blank || $installment_amount_error || $installment_overpaid_error) echo ' border-2 border-red-500 bg-red-100 '; ?>"
                     />
                     <?php
                     if ($installment_amount_left_blank)
                         echo '<label for="installment_amount" class="text-sm text-center text-red-600 ">Installment Amount left empty</label>';
                     if ($installment_amount_error)
-                        echo '<label for="installment_amount" class="text-sm text-center text-red-600 ">Installment Error Message</label>';
+                        echo '<label for="installment_amount" class="text-sm text-center text-red-600 ">Invalid Installment Value</label>';
                     if ($installment_overpaid_error)
                         echo <<< HTML
                             <label for="installment_amount" class="text-sm text-center text-red-600 ">Installment Overpaid. Amount cannot exceed $$max_payable_amount</label>
                         HTML;
+
                     ?>
 
                 </div>
