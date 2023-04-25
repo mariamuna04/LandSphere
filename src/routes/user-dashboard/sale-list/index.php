@@ -413,7 +413,6 @@ HTML;
                 echo <<< HTML
                     <p class="text-center text-3xl pb-12 font-medium leading-relaxed text-gray-500">
                         You are not selling any lands
-
                     </p>
                 HTML;
 
@@ -458,32 +457,65 @@ HTML;
                     $style = " bg-yellow-100 text-yellow-600 ";
                 }
 
+                $land_has_all_legal_documents_sql = "SELECT * FROM land_docs WHERE land_id = " . $land_id . ";";
+                $land_has_all_legal_documents_result = mysqli_query($connection, $land_has_all_legal_documents_sql);
+                $legal_document_table = mysqli_fetch_assoc($land_has_all_legal_documents_result);
+                $has_all_legal_docs = false;
+                $registration_document = $legal_document_table["registration_paper"];
+                $government_permit = $legal_document_table["government_permit"];
+                $agreement_document = $legal_document_table["agreement"];
+                $sale_deed = $legal_document_table["sale_deed"];
+                $tax_payment = $legal_document_table["tax_pay_receipt"];
+                $map_property = $legal_document_table["map_property"];
+
+                if ($registration_document && $government_permit && $agreement_document && $sale_deed && $tax_payment && $map_property) {
+                    $has_all_legal_docs = true;
+                }
+
                 echo <<< HTML
-                    <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
+                        <div class="group flex flex-col bg-beige-dark p-6 rounded-xl align-middle hover:shadow-lg 
                                 transition-all duration-300 ">
-                        <div class="flex justify-between">
-                            <div class="flex gap-4">  
-                                <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
-                                <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                            <div class="flex justify-between">
+                                <div class="flex gap-4">  
+                                    <div class="bg-beige-darkest text-zinc-600 font-mono align-middle p-1 rounded-xl font-sm px-3">$land_id</div>
+                                    <h1 class="text-2xl font-extrabold group-hover:text-primary transition-all duration-300">$land_title</h1>
+                                </div>
+                                <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> 
+                                    $land_type 
+                                </div>
                             </div>
-                            <div class="font-bold font-mono text-md px-3 rounded-xl p-1 $style "> $land_type </div>
-                        </div>
                         
-                        <div class="mt-3 flex justify-between items-center align-middle">
-                            <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
-                            <p class="font-bold text-xl">$land_area sqft</p> 
-                        </div>
-                        
-                        <form class="mt-3 flex justify-end" method="post" action="../../../utility/php/list_for_sale.php?land_id=$land_id">
-                            <button class="group text-green-600 text-sm font-bold py-2 px-4 rounded-full border border-green-300 flex gap-1 hover:bg-green-100 
-                            transition-all duration-300 items-center">
-                            <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
-                            duration-300 w-5 h-5" src="../../../resource/icons/dashboard/add.svg" alt="">
-                                <span class="-translate-x-[0.65rem]  group-hover:translate-x-0 transition-all duration-300">Add to Sell List</span>
-                            </button>
-                         </form>
+                            <div class="mt-3 flex justify-between items-center align-middle">
+                                <p class="p-1 rounded-xl bg-beige-light px-3 text-zinc-400 font-bold font-mono">$land_address</p> 
+                                <p class="font-bold text-xl">$land_area sqft</p> 
+                            </div>
+                        HTML;
+                if ($has_all_legal_docs) {
+                    echo <<< HTML
+                            <form class="mt-3 flex justify-end" method="post" action="../../../utility/php/list_for_sale.php?land_id=$land_id">
+                                <button class="group text-green-600 text-sm font-bold py-2 px-4 rounded-full border border-green-300 flex gap-1 hover:bg-green-100 
+                                transition-all duration-300 items-center">
+                                <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                                duration-300 w-5 h-5" src="../../../resource/icons/dashboard/add.svg" alt="">
+                                    <span class="-translate-x-[0.65rem]  group-hover:translate-x-0 transition-all duration-300">Add to Sell List</span>
+                                </button>
+                             </form>
                     </div>
+                        
                     HTML;
+                } else {
+                    echo <<< HTML
+                        <div class="mt-3 flex justify-end">
+                             <div class="flex flex-col gap-1"> 
+                                <p class="text-end text-red-600 font-extrabold text-sm opacity-75">You cannot list this land for sale because legal documents are missing</p>
+                                <p class="font-extrabold text-gray-600 text-end">Head to 
+                                    <a class="text-primary hover:underline" href="../owned-land/my-land/?land_id=$land_id">Owned Land/$land_title</a> to add a legal Document
+                                </p>
+                             </div>
+                        </div> 
+                   </div>
+                   HTML;
+                }
                 $lands = mysqli_fetch_assoc($get_lands_that_not_listed_result);
             }
         }
