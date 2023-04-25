@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 include "../../utility/php/connection.php";
@@ -31,6 +32,27 @@ $get_min_max_price = mysqli_query($connection, $get_min_max_price_sql);
 $min_max_price = mysqli_fetch_array($get_min_max_price);
 $minimum_price = $min_max_price['minimum_price'];
 $maximum_price = $min_max_price['maximum_price'];
+
+$search_key = $_GET['search_key'] ?? '';
+$residential = $_GET['residential'] ?? 0;
+$commercial = $_GET['commercial'] ?? 0;
+$industrial = $_GET['industrial'] ?? 0;
+$price = $_GET['price'] ?? $maximum_price;
+$area = $_GET['area'] ?? $maximum_area;
+
+if (isset($_POST['submit'])) {
+    $search_key = $_POST['search_key'] ?? '';
+    $residential = $_POST['residential'] ?? 0;
+    $commercial = $_POST['commercial'] ?? 0;
+    $industrial = $_POST['industrial'] ?? 0;
+    $price = $_POST['price_range'];
+    $area = $_POST['area_range'];
+
+
+    header("Location: ./?search_key=" . $search_key . "&residential=" . $residential . "&commercial=" . $commercial . "&industrial=" . $industrial . "&price=" . $price . "&area=" . $area);
+
+
+}
 
 ?>
 
@@ -282,10 +304,12 @@ HTML;
 <section id="index_main-section" class="container mx-auto my-auto mt-48 mb-16
                 pl-36 pr-36">
 
-    <form id="shelf-one" class="bg-white grid grid-cols-3 p-6 mb-12 rounded-2xl shadow-sm">
+    <form id="shelf-one"
+          method="post" action="" class="bg-white grid grid-cols-3 p-6 mb-12 rounded-2xl shadow-sm">
         <div class="col-span-3">
-            <label for="default-search"
-                   class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <label for="search_key" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+                Search
+            </label>
             <div class="relative focus:border-black">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg aria-hidden="true"
@@ -296,11 +320,13 @@ HTML;
                               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                 </div>
-                <input type="search" id="default-search"
+                <input type="search" name="search_key" id="search_key"
                        class="block w-full p-4 pl-10 text-md text-gray-600 font-medium
                        rounded-xl bg-white hover:text-black focus:outline-none"
+                       value="<?php echo $search_key; ?>"
                        placeholder="Type keyword to search">
                 <button type="submit"
+                        name="submit"
                         class="text-white absolute right-2.5
                         bottom-2.5 bg-primary hover:bg-green-700 hover:shadow-lg
                         font-medium rounded-xl text-sm px-4 py-2">
@@ -313,7 +339,8 @@ HTML;
         <div class="col-span-3 mt-4">
             <ul class="grid w-full gap-6 grid-cols-3">
                 <li>
-                    <input type="checkbox" id="residential" class="hidden peer" value="0">
+                    <input type="checkbox" <?php if ($residential == 1) echo 'checked' ?>
+                           id="residential" name="residential" class="hidden peer" value="1">
                     <label for="residential" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
@@ -331,7 +358,8 @@ HTML;
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="commercial" value="" class="hidden peer">
+                    <input type="checkbox" <?php if ($commercial == 2) echo 'checked' ?>
+                           id="commercial" name="commercial" value="2" class="hidden peer">
                     <label for="commercial" class="flex
                     items-center justify-between w-full h-full p-4 text-gray-500
                     bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
@@ -350,7 +378,8 @@ HTML;
                     </label>
                 </li>
                 <li>
-                    <input type="checkbox" id="industrial" value="" class="hidden peer">
+                    <input type="checkbox" id="industrial" <?php if ($industrial == 3) echo 'checked' ?>
+                           name="industrial" value="3" class="hidden peer">
                     <label for="industrial" class="flex
                     items-center justify-between w-full p-4 h-full text-gray-500
                     bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
@@ -378,13 +407,15 @@ HTML;
         <div class="col-span-3">
             <div class="flex gap-6">
                 <div class="w-full pl-4 pr-4 flex flex-col">
-                    <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center">Area
-                        Range</label>
-                    <input id="default-range" type="range"
+                    <label for="area_range"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center">
+                        Area Range <span
+                            class="font-mono text-zinc-500"><?php if ($area != $maximum_area) echo '( ' . $area . ' SQFT )' ?></span>
+                    </label>
+                    <input id="area_range" name="area_range" type="range"
                            min="<?php echo $minimum_area ?>"
                            max="<?php echo $maximum_area ?>"
-                           value="<?php echo $maximum_area ?>"
+                           value="<?php echo $area ?>"
                            class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
                     <div class="flex justify-between mx-2 my-4">
                         <h1 class="ml-4 font-mono"><?php echo $minimum_area ?> SQFT</h1>
@@ -393,13 +424,15 @@ HTML;
                 </div>
 
                 <div class="w-full pl-4 pr-4 flex flex-col">
-                    <label for="default-range"
-                           class="block mb-2 text-md font-medium text-gray-900 text-center">Price
-                        Range</label>
-                    <input id="default-range" type="range"
+                    <label for="price_range"
+                           class="block mb-2 text-md font-medium text-gray-900 text-center">
+                        Price Range <span
+                            class="font-mono text-zinc-500"><?php if ($price != $maximum_price) echo '( $' . number_format($price, 2) . ' )' ?></span>
+                    </label>
+                    <input id="price_range" name="price_range" type="range"
                            min="<?php echo $minimum_price ?>"
                            max="<?php echo $maximum_price ?>"
-                           value="<?php echo $maximum_price ?>"
+                           value="<?php echo $price ?>"
                            class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
                     <div class="flex justify-between mx-2 my-4">
                         <h1 class="ml-4 font-mono">$<?php echo $minimum_price ?></h1>
@@ -416,10 +449,44 @@ HTML;
 
     <section class="grid lg:grid-cols-3 justify-items-stretch gap-4 sm:grid-cols-1 md:grid-cols-2">
         <?php
-        $sql = "SELECT * FROM sell_list join land l on l.land_id = sell_list.land_id WHERE sell_list.land_id NOT IN 
-                                                                           (SELECT land_id FROM booked_land_purchase)";
-        $result = $connection->query($sql);
 
+        $search_query = "SELECT * FROM sell_list 
+                         JOIN land l ON l.land_id = sell_list.land_id 
+                         JOIN land_cost_info lci on l.land_id = lci.land_id
+         WHERE sell_list.land_id NOT IN (SELECT land_id FROM booked_land_purchase)";
+
+        if ($search_key != null) {
+            $search_query .= " AND (title LIKE '%$search_key%' OR address LIKE '%$search_key%' OR place_details LIKE '%$search_key%')";
+        }
+
+        if ($residential != 0 || $commercial != 0 || $industrial != 0) {
+            $search_query .= " AND (";
+
+            if ($residential) {
+                $search_query .= "land_type = 0 OR ";
+            }
+
+            if ($commercial) {
+                $search_query .= "land_type = 1 OR ";
+            }
+
+            if ($industrial) {
+                $search_query .= "land_type = 2 OR ";
+            }
+
+            $search_query = rtrim($search_query, "OR ") . ")";
+        }
+
+        if ($price != $maximum_price) {
+            $search_query .= " AND ( cost_per_sqft * area ) <= $price";
+        }
+
+        if ($area != $maximum_area) {
+            $search_query .= " AND area <= $area";
+        }
+
+
+        $result = $connection->query($search_query);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $land_id = $row['land_id'];
