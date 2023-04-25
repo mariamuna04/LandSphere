@@ -47,7 +47,6 @@ $land_address = $get_land_information['address'];
 $get_installment_information_sql = "SELECT * FROM installment WHERE id = " . $payment_id . " ORDER BY date DESC;";
 $get_installment_information_result = mysqli_query($connection, $get_installment_information_sql);
 $get_number_of_installments = mysqli_num_rows($get_installment_information_result);
-$get_installment_information = mysqli_fetch_assoc($get_installment_information_result);
 
 // Get max payable amount
 $max_payable_amount = 0;
@@ -347,7 +346,10 @@ HTML;
 <section id="main-section" class="container mx-auto my-auto mt-48 mb-16 pl-28 pr-28">
     <main class="flex flex-col gap-2 items-center justify-center">
         <h1 class="text-3xl font-bold text-center text-gray-700">
-            Installments of
+            <?php
+                if ($full_payment) echo 'Full Payment of';
+                else echo 'Installments of';
+                ?>
         </h1>
         <h1 class=" font-bold text-center text-4xl text-primary">
             <?php echo $land_title ?>

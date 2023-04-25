@@ -52,7 +52,16 @@ if ($token != $get_token['token']) {
             // Transfer ownership
             $transfer_ownership_sql = "UPDATE owns SET owner_id = " . $user_id . ", acquire_date = '" . $current_date . "'  WHERE land_id = " . $land_id . ";";
             $transfer_ownership_result = mysqli_query($connection, $transfer_ownership_sql);
-            if ($transfer_ownership_result) {
+
+            // Clear from booking
+            $clear_booking_sql = "DELETE FROM booked_land_purchase WHERE land_id = " . $land_id . ";";
+            $clear_booking_result = mysqli_query($connection, $clear_booking_sql);
+
+            // Remove from on sale
+            $remove_from_on_sale_sql = "DELETE FROM sell_list WHERE land_id = " . $land_id . ";";
+            $remove_from_on_sale_result = mysqli_query($connection, $remove_from_on_sale_sql);
+
+            if ($transfer_ownership_result && $clear_booking_result && $remove_from_on_sale_result) {
                 header('Location: ../');
             }
         }

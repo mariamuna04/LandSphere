@@ -298,7 +298,7 @@ HTML;
             session_destroy();
             $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
             $delete_token = mysqli_query($connection, $delete_token_sql);
-            header('Location: ./?land_id='.$land_id);
+            header('Location: ./?land_id=' . $land_id);
         }
     } else {
         $loggedOut =
@@ -416,8 +416,28 @@ HTML;
                             $check_already_booked_sql = "SELECT * FROM booked_land_purchase WHERE land_id = '$land_id' AND potential_buyer_id = '$user_id'";
                             $check_already_booked_result = mysqli_query($connection, $check_already_booked_sql);
 
-                            if ($check_already_booked_result->num_rows > 0) {
+                            # Check owner owns land
+                            $check_owner_owns_land_sql = "SELECT * FROM owns WHERE land_id = '$land_id' AND owner_id = '$user_id'";
+                            $check_owner_owns_land_result = mysqli_query($connection, $check_owner_owns_land_sql);
+                            $owner_owns_land = false;
+                            if ($check_owner_owns_land_result->num_rows > 0) {
+                                $owner_owns_land = true;
+                            }
+
+                            if ($owner_owns_land) {
                                 echo <<< HTML
+                                        <div                                       
+                                            class="                   
+                                            py-3 px-16 text-center text-base    
+                                            font-bold text-primary rounded-full outline-none items-center                 
+                                            col-span-2                     
+                                            ">                                              
+                                            You Own This Land!                                                     
+                                        </div>                                                          
+                                    HTML;
+                            } else {
+                                if ($check_already_booked_result->num_rows > 0) {
+                                    echo <<< HTML
                                        <div                                       
                                            class="                   
                                            py-3 px-16 text-center text-base    
@@ -428,8 +448,8 @@ HTML;
                                        </div>                                                          
                                     HTML;
 
-                            } else {
-                                echo <<< HTML
+                                } else {
+                                    echo <<< HTML
                                         <button type="submit"
                                             class="hover:shadow-form bg-green-700
                                             py-3 px-8 text-center text-base transition-all duration-300
@@ -439,6 +459,7 @@ HTML;
                                             Book Land
                                         </button>  
                                     HTML;
+                                }
                             }
 
                             ?>
