@@ -9,10 +9,10 @@ if (!isset($_GET['land_id'])) {
     die();
 }
 
-include "../../../../utility/php/connection.php";
+include "../../utility/php/connection.php";
 $connection = connection();
 if (!$connection) {
-    header('Location: ../../../static/error/HTTP521.html');
+    header('Location: ../static/error/HTTP521.html');
     die();
 }
 
@@ -62,7 +62,7 @@ if ($token != $get_token['token']) {
             $remove_from_on_sale_result = mysqli_query($connection, $remove_from_on_sale_sql);
 
             if ($transfer_ownership_result && $clear_booking_result && $remove_from_on_sale_result) {
-                header('Location: ../');
+                header('Location: ../../routes/user-dashboard/owned-land/my-land/?land_id=' . $land_id);
             }
         }
     }

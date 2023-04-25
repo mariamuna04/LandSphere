@@ -357,7 +357,7 @@ HTML;
                     HTML;
                 } else {
                     echo <<< HTML
-                        <a href="./transfer-ownership/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 w-full pb-4 px-4
+                        <a href="../../../utility/php/transfer_ownership.php?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 w-full pb-4 px-4
                         rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 bg-green-50
                         antialiased motion-safe:hover:scale-[1.02]">
                             <h1 class="text-center font-black pb-4 pt-4 mb-2 rounded-b-2xl bg-green-300 text-green-700">&#127881; Click to Transfer Ownership &#127881; </h1>
