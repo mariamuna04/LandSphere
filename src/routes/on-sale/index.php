@@ -15,6 +15,23 @@ if (isset($_POST["sign_out"])) {
     header("Location: ../../");
 }
 
+$get_min_max_area_sql = "SELECT MIN(area) AS min_area, MAX(area) AS max_area FROM land 
+                                                    WHERE land_id IN (SELECT land_id FROM sell_list) 
+                                                      AND land_id NOT IN (SELECT land_id FROM booked_land_purchase);";
+$get_min_max_area = mysqli_query($connection, $get_min_max_area_sql);
+$min_max_area = mysqli_fetch_array($get_min_max_area);
+$minimum_area = $min_max_area['min_area'];
+$maximum_area = $min_max_area['max_area'];
+
+$get_min_max_price_sql = "SELECT MIN(cost_per_sqft*area) AS 'minimum_price', MAX(cost_per_sqft*area) AS 'maximum_price' 
+                            FROM land JOIN land_cost_info lci on land.land_id = lci.land_id 
+                            WHERE lci.land_id in (SELECT land_id FROM sell_list) 
+                              AND lci.land_id NOT IN (SELECT booked_land_purchase.land_id FROM booked_land_purchase);";
+$get_min_max_price = mysqli_query($connection, $get_min_max_price_sql);
+$min_max_price = mysqli_fetch_array($get_min_max_price);
+$minimum_price = $min_max_price['minimum_price'];
+$maximum_price = $min_max_price['maximum_price'];
+
 ?>
 
 <!DOCTYPE html>
@@ -353,61 +370,41 @@ HTML;
 
         </div>
 
-        <div id="" class="pt-4 col-span-3">
-            <ul class="grid w-full gap-6 md:grid-cols-2">
-                <li>
-                    <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer"
-                           required>
-                    <label for="hosting-small" class="flex
-                    items-center justify-between w-full p-4 h-full text-gray-500
-                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
-                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
-                    hover:text-gray-600
-                    peer-checked:text-gray-600 hover:bg-gray-50">
-                        <span class="flex flex-col">
-                            <span class="w-full text-lg font-semibold">For Sale</span>
-                            <span class="w-full text-xs">Get your dream land with stunning prices</span>
-                        </span>
-                    </label>
-                </li>
-                <li>
-                    <input type="radio" id="hosting-big" name="hosting" value="hosting-big" class="hidden peer">
-                    <label for="hosting-big" class="flex
-                    items-center justify-between w-full p-4 h-full text-gray-500
-                    bg-white border-2 border-gray-200 rounded-xl cursor-pointer shadow-sm
-                    peer-checked:border-green-600 peer-checked:bg-gray-200 peer-checked:shadow-lg
-                    hover:text-gray-600
-                    peer-checked:text-gray-600 hover:bg-gray-50">
-                        <span class="flex flex-col">
-                            <span class="w-full text-lg font-semibold ">For Auction</span>
-                            <span class="w-full text-xs">Bid high, win big, and secure your slice of paradise</span>
-                        </span>
-                    </label>
-                </li>
-            </ul>
-
-        </div>
 
         <div class="col-span-3">
             <hr class="w-full h-1 mx-auto my-4 bg-gray-100 border-0 rounded">
         </div>
 
-        <div id="" class="col-span-3">
+        <div class="col-span-3">
             <div class="flex gap-6">
-                <div class="w-full pl-4 pr-4">
+                <div class="w-full pl-4 pr-4 flex flex-col">
                     <label for="default-range"
                            class="block mb-2 text-md font-medium text-gray-900 text-center">Area
                         Range</label>
-                    <input id="default-range" type="range" min="0" max="1000000" value="1000000"
-                           class="w-full h-2 bg-gray-200 rounded-xl  cursor-pointer">
+                    <input id="default-range" type="range"
+                           min="<?php echo $minimum_area ?>"
+                           max="<?php echo $maximum_area ?>"
+                           value="<?php echo $maximum_area ?>"
+                           class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
+                    <div class="flex justify-between mx-2 my-4">
+                        <h1 class="ml-4 font-mono"><?php echo $minimum_area ?> SQFT</h1>
+                        <h1 class="ml-4 font-mono"><?php echo $maximum_area ?> SQFT</h1>
+                    </div>
                 </div>
 
-                <div class="w-full pl-4 pr-4">
+                <div class="w-full pl-4 pr-4 flex flex-col">
                     <label for="default-range"
                            class="block mb-2 text-md font-medium text-gray-900 text-center">Price
                         Range</label>
-                    <input id="default-range" min="0" max="1000000" type="range" value="1000000"
-                           class="w-full h-2 rounded-xl bg-primary cursor-pointer">
+                    <input id="default-range" type="range"
+                           min="<?php echo $minimum_price ?>"
+                           max="<?php echo $maximum_price ?>"
+                           value="<?php echo $maximum_price ?>"
+                           class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
+                    <div class="flex justify-between mx-2 my-4">
+                        <h1 class="ml-4 font-mono">$<?php echo $minimum_price ?></h1>
+                        <h1 class="ml-4 font-mono">$<?php echo $maximum_price ?></h1>
+                    </div>
 
                 </div>
 
