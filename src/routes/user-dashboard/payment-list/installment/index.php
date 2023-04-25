@@ -100,6 +100,7 @@ if (isset($_POST['submit'])) {
         $fetch_actual_password_result = mysqli_query($connection, $fetch_actual_password_sql);
         $fetch_actual_password = mysqli_fetch_assoc($fetch_actual_password_result);
         $actual_password = $fetch_actual_password['password'];
+        $password = hash('sha256', $password);
         if ($password != $actual_password) $password_error = true;
 
         if ($card_number == $actual_card_number && $password == $actual_password && !$installment_overpaid_error && !$installment_amount_error) {

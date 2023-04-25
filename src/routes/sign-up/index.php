@@ -54,13 +54,14 @@ if (isset($_POST['submit'])) {
     $proceed = !$essential_info_left_blank && !$password_not_match;
 
     if ($proceed) {
-        echo "Proceed";
         $create_a_user_sql = "INSERT INTO user 
     (full_name, email, phone_number, date_of_birth, address, nid) 
     VALUES ('" . $full_name . "', '" . $email . "', '" . $phone_number . "', '" . $date_of_birth . "', '" . $address . "', " . $nid . ")";
         $create_a_user_result = mysqli_query($connection, $create_a_user_sql);
         $echo = "Hello";
         if ($create_a_user_result) {
+            # Make password hash sha256
+            $password = hash('sha256', $password);
             $create_login_entry_sql = "INSERT INTO login (user_nid, password) VALUES ('" . $nid . "', '" . $password . "')";
             $create_login_entry_result = mysqli_query($connection, $create_login_entry_sql);
             if ($create_login_entry_result) {

@@ -91,6 +91,7 @@ if (isset($_POST["submit"])) {
     $card_billing_address = $_POST['billing_address'];
 
     $current_password = $_POST['current_password'];
+    $current_password = hash('sha256', $current_password);
     $current_password_match = $current_password == $fetch_existing_password_row['password'];
 
     // Final Authentication check

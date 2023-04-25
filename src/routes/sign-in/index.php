@@ -32,6 +32,7 @@ if (isset($_POST['submit'])) {
         } else {
             $email_or_phone = mysqli_real_escape_string($connection, $email_or_phone);
             $password = mysqli_real_escape_string($connection, $password);
+            $password = hash('sha256', $password);
 
             $sql = "SELECT *
                     FROM USER 
