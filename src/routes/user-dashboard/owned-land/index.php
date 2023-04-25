@@ -375,7 +375,7 @@ HTML;
                         
                         <div class="mt-2 flex justify-between items-center">
                             <p class="py-1">$land_details</p> 
-                            <p class="w-fit text-md font-medium px-2.5 rounded-2xl $environment_status </p>
+                            <p class="w-60 py-1 ml-8 text-md font-medium text-center px-2.5 rounded-2xl $environment_status </p>
                         </div>
                         
                         <div class="mt-2 w-full  flex justify-around">       
