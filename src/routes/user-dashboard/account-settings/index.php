@@ -86,7 +86,7 @@ if (isset($_POST["submit"])) {
     // User Card Information
     $card_number = $_POST['card_number'];
     $card_expire_date = $_POST['expiry_date'];
-    $card_cvc = $_POST['cvc'];
+    $card_cvv = $_POST['cvv'];
     $card_name = $_POST['name_on_card'];
     $card_billing_address = $_POST['billing_address'];
 
@@ -115,19 +115,19 @@ if (isset($_POST["submit"])) {
         if ($previous_card_exist) {
             if (empty($card_number)) $card_number = $fetch_existing_payment_row['card_number'];
             if (empty($card_expire_date)) $card_expire_date = $fetch_existing_payment_row['expire_date'];
-            if (empty($card_cvc)) $card_cvc = $fetch_existing_payment_row['cvc'];
+            if (empty($card_cvv)) $card_cvv = $fetch_existing_payment_row['cvv'];
             if (empty($card_name)) $card_name = $fetch_existing_payment_row['name_on_card'];
             if (empty($card_billing_address)) $card_billing_address = $fetch_existing_payment_row['billing_address'];
 
             $update_new_payment_sql = "UPDATE payment_method 
-                SET card_number = '$card_number', expire_date = '$card_expire_date', cvc = '$card_cvc', 
+                SET card_number = '$card_number', expire_date = '$card_expire_date', cvv = '$card_cvv', 
                     name_on_card = '$card_name', billing_address = '$card_billing_address' 
                 WHERE user_id = " . $_SESSION['id'] . ";";
             $update_new_payment_result = mysqli_query($connection, $update_new_payment_sql);
         } else {
-            if (!empty($card_number) || !empty($card_expire_date) || !empty($card_cvc) || !empty($card_name) || !empty($card_billing_address)) {
-                $insert_new_payment_sql = "INSERT INTO payment_method (user_id, card_number, expire_date, cvc, name_on_card, billing_address) 
-                VALUES (" . $_SESSION['id'] . ", '$card_number', '$card_expire_date', '$card_cvc', '$card_name', '$card_billing_address');";
+            if (!empty($card_number) || !empty($card_expire_date) || !empty($card_cvv) || !empty($card_name) || !empty($card_billing_address)) {
+                $insert_new_payment_sql = "INSERT INTO payment_method (user_id, card_number, expire_date, cvv, name_on_card, billing_address) 
+                VALUES (" . $_SESSION['id'] . ", '$card_number', '$card_expire_date', '$card_cvv', '$card_name', '$card_billing_address');";
                 $insert_new_payment_result = mysqli_query($connection, $insert_new_payment_sql);
             }
 
@@ -434,10 +434,10 @@ if (isset($_POST["submit"])) {
                 </div>
 
                 <div class="flex-col">
-                    <label for="cvc" class="text-sm pl-2">CVC</label>
+                    <label for="cvv" class="text-sm pl-2">CVV</label>
                     <input type="text"
-                           name="cvc"
-                           id="cvc" placeholder="XXX"
+                           name="cvv"
+                           id="cvv" placeholder="XXX"
                            class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono text-center"

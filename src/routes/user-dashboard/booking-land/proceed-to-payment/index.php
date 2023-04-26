@@ -80,7 +80,7 @@ $owner_payment_information = mysqli_fetch_assoc($fetch_owner_payment_information
 $card_number = $owner_payment_information["card_number"];
 $card_holder_name = $owner_payment_information["name_on_card"];
 $expiry_date = $owner_payment_information["expire_date"];
-$cvc = $owner_payment_information["cvc"];
+$cvv = $owner_payment_information["cvv"];
 $billing_address = $owner_payment_information["billing_address"];
 
 // divide card number into 4 parts, with hyphen in between, 4 digits each
@@ -472,10 +472,10 @@ HTML;
                         </div>
                     </div>
                     <div class="flex justify-between">
-                        <h1 class="font-bold">CVC</h1>
+                        <h1 class="font-bold">CVV</h1>
                         <div>
                             <span id="hidden_bullet3">&bull;&bull;&bull;</span>
-                            <span id="visible_bullet3" class="hidden animate-bounce"><?php echo $cvc ?></span>
+                            <span id="visible_bullet3" class="hidden animate-bounce"><?php echo $cvv ?></span>
                         </div>
                     </div>
                     <div class="flex justify-between">

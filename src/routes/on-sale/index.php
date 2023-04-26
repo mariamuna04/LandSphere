@@ -418,8 +418,8 @@ HTML;
                            value="<?php echo $area ?>"
                            class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
                     <div class="flex justify-between mx-2 my-4">
-                        <h1 class="ml-4 font-mono"><?php echo $minimum_area ?> SQFT</h1>
-                        <h1 class="ml-4 font-mono"><?php echo $maximum_area ?> SQFT</h1>
+                        <h1 class="font-mono"><?php echo $minimum_area ?> SQFT</h1>
+                        <h1 class="font-mono"><?php echo $maximum_area ?> SQFT</h1>
                     </div>
                 </div>
 
@@ -435,8 +435,8 @@ HTML;
                            value="<?php echo $price ?>"
                            class="w-full h-2 bg-gray-200 rounded-xl cursor-pointer transition-all duration-300">
                     <div class="flex justify-between mx-2 my-4">
-                        <h1 class="ml-4 font-mono">$<?php echo number_format($minimum_price, 2) ?></h1>
-                        <h1 class="ml-4 font-mono">$<?php echo number_format($maximum_price, 2) ?></h1>
+                        <h1 class="font-mono">$<?php echo number_format($minimum_price, 2) ?></h1>
+                        <h1 class="font-mono">$<?php echo number_format($maximum_price, 2) ?></h1>
                     </div>
 
                 </div>

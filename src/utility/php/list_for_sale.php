@@ -33,12 +33,10 @@ if ($token == $get_token['token']) {
     $land = mysqli_fetch_assoc($land_information);
 
     $land_owner_id = $land["owner_id"];
-    $cost_per_sqft = $land["cost_per_sqft"];
-    $land_area = $land["area"];
-    $total_cost = $cost_per_sqft * $land_area;
+    $listing_date = date("Y-m-d");
 
     if ($_SESSION['id'] == $land["owner_id"]) {
-        $sql = "INSERT INTO sell_list (land_id, user_id, total_amount) VALUES (" . $land_id . ", " . $land_owner_id . ", " . $total_cost . ");";
+        $sql = "INSERT INTO sell_list (land_id, user_id, listing_date) VALUES (" . $land_id . ", " . $land_owner_id . ", '" . $listing_date . "');";
         if (mysqli_query($connection, $sql)) {
             header("Location: ../../routes/user-dashboard/sale-list/");
         } else {
