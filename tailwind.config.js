@@ -61,6 +61,7 @@ module.exports = {
         require('@tailwindcss/typography'),
     ],
     variants: {
+        fill: ['hover', 'focus'],
         extend: {
             animation: ['motion-safe'],
         }
