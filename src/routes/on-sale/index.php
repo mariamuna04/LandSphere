@@ -782,7 +782,7 @@ transition-all hover:shadow-lg text-gray-600 duration-300'>
     }
 
     function load_data(query) {
-        if (query.length > 1) {
+        if (query.length > 0) {
             let form_data = new FormData();
             form_data.append('query', query);
             let ajax_request = new XMLHttpRequest();

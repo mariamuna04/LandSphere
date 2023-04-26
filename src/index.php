@@ -490,7 +490,7 @@ if (isset($_SESSION['id'])) {
     }
 
     function load_data(query) {
-        if (query.length > 1) {
+        if (query.length > 0) {
             let form_data = new FormData();
             form_data.append('query', query);
             let ajax_request = new XMLHttpRequest();
