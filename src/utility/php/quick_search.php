@@ -10,8 +10,10 @@ if (isset($_POST["query"])) {
     $data = array();
     $key = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["query"]);
 
-    $query = "SELECT * FROM search WHERE search.search_key LIKE '%" . $key . "%'
-            OR search.search_description LIKE '" . $key . "%' LIMIT 10";
+    $query = "SELECT * FROM global_search 
+         WHERE global_search.search_key LIKE '" . $key . "%' 
+         OR global_search.search_description LIKE '%" . $key . "%' 
+         OR global_search.hidden_keywords LIKE '%" . $key . "%' LIMIT 10";
 
     $result = mysqli_query($connection, $query);
     foreach ($result as $row) {
