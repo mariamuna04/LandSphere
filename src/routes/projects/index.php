@@ -380,24 +380,26 @@ drop-shadow-xl">
      tabindex="-1"
      aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
-     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
-    backdrop-blur-md transition-all">
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-darkest
+    backdrop-blur-md transition-all ">
+
 
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
+        <div class="relative bg-white rounded-2xl shadow">
             <!-- Modal header -->
             <div class="flex justify-between p-4 border-b rounded-t items-center">
                 <img src="../../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
-                       name="search_box"
-                       id="search_text-field"
+                       name="quick_search_box"
+                       id="quick_search_box"
                        placeholder="Type anything to search"
+                       onkeyup="load_data(this.value)"
                        class="w-full rounded-md
                                bg-white px-3 text-base font-medium text-[#6B7280]
                                outline-none"
                 />
-                <label for="search_text-field"></label>
+                <label for="quick_search_box"></label>
                 <button type="button"
                         class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                         data-modal-hide="defaultModal">
@@ -406,14 +408,16 @@ drop-shadow-xl">
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-6 space-y-6">
-
+            <div id="quick_search_result" class="mx-3 my-6 flex flex-col gap-2 overflow-y-auto h-64">
             </div>
             <!-- Modal footer -->
-            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+            <div class="flex justify-between p-6 space-x-2 border-t border-gray-200 rounded-b">
+                <h1 class="text-sm font-bold text-[#6B7280]">Global Search</h1>
+                <h1 class="text-sm font-light text-[#6B7280]">Results are shown from database</h1>
             </div>
         </div>
     </div>
+
 </div>
 
 </body>
@@ -423,9 +427,12 @@ drop-shadow-xl">
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
+            document.getElementById('quick_search_box').focus();
         }
         if (event.ctrlKey && event.keyCode === 75) {
             document.getElementById('search_button').click();
+            document.getElementById('quick_search_box').focus();
+
         }
     });
 
@@ -433,6 +440,62 @@ drop-shadow-xl">
     if (os === "Win32" || os === "Win64" || os === "Windows" || os === "WinCE") {
         document.getElementById('keyboard_shortcut').innerHTML = "Ctrl";
     }
+
+
+    function get_text(event) {
+        let string = event.textContent;
+        // fetch api
+        fetch("../../utility/php/quick_search.php", {
+            method: "POST",
+            body: JSON.stringify({
+                search_query: string
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (responseData) {
+            document.getElementsByName('quick_search_box')[0].value = string;
+            document.getElementById('quick_search_result').innerHTML = '';
+        });
+    }
+
+    function load_data(query) {
+        if (query.length > 1) {
+            let form_data = new FormData();
+            form_data.append('query', query);
+            let ajax_request = new XMLHttpRequest();
+            ajax_request.open('POST', '../../utility/php/quick_search.php');
+            ajax_request.send(form_data);
+            ajax_request.onreadystatechange = function () {
+                if (ajax_request.readyState === 4 && ajax_request.status === 200) {
+                    let response = JSON.parse(ajax_request.responseText);
+
+                    let html = '';
+
+                    if (response.length > 0) {
+                        for (let count = 0; count < response.length; count++) {
+                            html += '<a href="';
+                            html += response[count]._url;
+                            html += '" class="group flex justify-between gap-1 bg-beige-default hover:bg-beige-dark transition-all duration-300 p-4 rounded-xl">';
+                            html += '<div class="flex flex-col gap-1"><h1 class="font-bold group-hover:text-primary transition-all duration-300" onclick="get_text(this)">' + response[count].search_key + '</h1>';
+                            html += '<p class="text-sm text-gray-500">' + response[count].search_description + '</p></div>';
+                            html += '<img class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300" src="../../resource/icons/jump.svg" alt="">';
+                            html += '</a>';
+                        }
+                    } else {
+                        html += '<p class="text-center text-gray-500 text-2xl font-bold mt-12">No result found</p>';
+                    }
+                    document.getElementById('quick_search_result').innerHTML = html;
+                    dd
+                }
+            }
+        } else {
+            document.getElementById('quick_search_result').innerHTML = '';
+        }
+    }
+
 
 </script>
 </html>

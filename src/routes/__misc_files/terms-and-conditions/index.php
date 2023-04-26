@@ -306,38 +306,40 @@
      tabindex="-1"
      aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
-     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-light
-    backdrop-blur-md transition-all">
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-darkest
+    backdrop-blur-md transition-all ">
 
 
     <div class="relative w-full h-full max-w-2xl md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
+        <div class="relative bg-white rounded-2xl shadow">
             <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t">
-                <img src="../../../resource/icons/modal-search-icon.svg" alt="">
+            <div class="flex justify-between p-4 border-b rounded-t items-center">
+                <img src="../resource/icons/modal-search-icon.svg" alt="">
                 <input type="text"
-                       name="search_box"
-                       id="search_text-field"
+                       name="quick_search_box"
+                       id="quick_search_box"
                        placeholder="Type anything to search"
+                       onkeyup="load_data(this.value)"
                        class="w-full rounded-md
                                bg-white px-3 text-base font-medium text-[#6B7280]
                                outline-none"
                 />
-                <label for="search_text-field"></label>
+                <label for="quick_search_box"></label>
                 <button type="button"
-                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                         data-modal-hide="defaultModal">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100
                 rounded-lg">Esc</kbd>
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-6 space-y-6">
-
+            <div id="quick_search_result" class="mx-3 my-6 flex flex-col gap-2 overflow-y-auto h-64">
             </div>
             <!-- Modal footer -->
-            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+            <div class="flex justify-between p-6 space-x-2 border-t border-gray-200 rounded-b">
+                <h1 class="text-sm font-bold text-[#6B7280]">Global Search</h1>
+                <h1 class="text-sm font-light text-[#6B7280]">Results are shown from database</h1>
             </div>
         </div>
     </div>
