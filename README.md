@@ -29,7 +29,7 @@ Our project is to design a website that securely and efficiently processes and m
 ### Build Material
 
 - PHP `v8.1.6`
-- Tailwind CSS `v3.3.0`
+- Tailwind CSS `v3.3.2`
 - FlowBite `v1.6.5` (OPTIONAL)
 
 ---
