@@ -59,6 +59,7 @@ $total_area_result = mysqli_query($connection, $get_total_area_query);
 $total_area = mysqli_fetch_assoc($total_area_result)["total_area"];
 
 $full_name = $_SESSION["name"];
+$email = $_SESSION["email"];
 // count how many words in the name
 $name_count = str_word_count($full_name);
 // if the name has more than one word
@@ -150,7 +151,7 @@ $hour = date('H', strtotime($current_time));
                  alt='user photo' height='32px' width='32px'>"
             ?>
 
-            <?php echo $_SESSION["name"]; ?>
+            <?php echo $full_name; ?>
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -173,7 +174,7 @@ $hour = date('H', strtotime($current_time));
                     ?>
                 </div>
                 <div class="truncate text-sm font-bold font-mono text-gray-500">
-                    <?php echo $_SESSION["email"]; ?>
+                    <?php echo $email; ?>
                 </div>
             </div>
             <ul class="py-2 text-sm text-gray-700"

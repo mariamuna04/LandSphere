@@ -17,6 +17,8 @@ if (!$connection) {
     die();
 }
 
+$user_name = '';
+
 $token = '';
 $user_id = '';
 if (!isset($_SESSION['token'])) {
@@ -24,6 +26,7 @@ if (!isset($_SESSION['token'])) {
 } else {
     $token = $_SESSION['token'];
     $user_id = $_SESSION['id'];
+    $user_name = $_SESSION['name'];
 }
 $get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
 $get_token_result = mysqli_query($connection, $get_token_sql);
@@ -286,7 +289,7 @@ HTML;
             ?>
 
             <div class="font-medium">
-                <div><?php echo $_SESSION['name'] ?></div>
+                <div><?php echo $user_name ?></div>
                 <div class="text-sm text-gray-500">Land Owner</div>
             </div>
 
