@@ -1,4 +1,6 @@
 <?php
+// turn on error reporting
+ini_set('display_errors', 1);
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -73,9 +75,11 @@ if (isset($_POST["submit"])) {
 
     $new_occupation = $_POST['occupation'];
     if (empty($new_occupation)) $new_occupation = $fetch_existing_data_row['occupation'];
+    if (empty($new_occupation)) $new_occupation = "";
 
     $new_yearly_income = $_POST['yearly_income'];
     if (empty($new_yearly_income)) $new_yearly_income = $fetch_existing_data_row['yearly_income'];
+    if (empty($new_yearly_income)) $new_yearly_income = 0;
 
     // User Password Information
     $new_password = $_POST['new_password'];
@@ -108,6 +112,7 @@ if (isset($_POST["submit"])) {
         $update_new_user_data_result = mysqli_query($connection, $update_new_user_data_sql);
 
         if ($password_modify) {
+            $new_password = hash('sha256', $new_password);
             $update_new_password_sql = "UPDATE login SET password = '$new_password' WHERE user_nid = " . $_SESSION['id'] . ";";
             $update_new_password_result = mysqli_query($connection, $update_new_password_sql);
         }
@@ -132,7 +137,7 @@ if (isset($_POST["submit"])) {
             }
 
         }
-        header("Location: ../");
+        header("Location: ./");
     }
 
 
