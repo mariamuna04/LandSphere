@@ -1,41 +1,42 @@
 <?php
 session_start();
 
-//if (!isset($_SESSION['id'])) {
-//    $_SESSION['redirect_url'] = "http" .
-//        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
-//        "://" . $_SERVER['HTTP_HOST'] .
-//        $_SERVER['REQUEST_URI'];
-//    header("Location: ../../sign-in");
-//}
-//
-//include "../../../utility/php/connection.php";
-//$connection = connection();
-//if (!$connection) {
-//    header('Location: ../../../static/error/HTTP521.html');
-//    die();
-//}
-//
-//$token = '';
-//$user_id = '';
-//if (!isset($_SESSION['token'])) {
-//    die();
-//} else {
-//    $token = $_SESSION['token'];
-//    $user_id = $_SESSION['id'];
-//}
-//$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
-//$get_token_result = mysqli_query($connection, $get_token_sql);
-//$get_token = mysqli_fetch_assoc($get_token_result);
-//
-//if ($token != $get_token['token']) {
-//    session_destroy();
-//    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
-//    $delete_token = mysqli_query($connection, $delete_token_sql);
-//    header('Location: ../../sign-in/');
-//}
+if (!isset($_SESSION['id'])) {
+    $_SESSION['redirect_url'] = "http" .
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') .
+        "://" . $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
+    header("Location: ../../sign-in");
+}
+
+include "../../../utility/php/connection.php";
+$connection = connection();
+if (!$connection) {
+    header('Location: ../../../static/error/HTTP521.html');
+    die();
+}
+
+$token = '';
+$user_id = '';
+if (!isset($_SESSION['token'])) {
+    die();
+} else {
+    $token = $_SESSION['token'];
+    $user_id = $_SESSION['id'];
+}
+$get_token_sql = "SELECT token FROM login WHERE user_nid = " . $user_id . ";";
+$get_token_result = mysqli_query($connection, $get_token_sql);
+$get_token = mysqli_fetch_assoc($get_token_result);
+
+if ($token != $get_token['token']) {
+    session_destroy();
+    $delete_token_sql = "UPDATE login SET token = NULL WHERE user_nid = " . $_SESSION['id'] . ";";
+    $delete_token = mysqli_query($connection, $delete_token_sql);
+    header('Location: ../../sign-in/');
+}
 
 // Uncomment and Write codes here
+
 
 ?>
 
@@ -51,7 +52,8 @@ session_start();
 </head>
 
 <body class="bg-beige-default">
-<nav id="index_navbar" class="bg-zinc-300 flex gap-6 justify-between pl-24
+<nav id="index_navbar"
+     class="bg-zinc-300 flex gap-6 justify-between pl-24
     pr-24 pt-4 pb-4 rounded-b-2xl fixed w-full bg-opacity-60
     backdrop-blur-lg items-center top-0 mb-12 z-50">
     <div class="flex-none gap-5 items-center">
@@ -61,7 +63,7 @@ session_start();
     </div>
 
     <div class="flex gap-2 items-end grow">
-        <h1 class="text-xl font-bold text-end w-full text-zinc-600">LandSphere Settings</h1>
+        <h1 class="text-xl font-bold text-end w-full text-zinc-600">Successor Settings</h1>
     </div>
 
 </nav>
@@ -92,7 +94,7 @@ session_start();
                     </svg>
                     <a href="#"
                        class="ml-1 text-sm font-medium text-gray-400 group-hover:text-gray-800 md:ml-2">
-                        Account Settings
+                        Successor Settings
                     </a>
                 </div>
             </li>
@@ -102,38 +104,11 @@ session_start();
 </div>
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
-    <form method="post" action="" class="grid grid-cols-2 gap-4 place-items-start align-middle items-center">
-        <div id="profile_image" class="w-full flex flex-col items-center justify-center">
-            <?php
-            $rnd = rand(0, 1000000);
-            echo "<img class='h-48 w-48 rounded-full'
-                 src='https://api.dicebear.com/6.x/avataaars/svg?seed=" . $rnd . "%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9'
-                 alt='user photo'>"
-            ?>
-            <p class="text-xl mt-6 font-bold">
-                <?php echo "FULL NAME" ?>
-            </p>
-            <p class="text-lg text-gray-400 font-medium">
-                <?php echo "EMAIL" ?>
-            </p>
-
-            <div class="mt-6 flex flex-col g-4 items-center w-fit">
-                <h1 class="text-center text-gray-400 font-light">
-                    To change <br>
-                    <span class="font-medium">Birthday</span>,
-                    <span class="font-medium">National ID number</span>,<br>
-                    <span class="font-medium">Birth Certificate Number</span>,
-                    <span class="font-medium">Passport Number</span>;<br>
-                    contact us.
-                </h1>
-
-                <a href="../index.php" class="hover:shadow-form w-full
-                        py-3 px-8 text-center text-base mt-8 border border-primary text-primary
-                        font-medium  outline-none items-center hover:bg-green-700 hover:text-white
-                        col-span-2 rounded-full">Return to Home</a>
-
-            </div>
+    <form method="post" action="" class="grid grid-cols-2 gap-12 place-items-start">
+        <div class="col-span-2 w-full h-1 mx-auto text-end text-3xl font-bold text-zinc-400">
+            <h1>Your Spouse</h1>
         </div>
+        <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
         <div class="w-full">
             <div class="flex flex-col gap-3">
@@ -141,26 +116,16 @@ session_start();
                 <input type="text"
                        name="spouse_nid"
                        id="spouse_nid"
-                       value="existing spouse name"
+                       placeholder="NID Number"
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono disabled:opacity-50"
                 />
 
-                <label for="spouse_name" class="text-sm pl-2">Spouse Name</label>
-                <input type="text"
-                       name="spouse_name"
-                       id="spouse_name"
-                       value="existing spouse name"
-                       class="-mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
-                />
-
                 <label for="spouse_email" class="text-sm pl-2">Spouse Email</label>
                 <input type="email"
                        name="spouse_email"
-                       value="existing spouse email"
+                       placeholder="someone@example.com"
                        id="spouse_email"
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -168,25 +133,48 @@ session_start();
                 />
 
 
-                <div class="flex gap-4">
-                    <div class="flex-col">
-                        <label for="spouse_birth_certificate" class="text-sm pl-2">Spouse Birth Certificate</label>
-                        <input type="text"
-                               name="spouse_birth_certificate"
-                               id="spouse_birth_certificate"
-                               value="existing spouse birth certificate"
-                               class="mt-1 w-full rounded-xl
+                <label for="spouse_birth_certificate" class="text-sm pl-2">Spouse Birth Certificate</label>
+                <input type="text"
+                       name="spouse_birth_certificate"
+                       id="spouse_birth_certificate"
+                       placeholder="11 Digit Number"
+                       class="-mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono tracking-widest"
+                />
+
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="flex flex-col gap-3">
+                <label for="spouse_name" class="text-sm pl-2">Name</label>
+                <input type="text"
+                       name="spouse_name"
+                       id="spouse_name"
+                       placeholder="Full Name"
+                       class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
-                        />
-                    </div>
+                />
 
+                <label for="spouse_phone_number" class="text-sm pl-2 pb-1">Phone Number</label>
+                <input type="text"
+                       name="spouse_phone_number"
+                       id="spouse_phone_number"
+                       placeholder="+880 1xxx-xxxxxx"
+                       class="-mt-2 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono"
+                />
+
+
+                <div class="flex gap-4">
                     <div class="flex-col">
                         <label for="spouse_passport_number" class="text-sm pl-2">Spouse Passport Number</label>
                         <input type="text"
                                name="spouse_passport_number"
                                id="spouse_passport_number"
-                               value="existing spouse passport number"
+                               placeholder="7 Digit Number"
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono disabled:opacity-70"
@@ -194,62 +182,99 @@ session_start();
 
                     </div>
 
+                    <div class="flex-col">
+                        <label for="spouse_division_index" class="text-sm pl-2">Division Index</label>
+                        <div class="flex items-center">
+                            <input type="text"
+                                   name="spouse_division_index"
+                                   id="spouse_division_index"
+                                   placeholder="Default: 50"
+                                   class="mt-1  rounded-xl
+                               bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono text-center"
+                            />
+                            <label for="spouse_division_index" class="text-xl pl-2">%</label>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
+        </div>
 
-                <label for="spouse_phone_number" class="text-sm pl-2">Spouse Phone Number</label>
-                <input type="text"
-                       name="spouse_phone_number"
-                       id="spouse_phone_number"
-                       value="existing spouse phone number"
-                       class="-mt-2 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
-                />
+        <div class="col-span-2 w-full h-1 mx-auto flex justify-between text-3xl font-bold text-zinc-400">
+            <h1>Total Children: 0</h1>
+            <h1>Your Children</h1>
+        </div>
+        <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
-                <div class="flex-col">
-                    <label for="spouse_division_index" class="text-sm pl-2">Division Index</label>
+        <div id="childrenContainer" class="col-span-2 flex gap-4">
+            <div class="flex gap-4 w-full justify-evenly">
+                <div class="flex flex-col gap-1 justify-evenly">
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
                     <input type="text"
-                           name="spouse_division_index"
-                           id="spouse_division_index"
-                            value="existing spouse division index"
-                           class="mt-1 w-full rounded-xl
+                           name="spouse_name"
+                           id="spouse_name"
+                           placeholder="Full Name"
+                           class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
                     />
                 </div>
-                
-                <div class="flex gap-4">
-                    <div class="flex-col">
-                        <button class="p-4 bg-gray-300"
-                        >Remove Spouse</button>
-                    </div>
-                    <div class="flex-col">
-                        <button class="p-4 bg-gray-300"
-                        >Update Spouse</button>
 
+                <div class="flex flex-col gap-1">
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <input type="text"
+                           name="spouse_name"
+                           id="spouse_name"
+                           placeholder="Full Name"
+                           class="-mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <input type="text"
+                           name="spouse_name"
+                           id="spouse_name"
+                           placeholder="Full Name"
+                           class="-mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <div class="flex gap-1 items-center">
+                        <input type="text"
+                               name="spouse_name"
+                               id="spouse_name"
+                               placeholder="Full Name"
+                               class="-mt-1 rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono"
+                        />
+                        <label for="spouse_division_index" class="text-xl pl-2">%</label>
                     </div>
                 </div>
-                
 
+                <button
+                    class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-red-100 transition-all duration-300 items-center">
+                    <img src="../../../resource/icons/dashboard/file_delete.svg" alt="">
+                </button>
             </div>
-        </div>
 
-        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
-
-        <div class="flex flex-col place-items-center w-full">
-            <img class="mb-4" src="../../../resource/icons/dashboard/lock.svg" alt="">
-            <h1 class="text-md text-gray-700 font-medium">
-                ADD CHILDREN SECTION
-            </h1>
         </div>
 
         <div class="w-full flex flex-col gap-4">
             <button id="add_children_button" class="p-4 bg-gray-300">
                 Add Children
             </button>
-            
+
             <div id="children_section">
-                
+
             </div>
         </div>
 
@@ -394,7 +419,6 @@ session_start();
 
 
     // Write js codes here.
-
 
 
 </script>
