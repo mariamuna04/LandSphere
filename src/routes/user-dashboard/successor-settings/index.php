@@ -1,4 +1,6 @@
 <?php
+//print error
+ini_set('display_errors', 1);
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -35,7 +37,70 @@ if ($token != $get_token['token']) {
     header('Location: ../../sign-in/');
 }
 
-// Uncomment and Write codes here
+$get_spouse_info = "SELECT * FROM marital_status WHERE partner_nid = " . $user_id . ";";
+$get_spouse_info_result = mysqli_query($connection, $get_spouse_info);
+$get_spouse_info_row = mysqli_fetch_assoc($get_spouse_info_result);
+
+$get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . ";";
+$get_children_info_result = mysqli_query($connection, $get_children_info);
+$number_of_children = mysqli_num_rows($get_children_info_result);
+
+if(isset($_POST['submit'])){
+    $nid= $_POST['spouse_nid'];
+    if(empty($nid)){
+        $nid= $get_spouse_info_row['nid'];
+    }
+    $name= $_POST['spouse_name'];
+
+    if(empty($name)){
+        $name= $get_spouse_info_row['full_name'];
+    }
+    $email= $_POST['spouse_email'];
+
+    if(empty($email)){
+        $email= $get_spouse_info_row['email'];
+    }
+    $phone= $_POST['spouse_phone_number'];
+
+    if(empty($phone)){
+        $phone= $get_spouse_info_row['phone_number'];
+    }
+    $birth_certificate= $_POST['spouse_birth_certificate'];
+
+    if(empty($birth_certificate)){
+        $birth_certificate= $get_spouse_info_row['birth_certificate_no'];
+    }
+    $passport= $_POST['spouse_passport_number'];
+
+    if(empty($passport)){
+        $passport= $get_spouse_info_row['passport_number'];
+    }
+    $division_index= $_POST['spouse_division_index'];
+
+    if(empty($division_index)){
+        $division_index= $get_spouse_info_row['division_index'];
+    }
+
+    if($get_spouse_info_row){
+        $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = '" . $birth_certificate . "', passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
+        $update_spouse_info_result = mysqli_query($connection, $update_spouse_info);
+        if($update_spouse_info_result){
+            header('Location: ./');
+        }
+    }
+    else{
+        $insert_spouse_info = "INSERT INTO marital_status (nid, full_name, email, phone_number, birth_certificate_no, passport_number, division_index, partner_nid) VALUES (" . $nid . ", '" . $name . "', '" . $email . "', '" . $phone . "', '" . $birth_certificate . "', '" . $passport . "', " . $division_index . ", " . $user_id . ");";
+        $insert_spouse_info_result = mysqli_query($connection, $insert_spouse_info);
+        if($insert_spouse_info_result){
+            header('Location: ./');
+        }
+    }
+
+    $children_name = $_POST['children_name_1'];
+    header('Location: ./random.php?x='.$children_name);
+}
+
+
 
 
 ?>
@@ -117,6 +182,7 @@ if ($token != $get_token['token']) {
                        name="spouse_nid"
                        id="spouse_nid"
                        placeholder="NID Number"
+                       <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['nid'].'"'?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono disabled:opacity-50"
@@ -126,6 +192,7 @@ if ($token != $get_token['token']) {
                 <input type="email"
                        name="spouse_email"
                        placeholder="someone@example.com"
+                          <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['email'].'"'?>
                        id="spouse_email"
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
@@ -138,6 +205,7 @@ if ($token != $get_token['token']) {
                        name="spouse_birth_certificate"
                        id="spouse_birth_certificate"
                        placeholder="11 Digit Number"
+                          <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['birth_certificate_no'].'"'?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono tracking-widest"
@@ -152,6 +220,7 @@ if ($token != $get_token['token']) {
                        name="spouse_name"
                        id="spouse_name"
                        placeholder="Full Name"
+                            <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['full_name'].'"'?>
                        class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -162,6 +231,7 @@ if ($token != $get_token['token']) {
                        name="spouse_phone_number"
                        id="spouse_phone_number"
                        placeholder="+880 1xxx-xxxxxx"
+                            <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['phone_number'].'"'?>
                        class="-mt-2 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -175,6 +245,7 @@ if ($token != $get_token['token']) {
                                name="spouse_passport_number"
                                id="spouse_passport_number"
                                placeholder="7 Digit Number"
+                                    <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['passport_number'].'"'?>
                                class="mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono disabled:opacity-70"
@@ -189,6 +260,7 @@ if ($token != $get_token['token']) {
                                    name="spouse_division_index"
                                    id="spouse_division_index"
                                    placeholder="Default: 50"
+                                        <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['division_index'].'"'?>
                                    class="mt-1  rounded-xl
                                bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono text-center"
@@ -202,19 +274,33 @@ if ($token != $get_token['token']) {
         </div>
 
         <div class="col-span-2 w-full h-1 mx-auto flex justify-between text-3xl font-bold text-zinc-400">
-            <h1>Total Children: 0</h1>
+            <h1>Total Children: <?php echo $number_of_children?></h1>
             <h1>Your Children</h1>
         </div>
         <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
         <div id="childrenContainer" class="col-span-2 flex gap-4">
-            <div class="flex gap-4 w-full justify-evenly">
+            <div class="flex flex-col gap-2">
+            <?php
+            $count =0 ;
+            if($number_of_children > 0){
+                $get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
+                while($get_children_info_row){
+                    $count++;
+                    $full_name = $get_children_info_row['full_name'];
+                    $phone_number = $get_children_info_row['phone_number'];
+                    $birth_certificate_no = $get_children_info_row['birth_certificate_number'];
+                    $division_index = $get_children_info_row['division_index'];
+
+                    echo <<<HTML
+<div class="flex gap-4 w-full justify-evenly">
                 <div class="flex flex-col gap-1 justify-evenly">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
                     <input type="text"
-                           name="spouse_name"
-                           id="spouse_name"
+                           name="children_name_$count"
+                           id="children_name_$count"
                            placeholder="Full Name"
+                            value="$full_name"
                            class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -224,9 +310,10 @@ if ($token != $get_token['token']) {
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
                     <input type="text"
-                           name="spouse_name"
-                           id="spouse_name"
+                           name="children_phone_number_$count"
+                           id="children_phone_number_$count"
                            placeholder="Full Name"
+                            value="$phone_number"
                            class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -236,9 +323,10 @@ if ($token != $get_token['token']) {
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
                     <input type="text"
-                           name="spouse_name"
-                           id="spouse_name"
+                           name= "children_birth_certificate_number_$count"
+                           id="children_birth_certificate_number_$count"
                            placeholder="Full Name"
+                            value="$birth_certificate_no"
                            class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -249,9 +337,10 @@ if ($token != $get_token['token']) {
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
                     <div class="flex gap-1 items-center">
                         <input type="text"
-                               name="spouse_name"
-                               id="spouse_name"
+                               name="children_division_index_$count"
+                               id= "children_division_index_$count"
                                placeholder="Full Name"
+                                 value="$division_index"
                                class="-mt-1 rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -266,6 +355,12 @@ if ($token != $get_token['token']) {
                 </button>
             </div>
 
+HTML;
+$get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
+                }
+            }
+                ?>
+        </div>
         </div>
 
         <div class="w-full flex flex-col gap-4">
