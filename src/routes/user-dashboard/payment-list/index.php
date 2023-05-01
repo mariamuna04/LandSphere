@@ -369,7 +369,7 @@ HTML;
                         rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
                         antialiased motion-safe:hover:scale-[1.02]">
                     HTML;
-                } else if (!$installment_over) {
+                } else if ($paid_amount == $total_amount) {
                     echo <<< HTML
                         <a href="../../../utility/php/transfer_ownership.php?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 w-full pb-4 px-4
                         rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 bg-green-50
