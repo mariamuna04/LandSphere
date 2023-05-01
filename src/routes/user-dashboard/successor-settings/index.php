@@ -162,12 +162,11 @@ foreach ($_POST as $name => $value) {
         if (empty($new_children_division_index)) {
             $new_children_division_index = 0;
         } else {
-            $new_children_division_index = $new_children_division_index/100;
+            $new_children_division_index = $new_children_division_index / 100;
         }
 
 
-
-        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . ";";
+        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
         $update_children_result = mysqli_query($connection, $update_children);
         if ($update_children_result) {
             header('Location: ./?success=1');
@@ -537,7 +536,7 @@ HTML;
                     $phone_number = $get_children_info_row['phone_number'];
                     $children_email = $get_children_info_row['email'];
                     $birth_certificate_no = $get_children_info_row['birth_certificate_number'];
-                    $division_index = $get_children_info_row['division_index']*100;
+                    $division_index = $get_children_info_row['division_index'] * 100;
 
                     echo <<<HTML
 <div class="flex gap-4 w-full justify-evenly">
