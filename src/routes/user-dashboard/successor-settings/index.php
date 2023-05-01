@@ -45,16 +45,13 @@ $get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . "
 $get_children_info_result = mysqli_query($connection, $get_children_info);
 $number_of_children = mysqli_num_rows($get_children_info_result);
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['update_spouse'])) {
     $nid = $_POST['spouse_nid'];
-    if (empty($nid)) {
-        $nid = $get_spouse_info_row['nid'];
-    }
-    $name = $_POST['spouse_name'];
+    if (empty($nid)) $nid = $get_spouse_info_row['nid'];
 
-    if (empty($name)) {
-        $name = $get_spouse_info_row['full_name'];
-    }
+    $name = $_POST['spouse_name'];
+    if (empty($name)) $name = $get_spouse_info_row['full_name'];
+
     $email = $_POST['spouse_email'];
 
     if (empty($email)) {
@@ -103,34 +100,83 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if(isset($_POST['add_spouse'])){
-
+if (isset($_POST['add_spouse'])) {
     $new_spouse_nid = $_POST['new_spouse_nid'];
     $new_spouse_name = $_POST['new_spouse_name'];
     $new_spouse_email = $_POST['new_spouse_email'];
     $new_spouse_birth_certificate = $_POST['new_spouse_birth_certificate'];
 
-    $get_remaining_division_index = "SELECT SUM(division_index) FROM children WHERE parent_nid = ".$user_id.";";
+    $get_remaining_division_index = "SELECT SUM(division_index) FROM children WHERE parent_nid = " . $user_id . ";";
     $get_remaining_division_index_result = mysqli_query($connection, $get_remaining_division_index);
     $get_remaining_division_index_row = mysqli_fetch_assoc($get_remaining_division_index_result);
     $new_spouse_division_index = 1 - $get_remaining_division_index_row['SUM(division_index)'];
 
 
     $insert_new_spouse = "INSERT INTO marital_status (nid, partner_nid, full_name, email, phone_number, passport_number, birth_certificate_no, division_index) 
-VALUES (".$new_spouse_nid.", ".$user_id.", '".$new_spouse_name."', '".$new_spouse_email."', NULL, NULL, '".$new_spouse_birth_certificate."', ".$new_spouse_division_index.");";
+VALUES (" . $new_spouse_nid . ", " . $user_id . ", '" . $new_spouse_name . "', '" . $new_spouse_email . "', NULL, NULL, '" . $new_spouse_birth_certificate . "', " . $new_spouse_division_index . ");";
     $insert_new_spouse_result = mysqli_query($connection, $insert_new_spouse);
-    if($insert_new_spouse_result){
+    if ($insert_new_spouse_result) {
         header('Location: ./?add_spouse=success');
     }
 }
 
-if(isset($_POST['remove_spouse'])){
-    $remove_spouse = "DELETE FROM marital_status WHERE partner_nid = ".$user_id.";";
+if (isset($_POST['remove_spouse'])) {
+    $remove_spouse = "DELETE FROM marital_status WHERE partner_nid = " . $user_id . ";";
     $remove_spouse_result = mysqli_query($connection, $remove_spouse);
-    if($remove_spouse_result){
+    if ($remove_spouse_result) {
         header('Location: ./?remove_spouse=success');
     }
 }
+
+if (isset($_POST['add_children'])) {
+    $new_child_birth_certificate = $_POST['new_children_birth_certificate'];
+    $new_child_name = $_POST['new_children_name'];
+    $new_child_email = $_POST['new_children_email'];
+
+    $insert_new_child = "INSERT INTO children (birth_certificate_number, parent_nid, full_name, email, phone_number, division_index) 
+VALUES ('" . $new_child_birth_certificate . "', " . $user_id . ", '" . $new_child_name . "', '" . $new_child_email . "', NULL, 0);";
+    $insert_new_child_result = mysqli_query($connection, $insert_new_child);
+    if ($insert_new_child_result) {
+        header('Location: ./?add_children=success');
+    }
+}
+
+foreach ($_POST as $name => $value) {
+    if (str_starts_with($name, "remove_children_")) {
+        $buttonNumber = substr($name, strlen("remove_children_"));
+        header('Location: ../../../utility/php/remove_children.php?remove_index=' . $buttonNumber);
+    }
+}
+
+foreach ($_POST as $name => $value) {
+    if (str_starts_with($name, "update_children_")) {
+        $buttonNumber = substr($name, strlen("remove_children_"));
+
+        $new_child_name = $_POST['new_children_name_' . $buttonNumber];
+        $new_child_email = $_POST['new_children_email_' . $buttonNumber];
+        $new_children_phone = $_POST['new_children_phone_' . $buttonNumber];
+        if (empty($new_children_phone) || $new_children_phone == "") {
+            $new_children_phone = "";
+        }
+        $new_children_division_index = $_POST['new_children_division_index_' . $buttonNumber];
+        if (empty($new_children_division_index)) {
+            $new_children_division_index = 0;
+        } else {
+            $new_children_division_index = $new_children_division_index/100;
+        }
+
+
+
+        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . ";";
+        $update_children_result = mysqli_query($connection, $update_children);
+        if ($update_children_result) {
+            header('Location: ./?success=1');
+        }
+
+
+    }
+}
+
 
 ?>
 
@@ -201,10 +247,10 @@ if(isset($_POST['remove_spouse'])){
     <form method="post" action="" class="grid grid-cols-2 gap-12 place-items-start">
         <div class="col-span-2 w-full h-1 mx-auto ">
             <div class="flex gap-2 justify-end align-middle items-center">
-            <h1 class="text-end text-3xl font-bold text-zinc-400">Your Spouse</h1>
+                <h1 class="text-end text-3xl font-bold text-zinc-400">Your Spouse</h1>
 
-            <?php if (!$get_spouse_info_row){
-                echo <<< HTML
+                <?php if (!$get_spouse_info_row) {
+                    echo <<< HTML
 
 <button id="spouse_add_button" type="button" data-modal-target="spouse_add_modal" data-modal-toggle="spouse_add_modal"
             class="rounded-full opacity-75 hover:opacity-100 transition-all duration-300 hover:bg-green-100
@@ -270,7 +316,7 @@ if(isset($_POST['remove_spouse'])){
                                    outline-none focus:shadow-md font-mono tracking-widest"
                     />  
                     <button name="add_spouse" type="submit" class="mt-2 w-full rounded-xl
-                           bg-green-500 py-3 px-6 text-base font-medium text-white
+                           bg-green-600 py-3 px-6 text-base font-medium text-white
                            outline-none focus:shadow-md font-mono hover:bg-green-600 transition-all duration-300">
                         Add Spouse</button>                   
         </div>
@@ -278,8 +324,8 @@ if(isset($_POST['remove_spouse'])){
 </div>
 
 HTML;
-            }
-            ?>
+                }
+                ?>
             </div>
         </div>
         <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
@@ -384,17 +430,26 @@ HTML;
                     </div>
                 </div>
             </div>
-            <button name="remove_spouse" class="text-red-600 h-12 rounded-xl
+            
+            <div class="flex gap-4 items-center">
+            <button name="remove_spouse" class="text-red-600 h-12 rounded-full
                            bg-red-100 py-3 px-6 text-base font-medium col-span-2 flex justify-center
                            outline-none focus:shadow-md font-mono hover:bg-red-200 transition-all duration-300">
-                Remove Spouse
+                Remove Information
             </button>
+            <button name="update_spouse" class="text-white h-12 rounded-full
+                           bg-green-600 py-3 px-6 text-base font-medium col-span-2 flex justify-center
+                           outline-none focus:shadow-md font-mono hover:bg-green-800 transition-all duration-300">
+                Update Information
+            </button>
+            </div>
+            
 HTML;
 
         } else {
             echo <<< HTML
     <div class="w-full text-center col-span-2 h-1 mx-auto text-2xl font-bold text-zinc-400">
-<h1>Spouse Not Found</h1>
+<h1>Opps! You do not have spouse...</h1>
 </div>
 HTML;
 
@@ -404,9 +459,72 @@ HTML;
 
 
         <div class="col-span-2 w-full h-1 mx-auto flex justify-end text-3xl font-bold text-zinc-400 mt-16">
-            <h1>Your Children</h1>
+            <div class="flex items-center gap-2">
+                <h1>Your Children</h1>
+                <button id="children_add_button" type="button" data-modal-target="children_add_modal"
+                        data-modal-toggle="children_add_modal"
+                        class="rounded-full opacity-75 hover:opacity-100 transition-all duration-300 hover:bg-green-100
+                    flex gap-12 items-center">
+                    <span class="flex items-center gap-2">
+                        <img class="h-8 w-8" src="../../../resource/icons/dashboard/add.svg" alt=" ">
+                    </span>
+                </button>
+
+
+                <div id="children_add_modal"
+                     tabindex="-1"
+                     aria-hidden="true"
+                     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-darkest
+     backdrop-blur-md transition-all shadow-xl animate-global_search_fadeIn">
+
+                    <div class="relative w-full max-w-2xl h-auto">
+
+                        <div class="relative rounded-2xl bg-beige-light p-8 flex flex-col gap-3">
+                            <h1 class="text-2xl font-bold text-zinc-500">Add Children</h1>
+                            <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
+
+                            <label for="spouse_nid" class="text-sm pl-2">Birth Certificate Number</label>
+                            <input type="text"
+                                   name="new_children_birth_certificate"
+                                   id="new_children_birth_certificate"
+                                   placeholder="Birth Certificate Number"
+                                   class="-mt-1 w-full rounded-xl
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono disabled:opacity-50"
+                            />
+
+                            <label for="spouse_name" class="text-sm pl-2">Name</label>
+                            <input type="text"
+                                   name="new_children_name"
+                                   id="new_children_name"
+                                   placeholder="Full Name"
+                                   class="-mt-1 w-full rounded-xl
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono"
+                            />
+
+                            <label for="spouse_email" class="text-sm pl-2">Email</label>
+                            <input type="email"
+                                   name="new_children_email"
+                                   placeholder="someone@example.com"
+                                   id="new_children_email"
+                                   class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono"
+                            />
+                            <button name="add_children" type="submit" class="mt-2 w-full rounded-xl
+                           bg-green-600 py-3 px-6 text-base font-medium text-white
+                           outline-none focus:shadow-md font-mono hover:bg-green-600 transition-all duration-300">
+                                Add Children
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
+        <hr class="col-span-2 w-full -mt-3 h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
         <div id="childrenContainer" class="col-span-2 flex gap-4 w-full">
             <?php
@@ -418,16 +536,17 @@ HTML;
                     $count++;
                     $full_name = $get_children_info_row['full_name'];
                     $phone_number = $get_children_info_row['phone_number'];
+                    $children_email = $get_children_info_row['email'];
                     $birth_certificate_no = $get_children_info_row['birth_certificate_number'];
-                    $division_index = $get_children_info_row['division_index'];
+                    $division_index = $get_children_info_row['division_index']*100;
 
                     echo <<<HTML
 <div class="flex gap-4 w-full justify-evenly">
                 <div class="flex flex-col gap-1 justify-evenly">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Full name</label>
                     <input type="text"
-                           name="children_name_$count"
-                           id="children_name_$count"
+                           name="new_children_name_$count"
+                           id="new_children_name_$count"
                            placeholder="Full Name"
                             value="$full_name"
                            class="-mt-1 w-full rounded-xl
@@ -439,21 +558,35 @@ HTML;
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Phone Number</label>
                     <input type="text"
-                           name="children_phone_number_$count"
-                           id="children_phone_number_$count"
-                           placeholder="Full Name"
+                           name="new_children_phone_number_$count"
+                           id="new_children_phone_number_$count"
+                           placeholder="+8801XXXXXXXXX"
                             value="$phone_number"
                            class="-mt-1 w-full rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
                     />
                 </div>
+                
+                <div class="flex flex-col gap-1">
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Email</label>
+                    <input type="text"
+                           name= "new_children_email_$count"
+                           id="new_children_email_$count"
+                           placeholder="Email"
+                            value="$children_email"
+                           class="-mt-1 w-full rounded-xl
+                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                               outline-none focus:shadow-md font-mono"
+                    />
+                </div>
+
 
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Birth Certificate</label>
                     <input type="text"
-                           name= "children_birth_certificate_number_$count"
-                           id="children_birth_certificate_number_$count"
+                           name= "new_children_birth_certificate_number_$count"
+                           id="new_children_birth_certificate_number_$count"
                            placeholder="Full Name"
                             value="$birth_certificate_no"
                            class="-mt-1 w-full rounded-xl
@@ -461,26 +594,36 @@ HTML;
                                outline-none focus:shadow-md font-mono"
                     />
                 </div>
-
+                
+                
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Division Index</label>
                     <div class="flex gap-1 items-center">
                         <input type="text"
-                               name="children_division_index_$count"
-                               id= "children_division_index_$count"
-                               placeholder="Full Name"
+                               name="new_children_division_index_$count"
+                               id= "new_children_division_index_$count"
+                              
                                value="$division_index"
-                               class="-mt-1 rounded-xl
+                               class="-mt-1 rounded-xl w-24
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
                         />
                         <label for="spouse_division_index" class="text-xl pl-2">%</label>
                     </div>
                 </div>
+                
+                <button name="update_children_$count"
+                    class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-green-100 transition-all duration-300 items-center">
+                    <img class="h-6 w-6" src="../../../resource/icons/dashboard/upload.svg" alt="">
+                </button>
+                
                 <button name="remove_children_$count"
                     class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-red-100 transition-all duration-300 items-center">
                     <img src="../../../resource/icons/dashboard/file_delete.svg" alt="">
                 </button>
+                
+                
+               
             </div>
 
 HTML;
@@ -489,7 +632,7 @@ HTML;
                 echo '</div>';
             } else {
                 echo <<<HTML
-                        <h1 class="justify-center flex w-full h-1 mx-auto text-2xl font-bold text-zinc-400">Children Not Found</h1>
+                        <h1 class="justify-center flex w-full h-1 mx-auto text-2xl font-bold text-zinc-400">You have not added any children</h1>
                 HTML;
 
             }
@@ -498,26 +641,6 @@ HTML;
 
         <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full mt-22">
 
-        <div class="col-span-2 flex w-full justify-center gap-12">
-            <input type="password"
-                   name="current_password"
-                   id="current_password"
-                   placeholder="Enter Password to Save Changes"
-                   class="mt-1 rounded-xl
-                               w-96 py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center"
-            />
-            <label for="current_password"></label>
-
-            <button name="submit" type="submit"
-                    class="hover:shadow-form bg-green-700
-                        px-8 text-center text-base
-                        font-bold text-white outline-none items-center
-                        col-span-2 rounded-full hover:bg-green-800
-                        hover:shadow-lg">
-                Save and Return to Home
-            </button>
-    </form>
 </section>
 
 
