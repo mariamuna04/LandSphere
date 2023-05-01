@@ -151,10 +151,10 @@ foreach ($_POST as $name => $value) {
 foreach ($_POST as $name => $value) {
     if (str_starts_with($name, "update_children_")) {
         $buttonNumber = substr($name, strlen("remove_children_"));
-
+        $new_child_birth_certificate = $_POST['new_children_birth_certificate_number_' . $buttonNumber];
         $new_child_name = $_POST['new_children_name_' . $buttonNumber];
         $new_child_email = $_POST['new_children_email_' . $buttonNumber];
-        $new_children_phone = $_POST['new_children_phone_' . $buttonNumber];
+        $new_children_phone = $_POST['new_children_phone_number_' . $buttonNumber];
         if (empty($new_children_phone) || $new_children_phone == "") {
             $new_children_phone = "";
         }
@@ -166,7 +166,7 @@ foreach ($_POST as $name => $value) {
         }
 
 
-        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
+        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', birth_certificate_number=" . $new_child_birth_certificate . ", email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
         $update_children_result = mysqli_query($connection, $update_children);
         if ($update_children_result) {
             header('Location: ./?success=1');
