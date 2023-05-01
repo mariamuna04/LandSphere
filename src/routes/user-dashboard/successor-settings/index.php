@@ -83,10 +83,12 @@ if (isset($_POST['update_spouse'])) {
 
     if (empty($division_index)) {
         $division_index = $get_spouse_info_row['division_index'];
+    } else {
+        $division_index = $division_index / 100;
     }
 
     if ($get_spouse_info_row) {
-        $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = '" . $birth_certificate . "', passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
+        $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = " . $birth_certificate . ", passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
         $update_spouse_info_result = mysqli_query($connection, $update_spouse_info);
         if ($update_spouse_info_result) {
             header('Location: ./');
@@ -331,6 +333,7 @@ HTML;
 
         <?php
         if ($get_spouse_info_row) {
+            $print_division_index = $get_spouse_info_row['division_index'] * 100;
             echo <<< HTML
             <div class="w-full">
                 <div class="flex flex-col gap-3">
@@ -417,7 +420,7 @@ HTML;
                                        name="spouse_division_index"
                                        id="spouse_division_index"
                                        placeholder="Default: 50"
-                                       value={$get_spouse_info_row['division_index']}
+                                       value={$print_division_index}
                                        class="mt-1  rounded-xl
                                    bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
                                    outline-none focus:shadow-md font-mono text-center"
