@@ -85,6 +85,14 @@ $sale_deed = $lands["sale_deed"];
 $tax_payment = $lands["tax_pay_receipt"];
 $map_property = $lands["map_property"];
 
+// Sell List Information
+$land_sell_list_sql = "SELECT * FROM sell_list WHERE land_id = $land_id;";
+$land_sell_list_sql_result = mysqli_query($connection, $land_sell_list_sql);
+$land_sell_list = mysqli_fetch_assoc($land_sell_list_sql_result);
+$max_installment = $land_sell_list["max_installment"];
+$deadline = $land_sell_list["deadline"];
+
+
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
     $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
@@ -406,7 +414,7 @@ if (isset($_POST['submit_rating'])) {
                 <li>
                     <a href="../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
                         Successor Settings
                     </a>
@@ -578,6 +586,17 @@ HTML;
                         ?>
                     </div>
 
+                    <div class="flex gap-4 font-mono font-bold items-center opacity-75">
+                        <h1 class="p-2 bg-gray-300 rounded-xl">
+                            Deadline : <?php echo $deadline ?>
+                        </h1>
+
+                        <h1 class="p-2 bg-gray-300 rounded-xl">
+                            Max Installment : <?php echo $max_installment ?>
+                        </h1>
+
+
+                    </div>
                     <div class="flex gap-4 items-baseline">
                         <form
                             action="../../../utility/php/land_book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>"

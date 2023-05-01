@@ -301,6 +301,12 @@ HTML;
                 $get_installment_information_result = mysqli_query($connection, $get_installment_information_sql);
                 $installment_number_row_count = mysqli_num_rows($get_installment_information_result);
 
+                // get sell list information
+                $get_sell_list_sql = "SELECT * FROM sell_list WHERE land_id = '$land_id'";
+                $get_sell_list_result = mysqli_query($connection, $get_sell_list_sql);
+                $sell_list = mysqli_fetch_assoc($get_sell_list_result);
+                $deadline = $sell_list['deadline'];
+
                 // Check if there are already some installments paid
                 // if so, get total paid amount from installment table
                 if ($installment_number_row_count > 0) {
@@ -386,7 +392,7 @@ HTML;
                         <hr class="border-2 border-gray-300 rounded-full my-2">
                         <div class="grid-cols-2 grid place-items-center justify-between my-2">
                             <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium 
-                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Deadline: $due_time</div>
+                            border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Deadline: $deadline</div>
                             <div class="bg-white text-sm px-2 py-2 rounded-xl w-[90%] text-center font-medium
                             border border-white group-hover:border group-hover:border-green-400 transition-all duration-300">Installments:
                                 <span class="font-mono pl-3"> $installment_number_row_count / $installment </span>
