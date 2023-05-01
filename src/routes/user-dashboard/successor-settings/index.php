@@ -41,7 +41,7 @@ $get_spouse_info = "SELECT * FROM marital_status WHERE partner_nid = " . $user_i
 $get_spouse_info_result = mysqli_query($connection, $get_spouse_info);
 $get_spouse_info_row = mysqli_fetch_assoc($get_spouse_info_result);
 
-$get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . ";";
+$get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . " ORDER BY birth_certificate_number;";
 $get_children_info_result = mysqli_query($connection, $get_children_info);
 $number_of_children = mysqli_num_rows($get_children_info_result);
 
@@ -144,7 +144,7 @@ VALUES ('" . $new_child_birth_certificate . "', " . $user_id . ", '" . $new_chil
 foreach ($_POST as $name => $value) {
     if (str_starts_with($name, "remove_children_")) {
         $buttonNumber = substr($name, strlen("remove_children_"));
-        header('Location: ../../../utility/php/remove_children.php?remove_index=' . $buttonNumber);
+        header('Location: ../../../utility/php/remove_children.php?index=' . $buttonNumber);
     }
 }
 
@@ -528,12 +528,11 @@ HTML;
 
         <div id="childrenContainer" class="col-span-2 flex gap-4 w-full">
             <?php
-            $count = 0;
             if ($number_of_children > 0) {
                 $get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
                 echo ' <div class="flex flex-col gap-2"> ';
                 while ($get_children_info_row) {
-                    $count++;
+
                     $full_name = $get_children_info_row['full_name'];
                     $phone_number = $get_children_info_row['phone_number'];
                     $children_email = $get_children_info_row['email'];
@@ -545,8 +544,8 @@ HTML;
                 <div class="flex flex-col gap-1 justify-evenly">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Full name</label>
                     <input type="text"
-                           name="new_children_name_$count"
-                           id="new_children_name_$count"
+                           name="new_children_name_$birth_certificate_no"
+                           id="new_children_name_$birth_certificate_no"
                            placeholder="Full Name"
                             value="$full_name"
                            class="-mt-1 w-full rounded-xl
@@ -558,8 +557,8 @@ HTML;
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Phone Number</label>
                     <input type="text"
-                           name="new_children_phone_number_$count"
-                           id="new_children_phone_number_$count"
+                           name="new_children_phone_number_$birth_certificate_no"
+                           id="new_children_phone_number_$birth_certificate_no"
                            placeholder="+8801XXXXXXXXX"
                             value="$phone_number"
                            class="-mt-1 w-full rounded-xl
@@ -571,8 +570,8 @@ HTML;
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Email</label>
                     <input type="text"
-                           name= "new_children_email_$count"
-                           id="new_children_email_$count"
+                           name= "new_children_email_$birth_certificate_no"
+                           id="new_children_email_$birth_certificate_no"
                            placeholder="Email"
                             value="$children_email"
                            class="-mt-1 w-full rounded-xl
@@ -585,8 +584,8 @@ HTML;
                 <div class="flex flex-col gap-1">
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Birth Certificate</label>
                     <input type="text"
-                           name= "new_children_birth_certificate_number_$count"
-                           id="new_children_birth_certificate_number_$count"
+                           name= "new_children_birth_certificate_number_$birth_certificate_no"
+                           id="new_children_birth_certificate_number_$birth_certificate_no"
                            placeholder="Full Name"
                             value="$birth_certificate_no"
                            class="-mt-1 w-full rounded-xl
@@ -600,8 +599,8 @@ HTML;
                     <label for="spouse_name" class="text-sm pl-2 pb-1">Division Index</label>
                     <div class="flex gap-1 items-center">
                         <input type="text"
-                               name="new_children_division_index_$count"
-                               id= "new_children_division_index_$count"
+                               name="new_children_division_index_$birth_certificate_no"
+                               id= "new_children_division_index_$birth_certificate_no"
                               
                                value="$division_index"
                                class="-mt-1 rounded-xl w-24
@@ -612,12 +611,12 @@ HTML;
                     </div>
                 </div>
                 
-                <button name="update_children_$count"
+                <button name="update_children_$birth_certificate_no"
                     class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-green-100 transition-all duration-300 items-center">
                     <img class="h-6 w-6" src="../../../resource/icons/dashboard/upload.svg" alt="">
                 </button>
                 
-                <button name="remove_children_$count"
+                <button name="remove_children_$birth_certificate_no"
                     class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-red-100 transition-all duration-300 items-center">
                     <img src="../../../resource/icons/dashboard/file_delete.svg" alt="">
                 </button>
