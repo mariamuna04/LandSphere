@@ -45,63 +45,92 @@ $get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . "
 $get_children_info_result = mysqli_query($connection, $get_children_info);
 $number_of_children = mysqli_num_rows($get_children_info_result);
 
-if(isset($_POST['submit'])){
-    $nid= $_POST['spouse_nid'];
-    if(empty($nid)){
-        $nid= $get_spouse_info_row['nid'];
+if (isset($_POST['submit'])) {
+    $nid = $_POST['spouse_nid'];
+    if (empty($nid)) {
+        $nid = $get_spouse_info_row['nid'];
     }
-    $name= $_POST['spouse_name'];
+    $name = $_POST['spouse_name'];
 
-    if(empty($name)){
-        $name= $get_spouse_info_row['full_name'];
+    if (empty($name)) {
+        $name = $get_spouse_info_row['full_name'];
     }
-    $email= $_POST['spouse_email'];
+    $email = $_POST['spouse_email'];
 
-    if(empty($email)){
-        $email= $get_spouse_info_row['email'];
+    if (empty($email)) {
+        $email = $get_spouse_info_row['email'];
     }
-    $phone= $_POST['spouse_phone_number'];
+    $phone = $_POST['spouse_phone_number'];
 
-    if(empty($phone)){
-        $phone= $get_spouse_info_row['phone_number'];
+    if (empty($phone)) {
+        $phone = $get_spouse_info_row['phone_number'];
+        if (empty($phone)) {
+            $phone = "";
+        }
     }
-    $birth_certificate= $_POST['spouse_birth_certificate'];
+    $birth_certificate = $_POST['spouse_birth_certificate'];
 
-    if(empty($birth_certificate)){
-        $birth_certificate= $get_spouse_info_row['birth_certificate_no'];
+    if (empty($birth_certificate)) {
+        $birth_certificate = $get_spouse_info_row['birth_certificate_no'];
     }
-    $passport= $_POST['spouse_passport_number'];
+    $passport = $_POST['spouse_passport_number'];
 
-    if(empty($passport)){
-        $passport= $get_spouse_info_row['passport_number'];
+
+    if (empty($passport)) {
+        $passport = $get_spouse_info_row['passport_number'];
+        if (empty($passport)) {
+            $passport = "";
+        }
     }
-    $division_index= $_POST['spouse_division_index'];
+    $division_index = $_POST['spouse_division_index'];
 
-    if(empty($division_index)){
-        $division_index= $get_spouse_info_row['division_index'];
+    if (empty($division_index)) {
+        $division_index = $get_spouse_info_row['division_index'];
     }
 
-    if($get_spouse_info_row){
+    if ($get_spouse_info_row) {
         $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = '" . $birth_certificate . "', passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
         $update_spouse_info_result = mysqli_query($connection, $update_spouse_info);
-        if($update_spouse_info_result){
+        if ($update_spouse_info_result) {
             header('Location: ./');
         }
-    }
-    else{
+    } else {
         $insert_spouse_info = "INSERT INTO marital_status (nid, full_name, email, phone_number, birth_certificate_no, passport_number, division_index, partner_nid) VALUES (" . $nid . ", '" . $name . "', '" . $email . "', '" . $phone . "', '" . $birth_certificate . "', '" . $passport . "', " . $division_index . ", " . $user_id . ");";
         $insert_spouse_info_result = mysqli_query($connection, $insert_spouse_info);
-        if($insert_spouse_info_result){
+        if ($insert_spouse_info_result) {
             header('Location: ./');
         }
     }
-
-    $children_name = $_POST['children_name_1'];
-    header('Location: ./random.php?x='.$children_name);
 }
 
+if(isset($_POST['add_spouse'])){
+
+    $new_spouse_nid = $_POST['new_spouse_nid'];
+    $new_spouse_name = $_POST['new_spouse_name'];
+    $new_spouse_email = $_POST['new_spouse_email'];
+    $new_spouse_birth_certificate = $_POST['new_spouse_birth_certificate'];
+
+    $get_remaining_division_index = "SELECT SUM(division_index) FROM children WHERE parent_nid = ".$user_id.";";
+    $get_remaining_division_index_result = mysqli_query($connection, $get_remaining_division_index);
+    $get_remaining_division_index_row = mysqli_fetch_assoc($get_remaining_division_index_result);
+    $new_spouse_division_index = 1 - $get_remaining_division_index_row['SUM(division_index)'];
 
 
+    $insert_new_spouse = "INSERT INTO marital_status (nid, partner_nid, full_name, email, phone_number, passport_number, birth_certificate_no, division_index) 
+VALUES (".$new_spouse_nid.", ".$user_id.", '".$new_spouse_name."', '".$new_spouse_email."', NULL, NULL, '".$new_spouse_birth_certificate."', ".$new_spouse_division_index.");";
+    $insert_new_spouse_result = mysqli_query($connection, $insert_new_spouse);
+    if($insert_new_spouse_result){
+        header('Location: ./?add_spouse=success');
+    }
+}
+
+if(isset($_POST['remove_spouse'])){
+    $remove_spouse = "DELETE FROM marital_status WHERE partner_nid = ".$user_id.";";
+    $remove_spouse_result = mysqli_query($connection, $remove_spouse);
+    if($remove_spouse_result){
+        header('Location: ./?remove_spouse=success');
+    }
+}
 
 ?>
 
@@ -170,122 +199,222 @@ if(isset($_POST['submit'])){
 
 <section class="container mx-auto my-auto mt-48 mb-24 pl-16 pr-16">
     <form method="post" action="" class="grid grid-cols-2 gap-12 place-items-start">
-        <div class="col-span-2 w-full h-1 mx-auto text-end text-3xl font-bold text-zinc-400">
-            <h1>Your Spouse</h1>
+        <div class="col-span-2 w-full h-1 mx-auto ">
+            <div class="flex gap-2 justify-end align-middle items-center">
+            <h1 class="text-end text-3xl font-bold text-zinc-400">Your Spouse</h1>
+
+            <?php if (!$get_spouse_info_row){
+                echo <<< HTML
+
+<button id="spouse_add_button" type="button" data-modal-target="spouse_add_modal" data-modal-toggle="spouse_add_modal"
+            class="rounded-full opacity-75 hover:opacity-100 transition-all duration-300 hover:bg-green-100
+                    flex gap-12 items-center">
+        <span class="flex items-center gap-2">
+            <img class="h-8 w-8" src="../../../resource/icons/dashboard/add.svg" alt=" ">
+        </span>
+</button>
+
+
+
+<div id="spouse_add_modal"
+     tabindex="-1"
+     aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-60 bg-beige-darkest
+     backdrop-blur-md transition-all shadow-xl animate-global_search_fadeIn">
+
+    <div class="relative w-full max-w-2xl h-auto">
+        
+        <div class="relative rounded-2xl bg-beige-light p-8 flex flex-col gap-3">
+            <h1 class="text-2xl font-bold text-zinc-500">Add Spouse</h1>
+            <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
+            
+            <label for="spouse_nid" class="text-sm pl-2">Spouse NID</label>
+            <input type="text"
+                   name="new_spouse_nid"
+                   id="new_spouse_nid"
+                   placeholder="NID Number"
+                   class="-mt-1 w-full rounded-xl
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono disabled:opacity-50"
+            />
+            
+            <label for="spouse_name" class="text-sm pl-2">Name</label>
+            <input type="text"
+                   name="new_spouse_name"
+                   id="new_spouse_name"
+                   placeholder="Full Name"
+                   class="-mt-1 w-full rounded-xl
+                           bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                           outline-none focus:shadow-md font-mono"
+            />
+            
+                    <label for="spouse_email" class="text-sm pl-2">Spouse Email</label>
+                    <input type="email"
+                           name="new_spouse_email"
+                           placeholder="someone@example.com"
+                           id="new_spouse_email"
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono"
+                    />
+                    
+                    <label for="spouse_birth_certificate" class="text-sm pl-2">Spouse Birth Certificate</label>
+                    <input type="text"
+                           name="new_spouse_birth_certificate"
+                           id="new_spouse_birth_certificate"
+                           placeholder="11 Digit Number"
+             
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono tracking-widest"
+                    />  
+                    <button name="add_spouse" type="submit" class="mt-2 w-full rounded-xl
+                           bg-green-500 py-3 px-6 text-base font-medium text-white
+                           outline-none focus:shadow-md font-mono hover:bg-green-600 transition-all duration-300">
+                        Add Spouse</button>                   
+        </div>
+    </div>
+</div>
+
+HTML;
+            }
+            ?>
+            </div>
         </div>
         <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
-        <div class="w-full">
-            <div class="flex flex-col gap-3">
-                <label for="spouse_nid" class="text-sm pl-2">Spouse NID</label>
-                <input type="text"
-                       name="spouse_nid"
-                       id="spouse_nid"
-                       placeholder="NID Number"
-                       <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['nid'].'"'?>
-                       class="-mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono disabled:opacity-50"
-                />
-
-                <label for="spouse_email" class="text-sm pl-2">Spouse Email</label>
-                <input type="email"
-                       name="spouse_email"
-                       placeholder="someone@example.com"
-                          <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['email'].'"'?>
-                       id="spouse_email"
-                       class="-mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
-                />
-
-
-                <label for="spouse_birth_certificate" class="text-sm pl-2">Spouse Birth Certificate</label>
-                <input type="text"
-                       name="spouse_birth_certificate"
-                       id="spouse_birth_certificate"
-                       placeholder="11 Digit Number"
-                          <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['birth_certificate_no'].'"'?>
-                       class="-mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono tracking-widest"
-                />
-
-            </div>
-        </div>
-        <div class="w-full">
-            <div class="flex flex-col gap-3">
-                <label for="spouse_name" class="text-sm pl-2">Name</label>
-                <input type="text"
-                       name="spouse_name"
-                       id="spouse_name"
-                       placeholder="Full Name"
-                            <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['full_name'].'"'?>
-                       class="-mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
-                />
-
-                <label for="spouse_phone_number" class="text-sm pl-2 pb-1">Phone Number</label>
-                <input type="text"
-                       name="spouse_phone_number"
-                       id="spouse_phone_number"
-                       placeholder="+880 1xxx-xxxxxx"
-                            <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['phone_number'].'"'?>
-                       class="-mt-2 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
-                />
-
-
-                <div class="flex gap-4">
-                    <div class="flex-col">
-                        <label for="spouse_passport_number" class="text-sm pl-2">Spouse Passport Number</label>
-                        <input type="text"
-                               name="spouse_passport_number"
-                               id="spouse_passport_number"
-                               placeholder="7 Digit Number"
-                                    <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['passport_number'].'"'?>
-                               class="mt-1 w-full rounded-xl
-                               bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono disabled:opacity-70"
-                        />
-
-                    </div>
-
-                    <div class="flex-col">
-                        <label for="spouse_division_index" class="text-sm pl-2">Division Index</label>
-                        <div class="flex items-center">
-                            <input type="text"
-                                   name="spouse_division_index"
-                                   id="spouse_division_index"
-                                   placeholder="Default: 50"
-                                        <?php if ($get_spouse_info_row) echo 'value="'.$get_spouse_info_row['division_index'].'"'?>
-                                   class="mt-1  rounded-xl
-                               bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono text-center"
-                            />
-                            <label for="spouse_division_index" class="text-xl pl-2">%</label>
-                        </div>
-                    </div>
-
+        <?php
+        if ($get_spouse_info_row) {
+            echo <<< HTML
+            <div class="w-full">
+                <div class="flex flex-col gap-3">
+                    <label for="spouse_nid" class="text-sm pl-2">Spouse NID</label>
+                    <input type="text"
+                           name="spouse_nid"
+                           id="spouse_nid"
+                           placeholder="NID Number"
+                           value={$get_spouse_info_row['nid']}
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono disabled:opacity-50"
+                    />
+    
+                    <label for="spouse_email" class="text-sm pl-2">Spouse Email</label>
+                    <input type="email"
+                           name="spouse_email"
+                           placeholder="someone@example.com"
+                           value={$get_spouse_info_row['email']}
+                           id="spouse_email"
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono"
+                    />
+    
+    
+                    <label for="spouse_birth_certificate" class="text-sm pl-2">Spouse Birth Certificate</label>
+                    <input type="text"
+                           name="spouse_birth_certificate"
+                           id="spouse_birth_certificate"
+                           placeholder="11 Digit Number"
+                           value={$get_spouse_info_row['birth_certificate_no']}
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono tracking-widest"
+                    />
+    
                 </div>
             </div>
-        </div>
+            <div class="w-full">
+                <div class="flex flex-col gap-3">
+                    <label for="spouse_name" class="text-sm pl-2">Name</label>
+                    <input type="text"
+                           name="spouse_name"
+                           id="spouse_name"
+                           placeholder="Full Name"
+                           value={$get_spouse_info_row['full_name']}
+                           class="-mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono"
+                    />
+    
+                    <label for="spouse_phone_number" class="text-sm pl-2 pb-1">Phone Number</label>
+                    <input type="text"
+                           name="spouse_phone_number"
+                           id="spouse_phone_number"
+                           placeholder="+880 1xxx-xxxxxx"
+                           value="{$get_spouse_info_row['phone_number']}"
+                           class="-mt-2 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono"
+                    />
+    
+    
+                    <div class="flex gap-4">
+                        <div class="flex-col">
+                            <label for="spouse_passport_number" class="text-sm pl-2">Spouse Passport Number</label>
+                            <input type="text"
+                                   name="spouse_passport_number"
+                                   id="spouse_passport_number"
+                                   placeholder="7 Digit Number"
+                                   value="{$get_spouse_info_row['passport_number']}"
+                                   class="mt-1 w-full rounded-xl
+                                   bg-white py-3 px-6 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono disabled:opacity-70"
+                            />
+    
+                        </div>
+    
+                        <div class="flex-col">
+                            <label for="spouse_division_index" class="text-sm pl-2">Division Index</label>
+                            <div class="flex items-center">
+                                <input type="text"
+                                       name="spouse_division_index"
+                                       id="spouse_division_index"
+                                       placeholder="Default: 50"
+                                       value={$get_spouse_info_row['division_index']}
+                                       class="mt-1  rounded-xl
+                                   bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
+                                   outline-none focus:shadow-md font-mono text-center"
+                                />
+                                <label for="spouse_division_index" class="text-xl pl-2">%</label>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            <button name="remove_spouse" class="text-red-600 h-12 rounded-xl
+                           bg-red-100 py-3 px-6 text-base font-medium col-span-2 flex justify-center
+                           outline-none focus:shadow-md font-mono hover:bg-red-200 transition-all duration-300">
+                Remove Spouse
+            </button>
+HTML;
 
-        <div class="col-span-2 w-full h-1 mx-auto flex justify-between text-3xl font-bold text-zinc-400">
-            <h1>Total Children: <?php echo $number_of_children?></h1>
+        } else {
+            echo <<< HTML
+    <div class="w-full text-center col-span-2 h-1 mx-auto text-2xl font-bold text-zinc-400">
+<h1>Spouse Not Found</h1>
+</div>
+HTML;
+
+
+        }
+        ?>
+
+
+        <div class="col-span-2 w-full h-1 mx-auto flex justify-end text-3xl font-bold text-zinc-400 mt-16">
             <h1>Your Children</h1>
         </div>
         <hr class="col-span-2 w-full h-1 mx-auto bg-gray-300 border-0 rounded-full">
 
-        <div id="childrenContainer" class="col-span-2 flex gap-4">
-            <div class="flex flex-col gap-2">
+        <div id="childrenContainer" class="col-span-2 flex gap-4 w-full">
             <?php
-            $count =0 ;
-            if($number_of_children > 0){
+            $count = 0;
+            if ($number_of_children > 0) {
                 $get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
-                while($get_children_info_row){
+                echo ' <div class="flex flex-col gap-2"> ';
+                while ($get_children_info_row) {
                     $count++;
                     $full_name = $get_children_info_row['full_name'];
                     $phone_number = $get_children_info_row['phone_number'];
@@ -295,7 +424,7 @@ if(isset($_POST['submit'])){
                     echo <<<HTML
 <div class="flex gap-4 w-full justify-evenly">
                 <div class="flex flex-col gap-1 justify-evenly">
-                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Full name</label>
                     <input type="text"
                            name="children_name_$count"
                            id="children_name_$count"
@@ -308,7 +437,7 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Phone Number</label>
                     <input type="text"
                            name="children_phone_number_$count"
                            id="children_phone_number_$count"
@@ -321,7 +450,7 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Birth Certificate</label>
                     <input type="text"
                            name= "children_birth_certificate_number_$count"
                            id="children_birth_certificate_number_$count"
@@ -334,13 +463,13 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label for="spouse_name" class="text-sm pl-2 pb-1">Name</label>
+                    <label for="spouse_name" class="text-sm pl-2 pb-1">Division Index</label>
                     <div class="flex gap-1 items-center">
                         <input type="text"
                                name="children_division_index_$count"
                                id= "children_division_index_$count"
                                placeholder="Full Name"
-                                 value="$division_index"
+                               value="$division_index"
                                class="-mt-1 rounded-xl
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
                                outline-none focus:shadow-md font-mono"
@@ -348,49 +477,26 @@ if(isset($_POST['submit'])){
                         <label for="spouse_division_index" class="text-xl pl-2">%</label>
                     </div>
                 </div>
-
-                <button
+                <button name="remove_children_$count"
                     class="translate-y-[1.5rem] h-12 text-red-600 text-sm font-bold py-2 px-4 rounded-full flex gap-1 hover:bg-red-100 transition-all duration-300 items-center">
                     <img src="../../../resource/icons/dashboard/file_delete.svg" alt="">
                 </button>
             </div>
 
 HTML;
-$get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
+                    $get_children_info_row = mysqli_fetch_assoc($get_children_info_result);
                 }
+                echo '</div>';
+            } else {
+                echo <<<HTML
+                        <h1 class="justify-center flex w-full h-1 mx-auto text-2xl font-bold text-zinc-400">Children Not Found</h1>
+                HTML;
+
             }
-                ?>
-        </div>
-        </div>
-
-        <div class="w-full flex flex-col gap-4">
-            <button id="add_children_button" class="p-4 bg-gray-300">
-                Add Children
-            </button>
-
-            <div id="children_section">
-
-            </div>
+            ?>
         </div>
 
-        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full">
-
-
-        <div class="flex flex-col place-items-center w-full">
-            <img class="mb-4" src="../../../resource/icons/dashboard/card.svg" alt="">
-            <h1 class="text-md text-gray-700 font-medium">
-                Add a Payment Method
-            </h1>
-            <span class="font-light text-gray-600">
-                SECURED BY
-            </span>
-
-            <h1 class="text-xl font-bold font-mono text-primary">
-                SSL Encryption
-            </h1>
-
-
-        </div>
+        <hr class="col-span-2 w-full h-1 mx-auto my-8 bg-gray-300 border-0 rounded-full mt-22">
 
         <div class="col-span-2 flex w-full justify-center gap-12">
             <input type="password"
