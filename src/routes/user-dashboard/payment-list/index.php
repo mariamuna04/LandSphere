@@ -279,7 +279,7 @@ HTML;
                 // Get Payment table information for each land
                 $payment_id = $lands_in_payment_list['payment_id'];
                 $land_id = $lands_in_payment_list['land_id'];
-                $due_time = $lands_in_payment_list['due_time'];
+
                 $total_amount = $lands_in_payment_list['total_amount'];
                 $paid_amount = 0;   // because paid can be calculated from installment table
                 $installment = $lands_in_payment_list['installments'];
@@ -305,7 +305,10 @@ HTML;
                 $get_sell_list_sql = "SELECT * FROM sell_list WHERE land_id = '$land_id'";
                 $get_sell_list_result = mysqli_query($connection, $get_sell_list_sql);
                 $sell_list = mysqli_fetch_assoc($get_sell_list_result);
+                $max_installment = $sell_list['max_installment'];
                 $deadline = $sell_list['deadline'];
+
+
 
                 // Check if there are already some installments paid
                 // if so, get total paid amount from installment table
@@ -355,25 +358,36 @@ HTML;
                     $percentage = 100;
                 }
 
-                if ($paid_amount != $total_amount) {
+                $installment_over = false;
+                if ($installment_number_row_count >= $max_installment) {
+                    $installment_over = true;
+                }
+
+                if ($paid_amount != $total_amount && !$installment_over) {
                     echo <<< HTML
                         <a href="./installment/?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 bg-beige-dark w-full p-4 
                         rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
                         antialiased motion-safe:hover:scale-[1.02]">
                     HTML;
-                } else {
+                } else if (!$installment_over) {
                     echo <<< HTML
                         <a href="../../../utility/php/transfer_ownership.php?land_id=$land_id&payment_id=$payment_id" class="group flex-col flex gap-1 w-full pb-4 px-4
                         rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 bg-green-50
                         antialiased motion-safe:hover:scale-[1.02]">
                             <h1 class="text-center font-black pb-4 pt-4 mb-2 rounded-b-2xl bg-green-300 text-green-700">&#127881; Click to Transfer Ownership &#127881; </h1>
                     HTML;
+                } else {
+                    echo <<< HTML
+                        <a class="group flex-col flex gap-1 w-full pb-4 px-4
+                        rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 bg-red-50
+                        antialiased motion-safe:hover:scale-[1.02]">
+                            <h1 class="text-center font-black pb-4 pt-4 mb-2 rounded-b-2xl bg-red-300 text-red-700">Installments over! Please contact for support</h1>
+                    HTML;
                 }
 
                 // convert paid amount and total amount to 2 decimal places
                 $paid_amount = number_format($paid_amount, 2);
                 $total_amount = number_format($total_amount, 2);
-
 
                 echo <<< HTML
                         <div class="flex justify-between font-mono tracking-wide">

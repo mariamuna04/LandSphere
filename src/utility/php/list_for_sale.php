@@ -8,6 +8,8 @@ if (!$connection) {
 }
 
 $land_id = $_GET["land_id"];
+$installment = $_POST["installment"];
+$deadline = $_POST["deadline"];
 
 $token = '';
 $user_id = '';
@@ -24,7 +26,7 @@ $get_token = mysqli_fetch_assoc($get_token_result);
 
 if ($token == $get_token['token']) {
 
-    $get_land_information = "SELECT * FROM land 
+    $get_land_information = "SELECT * FROM land
                         JOIN owns o on land.land_id = o.land_id
                         JOIN land_cost_info lci on land.land_id = lci.land_id
                         WHERE land.land_id = " . $land_id . ";";
@@ -36,7 +38,10 @@ if ($token == $get_token['token']) {
     $listing_date = date("Y-m-d");
 
     if ($_SESSION['id'] == $land["owner_id"]) {
-        $sql = "INSERT INTO sell_list (land_id, user_id, listing_date) VALUES (" . $land_id . ", " . $land_owner_id . ", '" . $listing_date . "');";
+        $sql = "INSERT INTO sell_list (land_id, user_id, listing_date, max_installment, deadline)
+VALUES (" . $land_id . ", " . $user_id . ", '" . $listing_date . "', " . $installment . ", '" . $deadline . "');";
+
+
         if (mysqli_query($connection, $sql)) {
             header("Location: ../../routes/user-dashboard/sale-list/");
         } else {

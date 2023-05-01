@@ -422,7 +422,7 @@ HTML;
                         <label for="installment" class="text-sm text-gray-500 pl-4">(Fixed by landowner)</label>
                     </div>
                     <input disabled type="date" name="deadline" id="deadline"
-                           class="rounded-xl text-right disabled:font-black disabled:text-black
+                           class="rounded-xl text-right border border-gray-600
                            py-3 px-6 text-base text-black disabled:opacity-100
                            outline-none focus:shadow-md font-mono mr-4"
                            <?php

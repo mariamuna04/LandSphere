@@ -587,11 +587,11 @@ HTML;
                     </div>
 
                     <div class="flex gap-4 font-mono font-bold items-center opacity-75">
-                        <h1 class="p-2 bg-gray-300 rounded-xl">
+                        <h1 class="p-2 border border-gray-600 px-2 rounded-xl">
                             Deadline : <?php echo $deadline ?>
                         </h1>
 
-                        <h1 class="p-2 bg-gray-300 rounded-xl">
+                        <h1 class="p-2 border border-gray-600 px-2 rounded-xl">
                             Max Installment : <?php echo $max_installment ?>
                         </h1>
 
