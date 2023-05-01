@@ -191,11 +191,11 @@ $user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_res
                 
                 
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
                             <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        Successor Settings
                     </a>
                 </li>
                 <hr>
