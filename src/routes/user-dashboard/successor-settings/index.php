@@ -1,6 +1,6 @@
 <?php
 //print error
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -45,6 +45,20 @@ $get_children_info = "SELECT * FROM children WHERE parent_nid = " . $user_id . "
 $get_children_info_result = mysqli_query($connection, $get_children_info);
 $number_of_children = mysqli_num_rows($get_children_info_result);
 
+$get_total_division_from_spouse_sql = "SELECT division_index FROM marital_status WHERE partner_nid = " . $user_id . ";";
+$get_total_division_from_spouse_result = mysqli_query($connection, $get_total_division_from_spouse_sql);
+$get_total_division_from_spouse_row = mysqli_fetch_assoc($get_total_division_from_spouse_result);
+$spouse_division = $get_total_division_from_spouse_row['division_index'];
+
+$get_total_division_from_children_sql = "SELECT SUM(division_index) FROM children WHERE parent_nid = " . $user_id . ";";
+$get_total_division_from_children_result = mysqli_query($connection, $get_total_division_from_children_sql);
+$get_total_division_from_children_row = mysqli_fetch_assoc($get_total_division_from_children_result);
+$children_division = $get_total_division_from_children_row['SUM(division_index)'];
+
+$total_division = $spouse_division + $children_division;
+
+$division_index_out_of_bound = "";
+
 if (isset($_POST['update_spouse'])) {
     $nid = $_POST['spouse_nid'];
     if (empty($nid)) $nid = $get_spouse_info_row['nid'];
@@ -87,18 +101,23 @@ if (isset($_POST['update_spouse'])) {
         $division_index = $division_index / 100;
     }
 
-    if ($get_spouse_info_row) {
-        $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = " . $birth_certificate . ", passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
-        $update_spouse_info_result = mysqli_query($connection, $update_spouse_info);
-        if ($update_spouse_info_result) {
-            header('Location: ./');
+    if ($division_index + $total_division - $spouse_division <= 1.01) {
+        if ($get_spouse_info_row) {
+            $update_spouse_info = "UPDATE marital_status SET nid = " . $nid . ", full_name = '" . $name . "', email = '" . $email . "', phone_number = '" . $phone . "', birth_certificate_no = " . $birth_certificate . ", passport_number = '" . $passport . "', division_index = " . $division_index . " WHERE partner_nid = " . $user_id . ";";
+            $update_spouse_info_result = mysqli_query($connection, $update_spouse_info);
+            if ($update_spouse_info_result) {
+                header('Location: ./');
+            }
+
+        } else {
+            $insert_spouse_info = "INSERT INTO marital_status (nid, full_name, email, phone_number, birth_certificate_no, passport_number, division_index, partner_nid) VALUES (" . $nid . ", '" . $name . "', '" . $email . "', '" . $phone . "', '" . $birth_certificate . "', '" . $passport . "', " . $division_index . ", " . $user_id . ");";
+            $insert_spouse_info_result = mysqli_query($connection, $insert_spouse_info);
+            if ($insert_spouse_info_result) {
+                header('Location: ./');
+            }
         }
     } else {
-        $insert_spouse_info = "INSERT INTO marital_status (nid, full_name, email, phone_number, birth_certificate_no, passport_number, division_index, partner_nid) VALUES (" . $nid . ", '" . $name . "', '" . $email . "', '" . $phone . "', '" . $birth_certificate . "', '" . $passport . "', " . $division_index . ", " . $user_id . ");";
-        $insert_spouse_info_result = mysqli_query($connection, $insert_spouse_info);
-        if ($insert_spouse_info_result) {
-            header('Location: ./');
-        }
+        $division_index_out_of_bound = "bg-red-100 border border-red-600";
     }
 }
 
@@ -167,13 +186,24 @@ foreach ($_POST as $name => $value) {
             $new_children_division_index = $new_children_division_index / 100;
         }
 
+        $get_this_children_sql = "SELECT * FROM children WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
+        $get_this_children_result = mysqli_query($connection, $get_this_children_sql);
+        $get_this_children_row = mysqli_fetch_assoc($get_this_children_result);
+        $this_children_division_index = $get_this_children_row['division_index'];
 
-        $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', birth_certificate_number=" . $new_child_birth_certificate . ", email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
-        $update_children_result = mysqli_query($connection, $update_children);
-        if ($update_children_result) {
-            header('Location: ./?success=1');
+        $total_division = $total_division - $this_children_division_index + $new_children_division_index;
+
+
+        if ($total_division <= 1.01) {
+            $update_children = "UPDATE children SET full_name = '" . $new_child_name . "', birth_certificate_number=" . $new_child_birth_certificate . ", email = '" . $new_child_email . "', phone_number = '" . $new_children_phone . "', division_index = " . $new_children_division_index . " WHERE parent_nid = " . $user_id . " AND birth_certificate_number = " . $buttonNumber . ";";
+            $update_children_result = mysqli_query($connection, $update_children);
+            if ($update_children_result) {
+                header('Location: ./?success=1');
+            }
+        } else {
+            $division_index_out_of_bound = "bg-red-100 border border-red-600";
+            header('Location: ./?error=0');
         }
-
 
     }
 }
@@ -423,11 +453,12 @@ HTML;
                                        value={$print_division_index}
                                        class="mt-1  rounded-xl
                                    bg-white py-3 px-6 w-48 text-base font-medium text-[#6B7280]
-                                   outline-none focus:shadow-md font-mono text-center"
+                                   outline-none focus:shadow-md font-mono text-center $division_index_out_of_bound"
                                 />
                                 <label for="spouse_division_index" class="text-xl pl-2">%</label>
                             </div>
                         </div>
+    
     
                     </div>
                 </div>
@@ -451,7 +482,7 @@ HTML;
         } else {
             echo <<< HTML
     <div class="w-full text-center col-span-2 h-1 mx-auto text-2xl font-bold text-zinc-400">
-<h1>Opps! You do not have spouse...</h1>
+<h1>Opps! You are single...</h1>
 </div>
 HTML;
 
@@ -607,7 +638,7 @@ HTML;
                                value="$division_index"
                                class="-mt-1 rounded-xl w-24
                                bg-white py-3 px-6 text-base font-medium text-[#6B7280]
-                               outline-none focus:shadow-md font-mono"
+                               outline-none focus:shadow-md font-mono $division_index_out_of_bound"
                         />
                         <label for="spouse_division_index" class="text-xl pl-2">%</label>
                     </div>
