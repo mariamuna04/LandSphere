@@ -191,11 +191,11 @@ $user_has_lands_that_not_listed = mysqli_num_rows($get_lands_that_not_listed_res
                 
                 
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
                             <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        Successor Settings
                     </a>
                 </li>
                 <hr>
@@ -492,13 +492,44 @@ HTML;
                         HTML;
                 if ($has_all_legal_docs) {
                     echo <<< HTML
-                            <form class="mt-3 flex justify-end" method="post" action="../../../utility/php/list_for_sale.php?land_id=$land_id">
-                                <button class="group text-green-600 text-sm font-bold py-2 px-4 rounded-full border border-green-300 flex gap-1 hover:bg-green-100 
-                                transition-all duration-300 items-center">
-                                <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
-                                duration-300 w-5 h-5" src="../../../resource/icons/dashboard/add.svg" alt="">
-                                    <span class="-translate-x-[0.65rem]  group-hover:translate-x-0 transition-all duration-300">Add to Sell List</span>
-                                </button>
+                            <form class="mt-3 flex justify-between items-center" method="post" action="../../../utility/php/list_for_sale.php?land_id=$land_id">
+                            
+                                <div class="flex gap-2 items-center">
+                                <div class="flex flex-col gap-1">
+                                        <label for="installment"> Installments </label>
+                                        
+                                        <input type="number" name="installment" id="installment"
+                                        min="1" max="24" required
+                                        class="rounded-xl text-right w-24
+                                        py-3 px-6 text-base font-medium text-[#6B7280]
+                                        outline-none focus:shadow-md font-mono mr-4"
+                                        />
+                                    
+                                    </div>
+                                   
+                                    
+                                    <div class="flex flex-col gap-1">
+                                        <label for="installment"> Deadline </label>
+                                        
+                                        <input required type="date" name="deadline" id="deadline"
+                                        class="rounded-xl text-right w-48
+                                        py-3 px-6 text-base font-medium text-[#6B7280]
+                                        outline-none focus:shadow-md font-mono mr-4"
+                                        />
+                                    
+                                    </div>
+                                
+                                </div>
+                            
+                                <div>
+                                    <button class="group text-green-600 text-sm font-bold py-2 px-4 rounded-full border border-green-300 flex gap-1 hover:bg-green-100 
+                                    transition-all duration-300 items-center">
+                                    <img class="invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all 
+                                    duration-300 w-5 h-5" src="../../../resource/icons/dashboard/add.svg" alt="">
+                                        <span class="-translate-x-[0.65rem]  group-hover:translate-x-0 transition-all duration-300">Add to Sell List</span>
+                                    </button>
+                                </div>
+                                
                              </form>
                     </div>
                         

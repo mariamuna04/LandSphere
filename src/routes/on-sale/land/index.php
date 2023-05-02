@@ -5,7 +5,7 @@ if (!isset($_GET['land_id'])) {
     die();
 }
 $land_id = $_GET['land_id'];
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['id'] ?? null;
 
 include "../../../utility/php/connection.php";
 $connection = connection();
@@ -13,6 +13,21 @@ if (!$connection) {
     header('Location: ../../static/error/HTTP521.html');
     die();
 }
+
+$get_buyer_information_sql = '';
+$get_buyer_information_sql_result = '';
+$buyer_information = '';
+$buyer_name = '';
+$buyer_email = '';
+
+if ($user_id != null) {
+    $get_buyer_information_sql = "SELECT * FROM user WHERE nid = " . $user_id . ";";
+    $get_buyer_information_sql_result = mysqli_query($connection, $get_buyer_information_sql);
+    $buyer_information = mysqli_fetch_array($get_buyer_information_sql_result);
+    $buyer_name = $buyer_information["full_name"];
+    $buyer_email = $buyer_information["email"];
+}
+
 
 $ensure_land_id_sql = "SELECT * FROM land WHERE land_id = $land_id";
 $ensure_land_id_sql_result = mysqli_query($connection, $ensure_land_id_sql);
@@ -70,6 +85,14 @@ $sale_deed = $lands["sale_deed"];
 $tax_payment = $lands["tax_pay_receipt"];
 $map_property = $lands["map_property"];
 
+// Sell List Information
+$land_sell_list_sql = "SELECT * FROM sell_list WHERE land_id = $land_id;";
+$land_sell_list_sql_result = mysqli_query($connection, $land_sell_list_sql);
+$land_sell_list = mysqli_fetch_assoc($land_sell_list_sql_result);
+$max_installment = $land_sell_list["max_installment"];
+$deadline = $land_sell_list["deadline"];
+
+
 $environment_status = "";
 if ($land_environment_points > 0 && $land_environment_points <= 2) {
     $environment_status = ' bg-green-100 text-green-500"> Ecologically Excellent ';
@@ -106,6 +129,25 @@ $get_owner_name_sql_result = mysqli_query($connection, $get_owner_name_sql);
 $owner_name = mysqli_fetch_array($get_owner_name_sql_result);
 $owner_name = $owner_name["full_name"];
 
+$get_all_ratings = "SELECT * FROM land_rating WHERE land_id = '" . $land_id . "'";
+$result = mysqli_query($connection, $get_all_ratings);
+$total_ratings = mysqli_num_rows($result);
+
+if (isset($_POST['submit_rating'])) {
+    $comment = $_POST['comment'];
+    $rating = $_POST['given_rating_value'];
+
+    $check_sql = "SELECT * FROM land_rating WHERE land_id = '" . $land_id . "' AND user_id = '" . $user_id . "'";
+    $check_sql_result = mysqli_query($connection, $check_sql);
+    $check_sql_result = mysqli_num_rows($check_sql_result);
+
+    if ($check_sql_result == 0) {
+        $insert_rating_sql = "INSERT INTO land_rating (land_id, user_id, rate, comment) VALUES ('" . $land_id . "', '" . $user_id . "', '" . $rating . "', '" . $comment . "');";
+        $insert_rating_sql_result = mysqli_query($connection, $insert_rating_sql);
+    }
+
+}
+
 
 ?>
 
@@ -117,6 +159,114 @@ $owner_name = $owner_name["full_name"];
     <link href="../../../../dist/output.css" rel="stylesheet">
     <title>LandSphere | Your Personal Land Manager</title>
     <link rel="icon" href="../../../resource/ico.svg">
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
+    <style>
+        .rating_stars {
+            margin-top: 15px;
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 200;
+            color: #918f8f;
+            position: relative;
+        }
+
+        .rating_stars span .fa, .rating_stars span.active-low .fa-star-o, .rating_stars span.active-high .fa-star-o {
+            display: none;
+        }
+
+        .rating_stars span .fa-star-o {
+            display: inline-block;
+        }
+
+        .rating_stars span.s.active-high .fa-star {
+            display: inline-block;
+            color: #feb645;
+        }
+
+        .rating_stars span.s.active-low .fa-star-half-o {
+            display: inline-block;
+            color: #feb645;
+        }
+
+        .rating_stars span.r {
+            position: absolute;
+            top: 0;
+            height: 20px;
+            width: 10px;
+            left: 0;
+        }
+
+        .rating_stars span.r.r0_5 {
+            left: 0px;
+        }
+
+        .rating_stars span.r.r1 {
+            left: 10px;
+            width: 11px;
+        }
+
+        .rating_stars span.r.r1_5 {
+            left: 21px;
+            width: 13px;
+        }
+
+        .rating_stars span.r.r2 {
+            left: 34px;
+            width: 12px;
+        }
+
+        .rating_stars span.r.r2_5 {
+            left: 46px;
+            width: 12px;
+        }
+
+        .rating_stars span.r.r3 {
+            left: 58px;
+            width: 11px;
+        }
+
+        .rating_stars span.r.r3_5 {
+            left: 69px;
+            width: 12px;
+        }
+
+        .rating_stars span.r.r4 {
+            left: 81px;
+            width: 12px;
+        }
+
+        .rating_stars span.r.r4_5 {
+            left: 93px;
+            width: 12px;
+        }
+
+        .rating_stars span.r.r5 {
+            left: 105px;
+            width: 12px;
+        }
+
+
+        label {
+            width: 100px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .values {
+            margin-top: 20px;
+        }
+
+        .info {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+    </style>
 
 </head>
 
@@ -205,7 +355,8 @@ $owner_name = $owner_name["full_name"];
                 type="button">
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 mr-2 rounded-full"
-                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 alt="user photo" height="32px" width="32px">
+                    src="https://api.dicebear.com/6.x/avataaars/svg?seed=$rnd%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"                 
+                    alt="user photo" height="32px" width="32px">
                     {$_SESSION["name"]}
             <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
@@ -223,7 +374,7 @@ $owner_name = $owner_name["full_name"];
                         $first_name <span class="text-green-600">$last_name</span>
                 </div>
                 <div class="truncate text-sm font-mono font-bold text-gray-500">
-                    {$_SESSION["email"]}
+                {$_SESSION["email"]}
                 </div>
             </div>
             <ul class="py-2 text-sm text-gray-700"
@@ -261,11 +412,11 @@ $owner_name = $owner_name["full_name"];
                 <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
                 
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
                             <img src="../../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        Successor Settings
                     </a>
                 </li>
                 <hr>
@@ -393,6 +544,33 @@ HTML;
                         <?php echo $land_details ?>
                     </p>
 
+                    <div class="flex gap-6 justify-between items-center w-fit p-1">
+                        <?php
+                        $get_rating_of_land = "SELECT *, AVG(rate) AS rating FROM land_rating WHERE land_id = '$land_id'";
+                        $get_rating_of_land_result = mysqli_query($connection, $get_rating_of_land);
+                        $get_rating_of_land_row = mysqli_fetch_assoc($get_rating_of_land_result);
+                        $rating = $get_rating_of_land_row['rating'];
+                        // convert float to int
+                        $loop_rating = intval($rating);
+                        echo '<div class="drop-shadow-md flex gap-2">';
+                        for ($i = 0;
+                             $i < $loop_rating;
+                             $i++) {
+                            echo '<img class="h-5 w-5 -translate-y-[.06rem]" src="../../../resource/icons/rating_star.svg" alt="">';
+                        }
+                        echo '</div>';
+                        $get_number_of_rating = "SELECT * FROM land_rating WHERE land_id = '$land_id'";
+                        $get_number_of_rating_result = mysqli_query($connection, $get_number_of_rating);
+                        $number_of_rating = mysqli_num_rows($get_number_of_rating_result);
+                        $rating = number_format($rating, 1);
+
+                        if ($number_of_rating == 0) {
+                            echo '<h1 class="font-bold -translate-x-[1.7rem] text-zinc-500"> No reviews yet ... </h1>';
+                        } else {
+                            echo '<h1 class="font-bold font-mono text-zinc-500">' . $rating . ' out of 5 <span class="text-neutral-400">(' . $number_of_rating . ' reviewed)</span> </h1>';
+                        } ?>
+                    </div>
+
                     <div>
                         <?php
                         $random = rand(1, 1000);
@@ -408,6 +586,17 @@ HTML;
                         ?>
                     </div>
 
+                    <div class="flex gap-4 font-mono font-bold items-center opacity-75">
+                        <h1 class="p-2 border border-gray-600 px-2 rounded-xl">
+                            Deadline : <?php echo $deadline ?>
+                        </h1>
+
+                        <h1 class="p-2 border border-gray-600 px-2 rounded-xl">
+                            Max Installment : <?php echo $max_installment ?>
+                        </h1>
+
+
+                    </div>
                     <div class="flex gap-4 items-baseline">
                         <form
                             action="../../../utility/php/land_book.php?land_id=<?php echo $land_id ?>&owner_id=<?php echo $owner_id ?>"
@@ -500,7 +689,9 @@ HTML;
     <main id="gallery">
         <div class="mt-4 flex w-full items-center snap-x gap-4 overflow-x-auto pb-5 pt-5 pl-2 pr-2 no-scroll">
             <?php
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0;
+                 $i < 5;
+                 $i++) {
                 $random = rand(1, 1000);
                 echo <<< HTML
                 <div class="min-w-[80%] transform motion-safe:hover:scale-[1.01] transition-all duration-300">
@@ -763,8 +954,147 @@ HTML;
                 </button>
             HTML;
             }
-            mysqli_close($connection);
+
             ?>
+        </div>
+
+
+    </main>
+
+    <main id="user_rating" class="mt-16 flex flex-col gap-4">
+        <?php
+        if ($total_ratings == 0) {
+            echo <<< HTML
+                <h1 class="pb-6 text-3xl font-medium">
+                    No Ratings Yet! <span class="text-gray-500"> Be the first one to rate this land </span>
+                </h1>
+              HTML;
+        } else {
+            echo <<< HTML
+                <h1 class="pb-2 text-3xl font-medium">
+                    Ratings. <span class="text-gray-500"> Give yours and see what others have to say about this land </span>
+                </h1>
+              HTML;
+
+        }
+
+        ?>
+
+        <?php
+        if ($user_id != null) {
+            $check_already_rated_sql = "SELECT * FROM land_rating WHERE user_id = " . $user_id . " AND land_id = " . $land_id . ";";
+            $check_already_rated_result = mysqli_query($connection, $check_already_rated_sql);
+            $check_already_rated = mysqli_num_rows($check_already_rated_result);
+
+            if (!$check_already_rated) {
+                echo <<< HTML
+                        <form method="post" action="" class="w-full">
+                            <div class="flex gap-2 select-none">
+                                <h1 class="ml-4 text-zinc-600 translate-y-[1.1rem] mr-4 select-none font-bold text-lg">Rate this land on
+                                    a scale to 0 to 5 </h1>
+                                <span class="rating_stars rating_0">
+                                <span class='s' data-low='0.5' data-high='1'><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                                <span class='s' data-low='1.5' data-high='2'><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                                <span class='s' data-low='2.5' data-high='3'><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                                <span class='s' data-low='3.5' data-high='4'><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                                <span class='s' data-low='4.5' data-high='5'><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                                <span class='r r0_5' data-rating='1' data-value='0.5'></span>
+                                <span class='r r1' data-rating='1' data-value='1'></span>
+                                <span class='r r1_5' data-rating='15' data-value='1.5'></span>
+                                <span class='r r2' data-rating='2' data-value='2'></span>
+                                <span class='r r2_5' data-rating='25' data-value='2.5'></span>
+                                <span class='r r3' data-rating='3' data-value='3'></span>
+                                <span class='r r3_5' data-rating='35' data-value='3.5'></span>
+                                <span class='r r4' data-rating='4' data-value='4'></span>
+                                <span class='r r4_5' data-rating='45' data-value='4.5'></span>
+                                <span class='r r5' data-rating='5' data-value='5'></span>
+                                </span>
+                                <input class="hidden" type="text" name="given_rating_value" id="rating_val" required/>
+                            </div>
+                            <div class="w-full mt-4  mb-4 border border-gray-200 rounded-xl bg-gray-50">
+                                <div class="px-4 py-2 bg-white rounded-t-xl ">
+                                    <label for="comment" class="sr-only">Your comment</label>
+                                    <textarea id="comment" name="comment" rows="4"
+                                              class="w-full p-4 text-base text-gray-900 bg-white border-0 outline-none"
+                                              placeholder="Write a comment..."></textarea>
+                                </div>
+                                    <div class="flex items-center justify-between px-3 py-2 border-t">
+                                        <button name="submit_rating" type="submit" class="hover:shadow-form bg-green-700
+                                            py-2 px-8 ml-4 text-center text-base font-bold text-white outline-none items-center
+                                            col-span-2 rounded-xl hover:bg-green-800 hover:shadow-lg transition-all duration-300">
+                                            Rate
+                                        </button>
+                                    
+                                    <div class="flex pl-0 space-x-1 pr-2">
+                                    <p class="text-gray-400 font-bold font-mono tracking-widest">
+                                            You are rating this land as $buyer_name ( $buyer_email )
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+HTML;
+            } else {
+                echo <<< HTML
+<div>
+<h1 class="text-lg font-medium text-zinc-500" >You Rated this land! <a href="../../../utility/php/remove_rating.php?uid=$user_id&lid=$land_id" class="text-red-600"> Remove Ratings </a> </h1>
+</div>
+HTML;
+            }
+        }
+        ?>
+
+
+        <div class="mt-4 grid grid-cols-3 gap-4">
+            <?php
+            $get_ratings_sql = "SELECT * FROM land_rating WHERE land_id = " . $land_id . ";";
+            $get_ratings_result = mysqli_query($connection, $get_ratings_sql);
+
+            while ($get_ratings = mysqli_fetch_assoc($get_ratings_result)) {
+                $get_user_sql = "SELECT * FROM user WHERE nid = " . $get_ratings['user_id'] . ";";
+                $get_user_result = mysqli_query($connection, $get_user_sql);
+                $get_user = mysqli_fetch_assoc($get_user_result);
+                $user_name = $get_user['full_name'];
+                $user_email = $get_user['email'];
+                $user_rating = $get_ratings['rate'];
+                $user_comment = $get_ratings['comment'];
+                $random_number = rand(1, 1000);
+
+                echo <<< HTML
+                            <div class="p-4 flex flex-col bg-beige-dark w-full rounded-xl">
+                        <div class="flex items-center gap-4">
+                            <img class="rounded-full h-12 w-12"
+                                 src="https://api.dicebear.com/6.x/avataaars/svg?seed=$random_number%20Hill&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                                 alt="">
+                            <div class="flex flex-col">
+                                <h1 class="text-lg font-bold">$user_name</h1>
+                                <h1 class="font-bold text-sm text-zinc-400">$user_email</h1>
+                            </div>
+                        </div>
+                        <div class="mt-1 font-bold font-mono flex gap-2 items-center">
+                            <img class="h-5 w-5" src="../../../resource/icons/rating_star.svg" alt="">
+                            <h1 class="text-sm">Rated $user_rating out of 5</h1>
+                        </div>
+                        <hr class="border-2 border-zinc-400 my-2">
+                        <div class=" break-words flex-wrap text-zinc-500 ">
+                            <h1>$user_comment</h1>
+                        </div>
+                    </div>
+
+                    
+                    
+                    HTML;
+
+            }
+
+
+            ?>
+
         </div>
 
 
@@ -783,12 +1113,9 @@ HTML;
                 <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Community </a>
                 <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Rules and Regulations </a>
                 <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Volunteers </a>
-                <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Option </a>
                 <a href="../../../static/error/HTTP501.html" class="hover:text-green-300">Opt Out </a>
-
-
             </div>
-            <a></a>
+
         </div>
 
         <div class="flex flex-col">
@@ -925,6 +1252,9 @@ HTML;
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
 <script>
     document.addEventListener('keydown', function (event) {
         if (event.metaKey && event.keyCode === 75) {
@@ -997,6 +1327,41 @@ HTML;
             document.getElementById('quick_search_result').innerHTML = '';
         }
     }
+
+    jQuery(document).ready(function ($) {
+        $('.rating_stars span.r').hover(function () {
+            // get hovered value
+            var rating = $(this).data('rating');
+            var value = $(this).data('value');
+            $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_' + rating);
+            highlight_star(value);
+        }, function () {
+            // get hidden field value
+            var rating = $("#rating").val();
+            var value = $("#rating_val").val();
+            $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_' + rating);
+            highlight_star(value);
+        }).click(function () {
+            // Set hidden field value
+            var value = $(this).data('value');
+            $("#rating_val").val(value);
+
+            var rating = $(this).data('rating');
+            $("#rating").val(rating);
+
+            highlight_star(value);
+        });
+
+        var highlight_star = function (rating) {
+            $('.rating_stars span.s').each(function () {
+                var low = $(this).data('low');
+                var high = $(this).data('high');
+                $(this).removeClass('active-high').removeClass('active-low');
+                if (rating >= high) $(this).addClass('active-high');
+                else if (rating == low) $(this).addClass('active-low');
+            });
+        }
+    });
 
 
 </script>

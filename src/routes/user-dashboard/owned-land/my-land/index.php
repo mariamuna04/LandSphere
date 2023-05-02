@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 0);
 session_start();
 if (!isset($_GET['land_id'])) {
     $_SESSION['redirect_url'] = "http" .
@@ -293,11 +294,11 @@ $is_land_booked = mysqli_num_rows($is_land_booked_result) > 0;
                 <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
                 
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        Successor Settings
                     </a>
                 </li>
                 <hr>
@@ -472,13 +473,41 @@ HTML;
                     if (!$is_land_listed_for_sale) {
                         if ($has_all_legal_documents) {
                             echo <<< HTML
-                                    <form method="post" action="../../../../utility/php/list_for_sale.php?land_id=$land_id">
+                                    <form method="post" 
+                                    action="../../../../utility/php/list_for_sale.php?land_id=$land_id"
+                                    class="flex gap-2 items-center">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="installment"> Installments </label>
+                                        
+                                        <input type="number" name="installment" id="installment"
+                                        min="1" max="24" required
+                                        class="rounded-xl text-right w-24
+                                        py-3 px-6 text-base font-medium text-[#6B7280]
+                                        outline-none focus:shadow-md font-mono mr-4"
+                                        />
+                                    
+                                    </div>
+                                   
+                                    
+                                    <div class="flex flex-col gap-1">
+                                        <label for="installment"> Deadline </label>
+                                        
+                                        <input required type="date" name="deadline" id="deadline"
+                                        class="rounded-xl text-right w-48
+                                        py-3 px-6 text-base font-medium text-[#6B7280]
+                                        outline-none focus:shadow-md font-mono mr-4"
+                                        />
+                                    
+                                    </div>
+                                    
+                                    
+                                    
                                     <button type="submit"
                                             class="hover:shadow-form bg-green-700
                                             py-3 px-8 text-center text-base transition-all duration-300
                                             font-bold text-white outline-none items-center
                                             col-span-2 rounded-full hover:bg-green-800
-                                            hover:shadow-lg w-fit">
+                                            hover:shadow-lg w-fit translate-y-[1rem]">
                                             List for Sale
                                     </button>  
                                     </form>

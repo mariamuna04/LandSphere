@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 session_start();
 if (!isset($_GET['land_id'])) {
     $_SESSION['redirect_url'] = "http" .
@@ -50,6 +51,10 @@ $get_land_information = "SELECT * FROM land
 $get_land_information_result = mysqli_query($connection, $get_land_information);
 $land = mysqli_fetch_assoc($get_land_information_result);
 
+$get_sell_list_sql = "SELECT * FROM sell_list WHERE land_id = " . $land_id . ";";
+$get_sell_list = mysqli_query($connection, $get_sell_list_sql);
+$sell_list = mysqli_fetch_assoc($get_sell_list);
+
 $cost_per_sqft = $land["cost_per_sqft"];
 $land_area = $land["area"];
 $total_cost = $cost_per_sqft * $land_area;
@@ -88,6 +93,7 @@ $card_number = substr($card_number, 0, 4) . "-" . substr($card_number, 4, 4) . "
 
 $payment_id = date("Y") . $land_id . $_SESSION['id'];
 $deadline_left_blank = false;
+$installment_left_blank = false;
 
 $date_diff = 0;
 $today = date("Y-m-d");
@@ -95,23 +101,10 @@ $deadline_passed = false;
 
 if (isset($_POST['submit'])) {
     $installment = $_POST['installment'];
-    if (empty($installment)) $installment = 0;
-    $deadline = $_POST['deadline'];
-    if (empty($deadline)) $deadline_left_blank = true;
-
-    // check if the date is more than 3 years from now
-    $over_3_years = false;
-    $deadline = date("Y-m-d", strtotime($deadline));
-    $date_diff = date_diff(date_create($today), date_create($deadline));
-    $date_diff = $date_diff->format("%y");
-
-    if ($deadline < $today) {
-        $deadline_passed = true;
-    }
-
-    if (!$deadline_left_blank && $date_diff < 4 && $deadline > $today) {
-        $confirm_payment_sql = "INSERT INTO payment (payment_id, buyer_nid, land_id, due_time, total_amount, installments) VALUES
-            (" . $payment_id . ", " . $_SESSION['id'] . " , " . $land_id . ", '" . $deadline . "', " . $total_cost . ", " . $installment . ");";
+    if (empty($installment)) $installment_left_blank = true;
+    if (!empty($installment)) {
+        $confirm_payment_sql = "INSERT INTO payment (payment_id, buyer_nid, land_id, total_amount, installments) VALUES
+            (" . $payment_id . ", " . $_SESSION['id'] . " , " . $land_id . ", " . $total_cost . ", " . $installment . ");";
         $confirm_payment = mysqli_query($connection, $confirm_payment_sql);
         header("Location: ../");
     }
@@ -254,11 +247,11 @@ if (isset($_POST['submit'])) {
                 <hr class="w-full h-1 mx-auto my-1 bg-gray-300 border-0 rounded-full">
                 
                 <li>
-                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
+                    <a href="../../../user-dashboard/successor-settings" class="flex px-4 py-2 hover:bg-gray-100 gap-2 w-full items-center">
                         <span>
-                            <img src="../../../../resource/icons/dashboard/settings.svg" alt="">
+                            <img src="../../resource/icons/dashboard/settings.svg" alt="">
                         </span>
-                        <span class="font-medium text-primary">Landsphere</span><span>Settings</span>
+                        Successor Settings
                     </a>
                 </li>
                 <hr>
@@ -401,41 +394,40 @@ HTML;
                 </div>
             </div>
             <h1 class="pl-4 pt-3 text-lg text-gray-500 font-bold">
-                Select Installment Plan and Deadline
+                Installment Plan and Deadline
             </h1>
 
             <form method="post" action="" class="flex flex-col h-full justify-between gap-2">
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col gap-1">
-                        <label for="installment" class="text-sm font-bold pl-4">Select Installment Period</label>
-                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Leave empty for no installment
-                            plan)</label>
+                        <label for="installment" class="text-sm font-bold pl-4 <?php if ($installment_left_blank) echo 'text-red-600'?>">Select Installment Period</label>
+                        <label for="installment" class="text-sm text-gray-500 pl-4 ">(Cannot exceed more than <?php echo $sell_list['max_installment'];?>)</label>
                     </div>
                     <input type="number" name="installment" id="installment"
-                           min="1" max="36"
+                           min="1" max="<?php echo $sell_list['max_installment'];?>"
                            class="rounded-xl text-right
                             py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md font-mono mr-4"
+                           outline-none focus:shadow-md font-mono mr-4
+                           <?php
+                            if ($installment_left_blank) {
+                                 echo 'bg-red-100';
+                            }
+                           ?>"
                     />
                 </div>
 
                 <div class="flex justify-between items-center pb-3">
                     <div class="flex flex-col gap-1">
                         <label for="deadline" class="text-sm font-bold pl-4">Deadline</label>
-                        <label for="installment" class="text-sm pl-4
-                        <?php
-                        if ($date_diff > 3) echo ' text-red-500 ';
-                        ?>
-                        ">(Cannot be more than 3
-                            years)</label>
+                        <label for="installment" class="text-sm text-gray-500 pl-4">(Fixed by landowner)</label>
                     </div>
-                    <input type="date" name="deadline" id="deadline"
-                           class="rounded-xl text-right
-                           py-3 px-6 text-base font-medium text-[#6B7280]
-                           outline-none focus:shadow-md font-mono mr-4
+                    <input disabled type="date" name="deadline" id="deadline"
+                           class="rounded-xl text-right border border-gray-600
+                           py-3 px-6 text-base text-black disabled:opacity-100
+                           outline-none focus:shadow-md font-mono mr-4"
                            <?php
-                           if ($deadline_left_blank || $date_diff > 3 || $deadline_passed) echo ' border border-red-500 bg-red-100 ';
-                           ?>"
+                           echo 'value="' . $sell_list['deadline'] . '"';
+                           ?>
                     />
                 </div>
                 <?php
