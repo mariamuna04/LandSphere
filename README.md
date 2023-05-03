@@ -1,5 +1,7 @@
 # LandSphere
 
+:star: **Awarded *Champion* in CSE Project Show 231 at United International University** :star:
+
 ###### A simple efficient land management website that can be used to manage land simply, flexibly and securely.  This website does not use any framework; just uses simple PHP, JavaScript, HTML and Tailwind CSS.
 
 
